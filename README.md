@@ -1,2 +1,1 @@
-# textli
-Encrypted Markdown Editor
+# Textli - Encrypted Markdown Editor
