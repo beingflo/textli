@@ -1,1 +1,0 @@
-# Textli - Encrypted Markdown Editor
