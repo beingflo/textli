@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const App = () => {
-  return (
-    <div>
-      Textli
-    </div>
-  );
+  return <div>Textli</div>;
 };
 
 export default App;
