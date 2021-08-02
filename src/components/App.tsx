@@ -1,15 +1,23 @@
 import React from 'react';
-import { useNoteList } from '../context/noteListReducer';
-import { useSpinner } from '../context/spinnerReducer';
+import { Note, useNoteList } from '../context/noteListReducer';
+import { useSpinner, useSetSpinner } from '../context/spinnerReducer';
 
 const App = (): React.ReactElement => {
-  const spinner = useSpinner();
+  const waiting = useSpinner();
   const noteList = useNoteList();
-  console.log('---');
-  console.log(spinner);
-  console.log(noteList);
-  console.log('---');
-  return <div>Textli</div>;
+  const dispatch = useSetSpinner();
+
+  return (
+    <>
+      <div>waiting: {waiting ? 'true' : 'false'}</div>
+      <ul>
+        {noteList.map((note: Note) => (
+          <li key={note.id}>{note.metainfo}</li>
+        ))}
+      </ul>
+      <button onClick={() => dispatch(!waiting)}>Click me</button>
+    </>
+  );
 };
 
 export default App;

@@ -1,8 +1,11 @@
 import config from './config.json';
+import { Note } from './context/noteListReducer';
 
 const GET_NOTE_URL = `${config.api_url}/notes`;
 
-export const get_notes = (): void => {
+export const get_notes = (
+  setNotesList: (noteList: Array<Note>) => void
+): void => {
   fetch(GET_NOTE_URL, {
     credentials: 'include',
     headers: {
@@ -11,7 +14,7 @@ export const get_notes = (): void => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      setNotesList(data);
     })
     .catch((error) => console.log(error));
 };

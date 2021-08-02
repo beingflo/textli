@@ -1,17 +1,16 @@
 import React from 'react';
-import App from './App';
 import { get_notes } from '../api';
-import { AppStateProvider } from '../context';
+import { useSetNoteList } from '../context/noteListReducer';
+import App from './App';
 
 const Bootstrapper = (): React.ReactElement => {
+  const setNoteList = useSetNoteList();
+
   React.useEffect(() => {
-    get_notes();
-  }, []);
-  return (
-    <AppStateProvider>
-      <App />
-    </AppStateProvider>
-  );
+    get_notes(setNoteList);
+  }, [setNoteList]);
+
+  return <App />;
 };
 
 export default Bootstrapper;

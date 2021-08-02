@@ -1,4 +1,5 @@
-import { useAppState } from '.';
+import React from 'react';
+import { State, useAppDispatch, useAppState } from '.';
 
 export type Note = {
   encrypted_key: string;
@@ -7,32 +8,19 @@ export type Note = {
   modified_at: string;
 };
 
-export type NoteListState = {
-  notes: Array<Note>;
-};
-
 export type NoteListAction = {
   type: string;
-  notes: boolean;
+  noteList: boolean;
 };
 
-export const NoteListActions = {
-  SET_NOTES: 'set-notes',
-};
+export const NOTE_LIST_SET_NOTES = 'set-notes';
 
-export const initialNoteListState = {
-  notes: [],
-};
-
-export const NoteListReducer = (
-  state: NoteListState,
-  action: NoteListAction
-): any => {
+export const NoteListReducer = (state: State, action: NoteListAction): any => {
   switch (action.type) {
-    case NoteListActions.SET_NOTES: {
+    case NOTE_LIST_SET_NOTES: {
       return {
         ...state,
-        notes: action.notes,
+        noteList: action.noteList,
       };
     }
     default:
@@ -40,8 +28,16 @@ export const NoteListReducer = (
   }
 };
 
-export const useNoteList = (): any => {
+export const useNoteList = (): Array<Note> => {
   const { noteList } = useAppState();
-
   return noteList;
+};
+
+export const useSetNoteList = (): ((noteList: Array<Note>) => void) => {
+  const dispatch = useAppDispatch();
+
+  return React.useMemo(() => {
+    return (noteList: Array<Note>) =>
+      dispatch({ type: NOTE_LIST_SET_NOTES, noteList });
+  }, [dispatch]);
 };

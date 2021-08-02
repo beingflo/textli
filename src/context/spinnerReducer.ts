@@ -1,28 +1,16 @@
-import { useAppState } from '.';
-
-export type SpinnerState = {
-  waiting: boolean;
-};
+import React from 'react';
+import { State, useAppDispatch, useAppState } from '.';
 
 export type SpinnerAction = {
   type: string;
   waiting: boolean;
 };
 
-export const SpinnerActions = {
-  SET_WAITING: 'set-waiting',
-};
+export const SPINNER_SET_WAITING = 'set-waiting';
 
-export const initialSpinnerState = {
-  waiting: false,
-};
-
-export const SpinnerReducer = (
-  state: SpinnerState,
-  action: SpinnerAction
-): any => {
+export const SpinnerReducer = (state: State, action: SpinnerAction): any => {
   switch (action.type) {
-    case SpinnerActions.SET_WAITING: {
+    case SPINNER_SET_WAITING: {
       return {
         ...state,
         waiting: action.waiting,
@@ -33,8 +21,16 @@ export const SpinnerReducer = (
   }
 };
 
-export const useSpinner = (): any => {
-  const { spinner } = useAppState();
+export const useSpinner = (): boolean => {
+  const { waiting } = useAppState();
+  return waiting;
+};
 
-  return spinner;
+export const useSetSpinner = (): ((waiting: boolean) => void) => {
+  const dispatch = useAppDispatch();
+
+  return React.useMemo(() => {
+    return (waiting: boolean) =>
+      dispatch({ type: SPINNER_SET_WAITING, waiting });
+  }, [dispatch]);
 };
