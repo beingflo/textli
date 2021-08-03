@@ -43,6 +43,21 @@ export const user_signup = (credentials: UserCredentials): void => {
     .catch((error) => console.log(error));
 };
 
+export const user_info = (): void => {
+  fetch(`${USER_URL}/info`, {
+    credentials: 'include',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => console.log(error));
+};
+
 export const get_notes = (dispatch: AppDispatch): void => {
   setSpinner(true, dispatch);
 
