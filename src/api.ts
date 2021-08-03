@@ -38,3 +38,16 @@ export const get_note = (id: string, dispatch: AppDispatch): void => {
     })
     .catch((error) => console.log(error));
 };
+
+export const delete_note = (id: string): void => {
+  fetch(`${NOTE_URL}/${id}`, {
+    credentials: 'include',
+    method: 'DELETE',
+  })
+    .then((response) => {
+      if (response.status < 200 && response.status >= 300) {
+        console.log(response);
+      }
+    })
+    .catch((error) => console.log(error));
+};
