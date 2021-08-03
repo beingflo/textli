@@ -3,7 +3,11 @@ import { AppDispatch } from './context';
 import { setCurrentNote } from './context/currentNoteReducer';
 import { setNoteList } from './context/noteListReducer';
 import { setSpinner } from './context/spinnerReducer';
-import { NoteSaveRequest, UserCredentials } from './types';
+import {
+  NoteSaveRequest,
+  UserCredentials,
+  UserCredentialsPasswordChange,
+} from './types';
 
 const NOTE_URL = `${config.api_url}/notes`;
 const USER_URL = `${config.api_url}/user`;
@@ -30,6 +34,25 @@ export const user_signup = (credentials: UserCredentials): void => {
   fetch(USER_URL, {
     credentials: 'include',
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+    .then((response) => {
+      if (response.status < 200 && response.status >= 300) {
+        console.log(response);
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
+export const user_password_change = (
+  credentials: UserCredentialsPasswordChange
+): void => {
+  fetch(USER_URL, {
+    credentials: 'include',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
