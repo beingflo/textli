@@ -86,3 +86,16 @@ export const delete_note = (id: string): void => {
     })
     .catch((error) => console.log(error));
 };
+
+export const undelete_note = (id: string): void => {
+  fetch(`${NOTE_URL}/undelete/${id}`, {
+    credentials: 'include',
+    method: 'POST',
+  })
+    .then((response) => {
+      if (response.status < 200 && response.status >= 300) {
+        console.log(response);
+      }
+    })
+    .catch((error) => console.log(error));
+};
