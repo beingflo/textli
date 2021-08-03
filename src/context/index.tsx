@@ -1,10 +1,20 @@
 import React, { Dispatch } from 'react';
-import { Note, NoteListReducer, NOTE_LIST_SET_NOTES } from './noteListReducer';
+import {
+  NoteListEntry,
+  NoteListReducer,
+  NOTE_LIST_SET_NOTES,
+} from './noteListReducer';
+import {
+  CurrentNoteReducer,
+  CURRENT_NOTE_SET,
+  Note,
+} from './currentNoteReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 
 export type State = {
   waiting: number;
-  noteList: Array<Note>;
+  noteList: Array<NoteListEntry>;
+  currentNote: Note | undefined;
 };
 
 export type Action = {
@@ -17,6 +27,7 @@ export type AppDispatch = Dispatch<Action>;
 const initialState: State = {
   waiting: 0,
   noteList: [],
+  currentNote: undefined,
 };
 
 export const AppContext = React.createContext<{
@@ -36,6 +47,7 @@ export const ContextProvider = ({
     () => ({
       [NOTE_LIST_SET_NOTES]: NoteListReducer,
       [SPINNER_SET_WAITING]: SpinnerReducer,
+      [CURRENT_NOTE_SET]: CurrentNoteReducer,
     }),
     []
   );

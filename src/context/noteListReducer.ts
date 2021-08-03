@@ -1,15 +1,16 @@
 import { State, useAppState, AppDispatch } from '.';
 
-export type Note = {
-  encrypted_key: string;
+export type NoteListEntry = {
   id: string;
-  metainfo: string;
+  created_at: string;
   modified_at: string;
+  metainfo: string;
+  encrypted_key: string;
 };
 
 export type NoteListAction = {
   type: string;
-  noteList: boolean;
+  noteList: Array<NoteListEntry>;
 };
 
 export const NOTE_LIST_SET_NOTES = 'set-notes';
@@ -27,13 +28,13 @@ export const NoteListReducer = (state: State, action: NoteListAction): any => {
   }
 };
 
-export const useNoteList = (): Array<Note> => {
+export const useNoteList = (): Array<NoteListEntry> => {
   const { noteList } = useAppState();
   return noteList;
 };
 
 export const setNoteList = (
-  noteList: Array<Note>,
+  noteList: Array<NoteListEntry>,
   dispatch: AppDispatch
 ): void => {
   dispatch({ type: NOTE_LIST_SET_NOTES, noteList });
