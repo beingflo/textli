@@ -26,6 +26,23 @@ export const user_login = (credentials: UserCredentials): void => {
     .catch((error) => console.log(error));
 };
 
+export const user_signup = (credentials: UserCredentials): void => {
+  fetch(USER_URL, {
+    credentials: 'include',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+    .then((response) => {
+      if (response.status < 200 && response.status >= 300) {
+        console.log(response);
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
 export const get_notes = (dispatch: AppDispatch): void => {
   setSpinner(true, dispatch);
 
