@@ -1,5 +1,4 @@
-import React from 'react';
-import { State, useAppDispatch, useAppState } from '.';
+import { State, useAppState, AppDispatch } from '.';
 
 export type Note = {
   encrypted_key: string;
@@ -33,11 +32,9 @@ export const useNoteList = (): Array<Note> => {
   return noteList;
 };
 
-export const useSetNoteList = (): ((noteList: Array<Note>) => void) => {
-  const dispatch = useAppDispatch();
-
-  return React.useMemo(() => {
-    return (noteList: Array<Note>) =>
-      dispatch({ type: NOTE_LIST_SET_NOTES, noteList });
-  }, [dispatch]);
+export const setNoteList = (
+  noteList: Array<Note>,
+  dispatch: AppDispatch
+): void => {
+  dispatch({ type: NOTE_LIST_SET_NOTES, noteList });
 };

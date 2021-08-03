@@ -7,7 +7,7 @@ export type State = {
   noteList: Array<Note>;
 };
 
-type Action = {
+export type Action = {
   type: string;
   [x: string]: any;
 };
@@ -21,7 +21,7 @@ const initialState: State = {
 
 export const AppContext = React.createContext<{
   state: State;
-  dispatch: React.Dispatch<Action>;
+  dispatch: AppDispatch;
 }>({
   state: initialState,
   dispatch: () => undefined,
@@ -63,7 +63,7 @@ export const useAppState = (): State => {
   return state;
 };
 
-export const useAppDispatch = (): Dispatch<Action> => {
+export const useAppDispatch = (): AppDispatch => {
   const { dispatch } = React.useContext(AppContext);
   return dispatch;
 };

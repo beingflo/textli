@@ -1,5 +1,4 @@
-import React from 'react';
-import { State, useAppDispatch, useAppState } from '.';
+import { State, useAppState, AppDispatch } from '.';
 
 export type SpinnerAction = {
   type: string;
@@ -26,11 +25,6 @@ export const useSpinner = (): boolean => {
   return waiting;
 };
 
-export const useSetSpinner = (): ((waiting: boolean) => void) => {
-  const dispatch = useAppDispatch();
-
-  return React.useMemo(() => {
-    return (waiting: boolean) =>
-      dispatch({ type: SPINNER_SET_WAITING, waiting });
-  }, [dispatch]);
+export const setSpinner = (waiting: boolean, dispatch: AppDispatch): void => {
+  dispatch({ type: SPINNER_SET_WAITING, waiting });
 };

@@ -1,11 +1,12 @@
 import React from 'react';
+import { useAppDispatch } from '../context';
 import { Note, useNoteList } from '../context/noteListReducer';
-import { useSpinner, useSetSpinner } from '../context/spinnerReducer';
+import { setSpinner, useSpinner } from '../context/spinnerReducer';
 
 const App = (): React.ReactElement => {
+  const dispatch = useAppDispatch();
   const waiting = useSpinner();
   const noteList = useNoteList();
-  const dispatch = useSetSpinner();
 
   return (
     <>
@@ -15,7 +16,12 @@ const App = (): React.ReactElement => {
           <li key={note.id}>{note.metainfo}</li>
         ))}
       </ul>
-      <button onClick={() => dispatch(!waiting)}>Click me</button>
+      <button
+        className="p-1 px-2 bg-green-400 rounded-lg"
+        onClick={() => setSpinner(!waiting, dispatch)}
+      >
+        Click me
+      </button>
     </>
   );
 };

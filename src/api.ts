@@ -1,11 +1,13 @@
 import config from './config.json';
-import { Note } from './context/noteListReducer';
+import { AppDispatch } from './context';
+import { setNoteList } from './context/noteListReducer';
+import { setSpinner } from './context/spinnerReducer';
 
 const GET_NOTE_URL = `${config.api_url}/notes`;
 
-export const get_notes = (
-  setNotesList: (noteList: Array<Note>) => void
-): void => {
+export const get_notes = (dispatch: AppDispatch): void => {
+  setSpinner(true, dispatch);
+
   fetch(GET_NOTE_URL, {
     credentials: 'include',
     headers: {
@@ -14,7 +16,9 @@ export const get_notes = (
   })
     .then((response) => response.json())
     .then((data) => {
-      setNotesList(data);
+      setNoteList(data, dispatch);
+      setSpinner(false, dispatch);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log(error))
+    .finally(() => setSpinner(false, dispatch));
 };

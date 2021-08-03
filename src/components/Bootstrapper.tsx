@@ -1,14 +1,14 @@
 import React from 'react';
 import { get_notes } from '../api';
-import { useSetNoteList } from '../context/noteListReducer';
+import { useAppDispatch } from '../context';
 import App from './App';
 
 const Bootstrapper = (): React.ReactElement => {
-  const setNoteList = useSetNoteList();
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    get_notes(setNoteList);
-  }, [setNoteList]);
+    get_notes(dispatch);
+  }, []);
 
   return <App />;
 };
