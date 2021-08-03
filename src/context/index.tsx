@@ -1,15 +1,8 @@
 import React, { Dispatch } from 'react';
-import {
-  NoteListEntry,
-  NoteListReducer,
-  NOTE_LIST_SET_NOTES,
-} from './noteListReducer';
-import {
-  CurrentNoteReducer,
-  CURRENT_NOTE_SET,
-  Note,
-} from './currentNoteReducer';
+import { NoteListReducer, NOTE_LIST_SET_NOTES } from './noteListReducer';
+import { CurrentNoteReducer, CURRENT_NOTE_SET } from './currentNoteReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
+import { Note, NoteListEntry } from '../types';
 
 export type State = {
   waiting: number;

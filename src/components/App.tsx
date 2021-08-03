@@ -1,7 +1,8 @@
 import React from 'react';
 import { get_note } from '../api';
 import { useAppDispatch } from '../context';
-import { NoteListEntry, useNoteList } from '../context/noteListReducer';
+import { useNoteList } from '../context/noteListReducer';
+import { NoteListEntry } from '../types';
 
 const App = (): React.ReactElement => {
   const dispatch = useAppDispatch();

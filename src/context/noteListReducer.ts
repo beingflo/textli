@@ -1,12 +1,5 @@
 import { State, useAppState, AppDispatch } from '.';
-
-export type NoteListEntry = {
-  id: string;
-  created_at: string;
-  modified_at: string;
-  metainfo: string;
-  encrypted_key: string;
-};
+import { NoteListEntry } from '../types';
 
 export type NoteListAction = {
   type: string;

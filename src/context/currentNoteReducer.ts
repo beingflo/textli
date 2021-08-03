@@ -1,13 +1,5 @@
 import { State, useAppState, AppDispatch } from '.';
-
-export type Note = {
-  id: string;
-  created_at: string;
-  modified_at: string;
-  metainfo: string;
-  content: string;
-  encrypted_key: string;
-};
+import { Note } from '../types';
 
 export type SetCurrentNoteAction = {
   type: string;
