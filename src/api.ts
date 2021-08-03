@@ -57,6 +57,23 @@ export const save_note = (note: NoteSaveRequest): void => {
     .catch((error) => console.log(error));
 };
 
+export const update_note = (id: string, note: NoteSaveRequest): void => {
+  fetch(`${NOTE_URL}/${id}`, {
+    credentials: 'include',
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(note),
+  })
+    .then((response) => {
+      if (response.status < 200 && response.status >= 300) {
+        console.log(response);
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
 export const delete_note = (id: string): void => {
   fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
