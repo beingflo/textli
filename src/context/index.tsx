@@ -3,7 +3,7 @@ import { Note, NoteListReducer, NOTE_LIST_SET_NOTES } from './noteListReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 
 export type State = {
-  waiting: boolean;
+  waiting: number;
   noteList: Array<Note>;
 };
 
@@ -15,7 +15,7 @@ export type Action = {
 export type AppDispatch = Dispatch<Action>;
 
 const initialState: State = {
-  waiting: false,
+  waiting: 0,
   noteList: [],
 };
 

@@ -12,7 +12,7 @@ export const SpinnerReducer = (state: State, action: SpinnerAction): any => {
     case SPINNER_SET_WAITING: {
       return {
         ...state,
-        waiting: action.waiting,
+        waiting: Math.max(state.waiting + (action.waiting ? 1 : -1), 0),
       };
     }
     default:
@@ -22,7 +22,8 @@ export const SpinnerReducer = (state: State, action: SpinnerAction): any => {
 
 export const useSpinner = (): boolean => {
   const { waiting } = useAppState();
-  return waiting;
+  console.log(waiting);
+  return waiting > 0;
 };
 
 export const setSpinner = (waiting: boolean, dispatch: AppDispatch): void => {

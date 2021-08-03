@@ -17,7 +17,6 @@ export const get_notes = (dispatch: AppDispatch): void => {
     .then((response) => response.json())
     .then((data) => {
       setNoteList(data, dispatch);
-      setSpinner(false, dispatch);
     })
     .catch((error) => console.log(error))
     .finally(() => setSpinner(false, dispatch));
