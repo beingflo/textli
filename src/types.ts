@@ -20,3 +20,8 @@ export type NoteListEntry = {
   metainfo: string;
   encrypted_key: string;
 };
+
+export type UserCredentials = {
+  name: string;
+  password: string;
+};
