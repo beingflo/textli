@@ -25,3 +25,9 @@ export type UserCredentials = {
   name: string;
   password: string;
 };
+
+export type UserCredentialsPasswordChange = {
+  name: string;
+  password: string;
+  password_new: string;
+};
