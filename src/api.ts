@@ -63,6 +63,23 @@ export const user_signup = (credentials: UserCredentials): void => {
     .catch((error) => console.log(error));
 };
 
+export const user_delete = (credentials: UserCredentials): void => {
+  fetch(USER_URL, {
+    credentials: 'include',
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+    .then((response) => {
+      if (response.status < 200 && response.status >= 300) {
+        console.log(response);
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
 export const user_password_change = (
   credentials: UserCredentialsPasswordChange
 ): void => {
