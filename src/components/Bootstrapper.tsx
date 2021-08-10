@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { get_notes } from '../api';
 import { useAppDispatch } from '../context';
 import App from './App';
@@ -10,7 +11,12 @@ const Bootstrapper = (): React.ReactElement => {
     get_notes(dispatch);
   }, []);
 
-  return <App />;
+  return (
+    <>
+      <ToastContainer />
+      <App />
+    </>
+  );
 };
 
 export default Bootstrapper;
