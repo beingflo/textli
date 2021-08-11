@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import config from './config.json';
 import { AppDispatch } from './context';
 import { setCurrentNote } from './context/currentNoteReducer';
@@ -12,6 +13,17 @@ import {
 const NOTE_URL = `${config.api_url}/notes`;
 const USER_URL = `${config.api_url}/user`;
 const SESSION_URL = `${config.api_url}/session`;
+
+const mapError = (response: any) => {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
+};
+
+const handleException = (error: any) => {
+  toast.error(error.toString());
+};
 
 export const user_login = (credentials: UserCredentials): void => {
   fetch(SESSION_URL, {
@@ -55,12 +67,8 @@ export const user_signup = (credentials: UserCredentials): void => {
     },
     body: JSON.stringify(credentials),
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const user_delete = (credentials: UserCredentials): void => {
@@ -124,11 +132,12 @@ export const get_notes = (dispatch: AppDispatch): void => {
       'Content-Type': 'application/json',
     },
   })
+    .then(mapError)
     .then((response) => response.json())
     .then((data) => {
       setNoteList(data, dispatch);
     })
-    .catch((error) => console.log(error))
+    .catch(handleException)
     .finally(() => setSpinner(false, dispatch));
 };
 
