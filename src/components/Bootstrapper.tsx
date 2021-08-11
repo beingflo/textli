@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { get_notes, user_signup } from '../api';
+import { get_notes } from '../api';
 import { useAppDispatch } from '../context';
 import App from './App';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,6 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     get_notes(dispatch);
-    user_signup({ name: 'florian', password: 'test' });
   }, []);
 
   return (

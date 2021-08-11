@@ -34,12 +34,8 @@ export const user_login = (credentials: UserCredentials): void => {
     },
     body: JSON.stringify(credentials),
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const user_logout = (): void => {
@@ -50,12 +46,8 @@ export const user_logout = (): void => {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const user_signup = (credentials: UserCredentials): void => {
@@ -80,12 +72,8 @@ export const user_delete = (credentials: UserCredentials): void => {
     },
     body: JSON.stringify(credentials),
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const user_password_change = (
@@ -99,12 +87,8 @@ export const user_password_change = (
     },
     body: JSON.stringify(credentials),
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const user_info = (): void => {
@@ -115,11 +99,8 @@ export const user_info = (): void => {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const get_notes = (dispatch: AppDispatch): void => {
@@ -149,11 +130,12 @@ export const get_note = (id: string, dispatch: AppDispatch): void => {
       'Content-Type': 'application/json',
     },
   })
+    .then(mapError)
     .then((response) => response.json())
     .then((data) => {
       setCurrentNote(data, dispatch);
     })
-    .catch((error) => console.log(error));
+    .catch(handleException);
 };
 
 export const save_note = (note: NoteSaveRequest): void => {
@@ -165,12 +147,8 @@ export const save_note = (note: NoteSaveRequest): void => {
     },
     body: JSON.stringify(note),
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const update_note = (id: string, note: NoteSaveRequest): void => {
@@ -182,12 +160,8 @@ export const update_note = (id: string, note: NoteSaveRequest): void => {
     },
     body: JSON.stringify(note),
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const delete_note = (id: string): void => {
@@ -195,12 +169,8 @@ export const delete_note = (id: string): void => {
     credentials: 'include',
     method: 'DELETE',
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
 
 export const undelete_note = (id: string): void => {
@@ -208,10 +178,6 @@ export const undelete_note = (id: string): void => {
     credentials: 'include',
     method: 'POST',
   })
-    .then((response) => {
-      if (response.status < 200 && response.status >= 300) {
-        console.log(response);
-      }
-    })
-    .catch((error) => console.log(error));
+    .then(mapError)
+    .catch(handleException);
 };
