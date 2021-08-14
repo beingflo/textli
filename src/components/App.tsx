@@ -1,5 +1,5 @@
 import React from 'react';
-import { get_note } from '../api';
+import { get_note } from '../api/note_api';
 import { useAppDispatch } from '../context';
 import { useNoteList } from '../context/noteListReducer';
 import { NoteListEntry } from '../types';
