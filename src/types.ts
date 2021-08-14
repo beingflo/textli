@@ -31,3 +31,7 @@ export type UserCredentialsPasswordChange = {
   password: string;
   password_new: string;
 };
+
+export type CreateShareRequest = {
+  note: string;
+};
