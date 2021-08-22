@@ -2,8 +2,8 @@ import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
 import { get_notes } from '../api/note_api';
 import { useAppDispatch } from '../context';
-import App from './App';
 import 'react-toastify/dist/ReactToastify.css';
+import Login from './Login';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -24,7 +24,7 @@ const Bootstrapper = (): React.ReactElement => {
         draggable
         pauseOnHover
       />
-      <App />
+      <Login />
     </>
   );
 };
