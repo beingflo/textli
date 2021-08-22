@@ -12,7 +12,7 @@ const Login = (): React.ReactElement => {
               <input
                 type="text"
                 className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
-                placeholder="Choose a username"
+                placeholder="Enter your username"
               />
             </label>
             <label className="block">
@@ -20,15 +20,7 @@ const Login = (): React.ReactElement => {
               <input
                 type="password"
                 className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
-                placeholder="Enter password"
-              />
-            </label>
-            <label className="block">
-              <span className="text-gray-700 text-sm">Confirm Password</span>
-              <input
-                type="password"
-                className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
-                placeholder="Confirm your password"
+                placeholder="Enter your password"
               />
             </label>
             <button
