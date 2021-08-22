@@ -2,10 +2,10 @@ import React from 'react';
 
 const Login = (): React.ReactElement => {
   return (
-    <div className="h-screen bg-gray-100">
-      <div className="p-4 bg-white w-3/4 shadow-sm rounded-sm">
-        <h2 className="text-2xl font-bold">Login</h2>
-        <div className="mt-8 max-w-md">
+    <div className="flex h-screen bg-gray-100">
+      <div className="p-10 bg-white shadow-sm rounded-md m-auto w-1/2 max-w-lg">
+        <h2 className="text-2xl font-bold text-center">Login</h2>
+        <div className="mt-8">
           <div className="grid grid-cols-1 gap-6">
             <label className="block">
               <span className="text-gray-700 text-sm">Username</span>
