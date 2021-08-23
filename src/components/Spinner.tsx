@@ -15,7 +15,7 @@ export const SpinnerPage = (): React.ReactElement => {
     <div className="flex h-48 md:h-screen">
       <div className="spinner m-auto w-12 h-12">
         <div className="double-bounce1 bg-yellow-300"></div>
-        <div className="double-bounce2 bg-yellow-300"></div>
+        <div className="double-bounce2 bg-green-500"></div>
       </div>
     </div>
   );
