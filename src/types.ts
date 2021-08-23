@@ -35,3 +35,8 @@ export type UserCredentialsPasswordChange = {
 export type CreateShareRequest = {
   note: string;
 };
+
+export enum Status {
+  OK = 'OK',
+  REDIRECT = 'REDIRECT',
+}

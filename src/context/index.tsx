@@ -2,12 +2,14 @@ import React, { Dispatch } from 'react';
 import { NoteListReducer, NOTE_LIST_SET_NOTES } from './noteListReducer';
 import { CurrentNoteReducer, CURRENT_NOTE_SET } from './currentNoteReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
-import { Note, NoteListEntry } from '../types';
+import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
+import { Note, NoteListEntry, Status } from '../types';
 
 export type State = {
   waiting: number;
   noteList: Array<NoteListEntry>;
   currentNote: Note | undefined;
+  status: Status;
 };
 
 export type Action = {
@@ -21,6 +23,7 @@ const initialState: State = {
   waiting: 0,
   noteList: [],
   currentNote: undefined,
+  status: Status.OK,
 };
 
 export const AppContext = React.createContext<{
@@ -41,6 +44,7 @@ export const ContextProvider = ({
       [NOTE_LIST_SET_NOTES]: NoteListReducer,
       [SPINNER_SET_WAITING]: SpinnerReducer,
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
+      [STATUS_SET_STATUS]: StatusReducer,
     }),
     []
   );
