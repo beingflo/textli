@@ -4,13 +4,18 @@ import { get_notes } from '../api/note_api';
 import { useAppDispatch } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './Login';
+import { useStatus } from '../context/statusReducer';
+import { Status } from '../types';
+import App from './App';
+import { useSpinner } from '../context/spinnerReducer';
+import Spinner from './Spinner';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const waiting = useSpinner();
+  const status = useStatus();
 
-  React.useEffect(() => {
-    get_notes(dispatch);
-  }, []);
+  React.useEffect(() => get_notes(dispatch), [dispatch]);
 
   return (
     <>
@@ -24,7 +29,11 @@ const Bootstrapper = (): React.ReactElement => {
         draggable
         pauseOnHover
       />
-      <Login />
+      {waiting ? (
+        <Spinner />
+      ) : (
+        <>{status === Status.OK ? <App /> : <Login />}</>
+      )}
     </>
   );
 };
