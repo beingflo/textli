@@ -12,6 +12,8 @@ const Signup = (): React.ReactElement => {
     console.log(passwordConfirm);
     console.log(email);
 
+    // TODO send request
+
     event.preventDefault();
   };
 

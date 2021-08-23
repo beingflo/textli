@@ -8,8 +8,12 @@ const Login = (): React.ReactElement => {
     console.log(username);
     console.log(password);
 
+    // TODO send request
+
     event.preventDefault();
   };
+
+  const submitDisabled = !username || !password;
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -39,7 +43,8 @@ const Login = (): React.ReactElement => {
             </label>
             <button
               type="submit"
-              className="w-full py-3 mt-10 bg-gray-800 rounded-md
+              disabled={submitDisabled}
+              className="w-full py-3 mt-10 bg-gray-800 rounded-md disabled:bg-gray-400
                     font-medium text-white uppercase
                     focus:outline-none hover:bg-gray-700 hover:shadow-none"
             >
