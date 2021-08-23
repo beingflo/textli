@@ -6,16 +6,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
 import App from './App';
-import { useSpinner } from '../context/spinnerReducer';
 import { SpinnerPage } from './Spinner';
 import Start from './Start';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const waiting = useSpinner();
   const status = useStatus();
 
-  React.useEffect(() => get_notes(dispatch), [dispatch]);
+  const [waiting, setWaiting] = React.useState(true);
+
+  React.useEffect(() => {
+    get_notes(dispatch);
+    setWaiting(false);
+  }, [dispatch]);
 
   return (
     <>

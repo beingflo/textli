@@ -2,7 +2,6 @@ import config from '../config.json';
 import { AppDispatch } from '../context';
 import { setCurrentNote } from '../context/currentNoteReducer';
 import { setNoteList } from '../context/noteListReducer';
-import { setSpinner } from '../context/spinnerReducer';
 import { setStatus } from '../context/statusReducer';
 import { NoteSaveRequest, Status } from '../types';
 import { mapError, handleException } from './index';
@@ -10,8 +9,6 @@ import { mapError, handleException } from './index';
 const NOTE_URL = `${config.api_url}/notes`;
 
 export const get_notes = (dispatch: AppDispatch): void => {
-  setSpinner(true, dispatch);
-
   fetch(NOTE_URL, {
     credentials: 'include',
     method: 'GET',
@@ -27,8 +24,7 @@ export const get_notes = (dispatch: AppDispatch): void => {
     })
     .catch(() => {
       setStatus(Status.REDIRECT, dispatch);
-    })
-    .finally(() => setSpinner(false, dispatch));
+    });
 };
 
 export const get_note = (id: string, dispatch: AppDispatch): void => {
