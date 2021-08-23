@@ -15,7 +15,12 @@ const Signup = (): React.ReactElement => {
     event.preventDefault();
   };
 
-  const passwordMatch = password === passwordConfirm && password;
+  const passwordMatch: boolean =
+    password === passwordConfirm && password !== '';
+  const passwordNoMatch: boolean =
+    password !== passwordConfirm && (password !== '' || passwordConfirm !== '');
+
+  const submitDisabled = !passwordMatch || !username;
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -39,6 +44,7 @@ const Signup = (): React.ReactElement => {
                 type="password"
                 className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
                 placeholder="Enter your password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(event) => setPassword(event?.target?.value)}
               />
@@ -50,6 +56,7 @@ const Signup = (): React.ReactElement => {
                   type="password"
                   className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
                   placeholder="Confirm your password"
+                  autoComplete="new-password"
                   value={passwordConfirm}
                   onChange={(event) => setPasswordConfirm(event?.target?.value)}
                 />
@@ -70,6 +77,23 @@ const Signup = (): React.ReactElement => {
                     />
                   </svg>
                 )}
+                {passwordNoMatch && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke-width="2"
+                    className="fill-current text-red-500 absolute top-3 right-3"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zm3.707 8.707a1 1 0 0 0-1.414-1.414L12 10.586 9.707 8.293a1 1 0 1 0-1.414 1.414L10.586 12l-2.293 2.293a1 1 0 1 0 1.414 1.414L12 13.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13.414 12l2.293-2.293z"
+                    />
+                  </svg>
+                )}
               </div>
             </label>
             <label className="block mt-4">
@@ -86,7 +110,8 @@ const Signup = (): React.ReactElement => {
             </label>
             <button
               type="submit"
-              className="w-full py-3 mt-10 bg-gray-800 rounded-md
+              disabled={submitDisabled}
+              className="w-full py-3 mt-10 bg-gray-800 disabled:bg-gray-400 rounded-md
                     font-medium text-white uppercase
                     focus:outline-none hover:bg-gray-700 hover:shadow-none"
             >
