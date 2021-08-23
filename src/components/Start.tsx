@@ -6,8 +6,8 @@ import '../style.css';
 
 export const Start = (): React.ReactElement => {
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="p-8 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
+    <div className="flex h-auto">
+      <div className="p-8 shadow-2xl rounded-md mx-2 sm:mx-auto my-8 w-full sm:max-w-md">
         <Tab.Group>
           <Tab.List className="grid grid-cols-3">
             <Tab as={Fragment}>
