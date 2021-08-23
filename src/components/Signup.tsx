@@ -2,6 +2,7 @@ import React from 'react';
 import { get_notes } from '../api/note_api';
 import { user_login, user_signup } from '../api/user_api';
 import { useAppDispatch } from '../context';
+import { Spinner } from './Spinner';
 
 const Signup = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -11,18 +12,24 @@ const Signup = (): React.ReactElement => {
   const [passwordConfirm, setPasswordConfirm] = React.useState('');
   const [email, setEmail] = React.useState('');
 
+  const [waiting, setWaiting] = React.useState(false);
+
   const submit = React.useCallback(
     (event: any) => {
       // TODO use email
       const success = () => {
-        const loginSucces = () => get_notes(dispatch);
+        const loginSucces = () => {
+          get_notes(dispatch);
+          setWaiting(false);
+        };
         user_login({ name: username, password: password }, loginSucces);
       };
+      setWaiting(true);
       user_signup({ name: username, password: password }, success);
 
       event.preventDefault();
     },
-    [dispatch, username, password]
+    [dispatch, username, password, waiting]
   );
 
   const passwordMatch: boolean =
@@ -123,7 +130,14 @@ const Signup = (): React.ReactElement => {
                     font-medium text-white uppercase
                     focus:outline-none hover:bg-gray-700 hover:shadow-none"
         >
-          Create account
+          <div className="relative">
+            <span>Create account</span>
+            {waiting && (
+              <span className="absolute pl-2">
+                <Spinner />
+              </span>
+            )}
+          </div>
         </button>
       </form>
     </div>
