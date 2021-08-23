@@ -3,12 +3,12 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import { get_notes } from '../api/note_api';
 import { useAppDispatch } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
-import Login from './Login';
 import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
 import App from './App';
 import { useSpinner } from '../context/spinnerReducer';
 import Spinner from './Spinner';
+import Start from './Start';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -32,7 +32,7 @@ const Bootstrapper = (): React.ReactElement => {
       {waiting ? (
         <Spinner />
       ) : (
-        <>{status === Status.OK ? <App /> : <Login />}</>
+        <>{status === Status.OK ? <App /> : <Start />}</>
       )}
     </>
   );
