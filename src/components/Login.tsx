@@ -1,18 +1,30 @@
 import React from 'react';
 
 const Login = (): React.ReactElement => {
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const submit = (event: any) => {
+    console.log(username);
+    console.log(password);
+
+    event.preventDefault();
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="p-10 bg-white shadow-sm rounded-md m-auto w-1/2 max-w-lg">
         <h2 className="text-2xl font-bold text-center">Login</h2>
         <div className="mt-8">
-          <div className="grid grid-cols-1 gap-6">
+          <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
             <label className="block">
               <span className="text-gray-700 text-sm">Username</span>
               <input
                 type="text"
                 className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
                 placeholder="Enter your username"
+                value={username}
+                onChange={(event) => setUsername(event?.target?.value)}
               />
             </label>
             <label className="block">
@@ -21,6 +33,8 @@ const Login = (): React.ReactElement => {
                 type="password"
                 className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(event) => setPassword(event?.target?.value)}
               />
             </label>
             <button
@@ -31,7 +45,7 @@ const Login = (): React.ReactElement => {
             >
               Login
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
