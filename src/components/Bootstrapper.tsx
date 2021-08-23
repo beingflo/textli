@@ -7,7 +7,7 @@ import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
 import App from './App';
 import { useSpinner } from '../context/spinnerReducer';
-import Spinner from './Spinner';
+import { SpinnerPage } from './Spinner';
 import Start from './Start';
 
 const Bootstrapper = (): React.ReactElement => {
@@ -30,7 +30,7 @@ const Bootstrapper = (): React.ReactElement => {
         pauseOnHover
       />
       {waiting ? (
-        <Spinner />
+        <SpinnerPage />
       ) : (
         <>{status === Status.OK ? <App /> : <Start />}</>
       )}
