@@ -1,4 +1,5 @@
 import React from 'react';
+import { user_login } from '../api/user_api';
 
 const Login = (): React.ReactElement => {
   const [username, setUsername] = React.useState('');
@@ -8,7 +9,7 @@ const Login = (): React.ReactElement => {
     console.log(username);
     console.log(password);
 
-    // TODO send request
+    user_login({ name: username, password });
 
     event.preventDefault();
   };
@@ -17,7 +18,7 @@ const Login = (): React.ReactElement => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="p-10 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
+      <div className="p-8 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
         <h2 className="text-2xl font-bold text-center">Login</h2>
         <div className="mt-8">
           <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
