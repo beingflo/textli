@@ -13,7 +13,7 @@ const Login = (): React.ReactElement => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="p-10 bg-white shadow-sm rounded-md m-auto w-1/2 max-w-lg">
+      <div className="p-10 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
         <h2 className="text-2xl font-bold text-center">Login</h2>
         <div className="mt-8">
           <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
