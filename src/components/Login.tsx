@@ -9,11 +9,15 @@ const Login = (): React.ReactElement => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const submit = async (event: any) => {
-    user_login({ name: username, password }).then(() => get_notes(dispatch));
+  const submit = React.useCallback(
+    (event: any) => {
+      const success = () => get_notes(dispatch);
+      user_login({ name: username, password }, success);
 
-    event.preventDefault();
-  };
+      event.preventDefault();
+    },
+    [dispatch, username, password]
+  );
 
   const submitDisabled = !username || !password;
 
@@ -44,7 +48,7 @@ const Login = (): React.ReactElement => {
         <button
           type="submit"
           disabled={submitDisabled}
-          className="w-full py-3 mt-10 bg-gray-800 rounded-md disabled:bg-gray-400
+          className="w-full py-3 mt-14 bg-gray-800 rounded-md disabled:bg-gray-400
                     font-medium text-white uppercase
                     focus:outline-none hover:bg-gray-700 hover:shadow-none"
         >

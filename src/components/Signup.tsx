@@ -1,18 +1,29 @@
 import React from 'react';
-import { user_signup } from '../api/user_api';
+import { get_notes } from '../api/note_api';
+import { user_login, user_signup } from '../api/user_api';
+import { useAppDispatch } from '../context';
 
 const Signup = (): React.ReactElement => {
+  const dispatch = useAppDispatch();
+
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [passwordConfirm, setPasswordConfirm] = React.useState('');
   const [email, setEmail] = React.useState('');
 
-  const submit = (event: any) => {
-    // TODO use email
-    user_signup({ name: username, password: password });
+  const submit = React.useCallback(
+    (event: any) => {
+      // TODO use email
+      const success = () => {
+        const loginSucces = () => get_notes(dispatch);
+        user_login({ name: username, password: password }, loginSucces);
+      };
+      user_signup({ name: username, password: password }, success);
 
-    event.preventDefault();
-  };
+      event.preventDefault();
+    },
+    [dispatch, username, password]
+  );
 
   const passwordMatch: boolean =
     password === passwordConfirm && password !== '';
