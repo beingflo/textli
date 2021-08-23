@@ -2,6 +2,7 @@ import React from 'react';
 import { get_notes } from '../api/note_api';
 import { user_login } from '../api/user_api';
 import { useAppDispatch } from '../context';
+import { Spinner } from './Spinner';
 
 const Login = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -9,14 +10,21 @@ const Login = (): React.ReactElement => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const [waiting, setWaiting] = React.useState(false);
+
   const submit = React.useCallback(
     (event: any) => {
-      const success = () => get_notes(dispatch);
+      const success = () => {
+        get_notes(dispatch);
+        setWaiting(false);
+      };
+
+      setWaiting(true);
       user_login({ name: username, password }, success);
 
       event.preventDefault();
     },
-    [dispatch, username, password]
+    [dispatch, username, password, waiting]
   );
 
   const submitDisabled = !username || !password;
@@ -52,7 +60,14 @@ const Login = (): React.ReactElement => {
                     font-medium text-white uppercase
                     focus:outline-none hover:bg-gray-700 hover:shadow-none"
         >
-          Login
+          <div className="relative">
+            <span>Login</span>
+            {waiting && (
+              <span className="absolute pl-2">
+                <Spinner />
+              </span>
+            )}
+          </div>
         </button>
       </form>
     </div>
