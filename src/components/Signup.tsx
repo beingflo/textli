@@ -1,4 +1,5 @@
 import React from 'react';
+import { user_signup } from '../api/user_api';
 
 const Signup = (): React.ReactElement => {
   const [username, setUsername] = React.useState('');
@@ -7,12 +8,8 @@ const Signup = (): React.ReactElement => {
   const [email, setEmail] = React.useState('');
 
   const submit = (event: any) => {
-    console.log(username);
-    console.log(password);
-    console.log(passwordConfirm);
-    console.log(email);
-
-    // TODO send request
+    // TODO use email
+    user_signup({ name: username, password: password });
 
     event.preventDefault();
   };
@@ -26,7 +23,7 @@ const Signup = (): React.ReactElement => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="p-10 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
+      <div className="p-8 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
         <h2 className="text-2xl font-bold text-center">Signup</h2>
         <div className="mt-8">
           <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
