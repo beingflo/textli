@@ -5,8 +5,12 @@ import { mapError, handleException } from './index';
 const USER_URL = `${config.api_url}/user`;
 const SESSION_URL = `${config.api_url}/session`;
 
-export const user_login = (credentials: UserCredentials): Promise<void> => {
-  return fetch(SESSION_URL, {
+export const user_login = (
+  credentials: UserCredentials,
+  onSuccess: (res: Response) => void = () => {},
+  onFailure: any = handleException
+): void => {
+  fetch(SESSION_URL, {
     credentials: 'include',
     method: 'POST',
     headers: {
@@ -15,7 +19,8 @@ export const user_login = (credentials: UserCredentials): Promise<void> => {
     body: JSON.stringify(credentials),
   })
     .then(mapError)
-    .catch(handleException);
+    .then(onSuccess)
+    .catch(onFailure);
 };
 
 export const user_logout = (): void => {
@@ -30,7 +35,11 @@ export const user_logout = (): void => {
     .catch(handleException);
 };
 
-export const user_signup = (credentials: UserCredentials): void => {
+export const user_signup = (
+  credentials: UserCredentials,
+  onSuccess: (res: Response) => void = () => {},
+  onFailure: any = handleException
+): void => {
   fetch(USER_URL, {
     credentials: 'include',
     method: 'POST',
@@ -40,7 +49,8 @@ export const user_signup = (credentials: UserCredentials): void => {
     body: JSON.stringify(credentials),
   })
     .then(mapError)
-    .catch(handleException);
+    .then(onSuccess)
+    .catch(onFailure);
 };
 
 export const user_delete = (credentials: UserCredentials): void => {
