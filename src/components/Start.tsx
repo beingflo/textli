@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react';
-import React from 'react';
+import React, { Fragment } from 'react';
 import Login from './Login';
 import Signup from './Signup';
 import '../style.css';
@@ -10,20 +10,32 @@ export const Start = (): React.ReactElement => {
       <div className="p-8 bg-white shadow-sm rounded-md mx-2 sm:mx-auto my-auto w-full sm:max-w-md">
         <Tab.Group>
           <Tab.List className="grid grid-cols-3">
-            <Tab
-              className={({ selected }) =>
-                `text-2xl font-bold text-center ${selected && 'highlight'}`
-              }
-            >
-              Login
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <div className="flex">
+                  <button
+                    className={`text-2xl font-bold mx-auto ${
+                      selected && 'highlight'
+                    }`}
+                  >
+                    Login
+                  </button>
+                </div>
+              )}
             </Tab>
             <h2 className="text-2xl font-bold text-center">|</h2>
-            <Tab
-              className={({ selected }) =>
-                `text-2xl font-bold text-center ${selected && 'highlight'}`
-              }
-            >
-              Sign up
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <div className="flex">
+                  <button
+                    className={`text-2xl font-bold mx-auto ${
+                      selected && 'highlight'
+                    }`}
+                  >
+                    Sign up
+                  </button>
+                </div>
+              )}
             </Tab>
           </Tab.List>
           <Tab.Panels>
