@@ -3,7 +3,8 @@ import { AppDispatch } from '../context';
 import { setCurrentNote } from '../context/currentNoteReducer';
 import { setNoteList } from '../context/noteListReducer';
 import { setSpinner } from '../context/spinnerReducer';
-import { NoteSaveRequest } from '../types';
+import { setStatus } from '../context/statusReducer';
+import { NoteSaveRequest, Status } from '../types';
 import { mapError, handleException } from './index';
 
 const NOTE_URL = `${config.api_url}/notes`;
@@ -23,7 +24,9 @@ export const get_notes = (dispatch: AppDispatch): void => {
     .then((data) => {
       setNoteList(data, dispatch);
     })
-    .catch(handleException)
+    .catch(() => {
+      setStatus(Status.REDIRECT, dispatch);
+    })
     .finally(() => setSpinner(false, dispatch));
 };
 
