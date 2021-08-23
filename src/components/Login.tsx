@@ -1,15 +1,16 @@
 import React from 'react';
+import { get_notes } from '../api/note_api';
 import { user_login } from '../api/user_api';
+import { useAppDispatch } from '../context';
 
 const Login = (): React.ReactElement => {
+  const dispatch = useAppDispatch();
+
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const submit = (event: any) => {
-    console.log(username);
-    console.log(password);
-
-    user_login({ name: username, password });
+  const submit = async (event: any) => {
+    user_login({ name: username, password }).then(() => get_notes(dispatch));
 
     event.preventDefault();
   };

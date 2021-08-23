@@ -5,8 +5,8 @@ import { mapError, handleException } from './index';
 const USER_URL = `${config.api_url}/user`;
 const SESSION_URL = `${config.api_url}/session`;
 
-export const user_login = (credentials: UserCredentials): void => {
-  fetch(SESSION_URL, {
+export const user_login = (credentials: UserCredentials): Promise<void> => {
+  return fetch(SESSION_URL, {
     credentials: 'include',
     method: 'POST',
     headers: {

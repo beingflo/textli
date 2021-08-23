@@ -23,6 +23,7 @@ export const get_notes = (dispatch: AppDispatch): void => {
     .then((response) => response.json())
     .then((data) => {
       setNoteList(data, dispatch);
+      setStatus(Status.OK, dispatch);
     })
     .catch(() => {
       setStatus(Status.REDIRECT, dispatch);

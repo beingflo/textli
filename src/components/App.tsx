@@ -1,14 +1,18 @@
 import React from 'react';
 import { user_logout } from '../api/user_api';
+import { useAppDispatch } from '../context';
 import { useNoteList } from '../context/noteListReducer';
-import { NoteListEntry } from '../types';
+import { setStatus } from '../context/statusReducer';
+import { NoteListEntry, Status } from '../types';
 
 const App = (): React.ReactElement => {
+  const dispatch = useAppDispatch();
   const notes = useNoteList();
 
-  const logout = () => {
+  const logout = React.useCallback(() => {
     user_logout();
-  };
+    setStatus(Status.REDIRECT, dispatch);
+  }, [dispatch]);
 
   return (
     <>
