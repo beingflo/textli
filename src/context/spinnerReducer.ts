@@ -22,7 +22,6 @@ export const SpinnerReducer = (state: State, action: SpinnerAction): any => {
 
 export const useSpinner = (): boolean => {
   const { waiting } = useAppState();
-  console.log(waiting);
   return waiting > 0;
 };
 
