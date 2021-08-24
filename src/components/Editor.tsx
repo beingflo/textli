@@ -10,6 +10,7 @@ import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
+import Image from '@tiptap/extension-image';
 import './editorStyles.css';
 
 export const Editor = (): React.ReactElement => {
@@ -23,6 +24,7 @@ export const Editor = (): React.ReactElement => {
       }),
       TextStyle,
       Link,
+      Image,
       Table,
       TableCell,
       TableRow,
