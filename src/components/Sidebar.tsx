@@ -42,12 +42,13 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
         </svg>
       </button>
 
-      <ul>
+      <ul className="space-y-1">
         {notes.map((note: NoteListEntry) => (
           <li
             onClick={() => handleSelection(note?.id)}
             key={note?.id}
             id={note?.id}
+            className="cursor-pointer"
           >
             <div className={`truncate ${isSelected(note?.id) && 'highlight'}`}>
               {JSON.parse(note?.metainfo)?.title}
