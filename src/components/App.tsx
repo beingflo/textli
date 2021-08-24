@@ -2,6 +2,7 @@ import { Transition } from '@headlessui/react';
 import React from 'react';
 import Editor from './Editor';
 import Sidebar from './Sidebar';
+import ActionGroup from './ActionGroup';
 
 const App = (): React.ReactElement => {
   const [showSidebar, setShowSidebar] = React.useState(true);
@@ -50,7 +51,9 @@ const App = (): React.ReactElement => {
       <div className="w-1/2">
         <Editor />
       </div>
-      <div className="pr-4 pt-4">buttons</div>
+      <div className="pr-4 pt-8">
+        <ActionGroup />
+      </div>
     </div>
   );
 };
