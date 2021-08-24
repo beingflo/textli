@@ -48,11 +48,11 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
             onClick={() => handleSelection(note?.id)}
             key={note?.id}
             id={note?.id}
-            className="cursor-pointer"
+            className="cursor-pointer truncate"
           >
-            <div className={`truncate ${isSelected(note?.id) && 'highlight'}`}>
+            <span className={`${isSelected(note?.id) ? 'highlight' : ''}`}>
               {JSON.parse(note?.metainfo)?.title}
-            </div>
+            </span>
           </li>
         ))}
       </ul>
