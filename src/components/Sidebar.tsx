@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
 import { NoteListEntry } from '../types';
+import '../style.css';
 
 export type Props = {
   setHide: () => void;
@@ -8,6 +9,19 @@ export type Props = {
 
 export const Sidebar = ({ setHide }: Props): React.ReactElement => {
   const notes = useNoteList();
+  const [selectedNote, setSelectedNote] = React.useState('');
+
+  const isSelected = React.useCallback(
+    (id: string) => selectedNote === id,
+    [selectedNote]
+  );
+
+  const handleSelection = React.useCallback(
+    (id: string) => {
+      setSelectedNote(id);
+    },
+    [setSelectedNote]
+  );
 
   return (
     <div className="absolute p-4 w-full">
@@ -30,8 +44,14 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
 
       <ul>
         {notes.map((note: NoteListEntry) => (
-          <li onClick={setHide} key={note.id}>
-            <div className="truncate">{JSON.parse(note?.metainfo)?.title}</div>
+          <li
+            onClick={() => handleSelection(note?.id)}
+            key={note?.id}
+            id={note?.id}
+          >
+            <div className={`truncate ${isSelected(note?.id) && 'highlight'}`}>
+              {JSON.parse(note?.metainfo)?.title}
+            </div>
           </li>
         ))}
       </ul>
