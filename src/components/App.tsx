@@ -1,33 +1,48 @@
+import { Transition } from '@headlessui/react';
 import React from 'react';
-import { user_logout } from '../api/user_api';
-import { useAppDispatch } from '../context';
-import { useNoteList } from '../context/noteListReducer';
-import { setStatus } from '../context/statusReducer';
-import { NoteListEntry, Status } from '../types';
 import Editor from './Editor';
+import Sidebar from './Sidebar';
 
 const App = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
-  const notes = useNoteList();
-
-  const logout = React.useCallback(() => {
-    user_logout();
-    setStatus(Status.REDIRECT, dispatch);
-  }, [dispatch]);
+  const [showSidebar, setShowSidebar] = React.useState(true);
 
   return (
     <div className="h-screen flex">
-      <div>
-        Sidebar
-        <ul>
-          {notes.map((note: NoteListEntry) => (
-            <li>{note.metainfo}</li>
-          ))}
-        </ul>
-      </div>
       <div className="w-1/2">
+        <Transition
+          show={showSidebar}
+          enter="transition ease-in-out duration-300 transform"
+          enterFrom="-translate-x-full"
+          enterTo="translate-x-0"
+          leave="transition ease-in-out duration-300 transform"
+          leaveFrom="translate-x-0"
+          leaveTo="-translate-x-full"
+        >
+          <Sidebar setHide={() => setShowSidebar(false)} />
+        </Transition>
+        <Transition show={!showSidebar}>
+          <button className="p-4" onClick={() => setShowSidebar(!showSidebar)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </Transition>
+      </div>
+      <div className="flex-grow flex flex-col">
         <Editor />
       </div>
+      <div className="pr-4 pt-4 hidden">buttons</div>
     </div>
   );
 };
