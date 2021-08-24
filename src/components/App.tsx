@@ -7,8 +7,8 @@ const App = (): React.ReactElement => {
   const [showSidebar, setShowSidebar] = React.useState(true);
 
   return (
-    <div className="h-screen flex">
-      <div className="w-1/2">
+    <div className="h-screen flex justify-between">
+      <div className="w-1/4">
         <Transition
           show={showSidebar}
           enter="transition ease-in-out duration-300 transform"
@@ -20,7 +20,15 @@ const App = (): React.ReactElement => {
         >
           <Sidebar setHide={() => setShowSidebar(false)} />
         </Transition>
-        <Transition show={!showSidebar}>
+        <Transition
+          show={!showSidebar}
+          enter="transition-opacity duration-150 delay-150"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
           <button className="p-4" onClick={() => setShowSidebar(!showSidebar)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -39,10 +47,10 @@ const App = (): React.ReactElement => {
           </button>
         </Transition>
       </div>
-      <div className="flex-grow flex flex-col">
+      <div className="w-1/2">
         <Editor />
       </div>
-      <div className="pr-4 pt-4 hidden">buttons</div>
+      <div className="pr-4 pt-4">buttons</div>
     </div>
   );
 };
