@@ -4,7 +4,6 @@ import StarterKit from '@tiptap/starter-kit';
 import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
 import Placeholder from '@tiptap/extension-placeholder';
-import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
 import './editorStyles.css';
 
@@ -17,7 +16,6 @@ export const Editor = (): React.ReactElement => {
       Placeholder.configure({
         placeholder: 'Write something nice ...',
       }),
-      FontFamily,
       TextStyle,
     ],
     autofocus: 'end',
