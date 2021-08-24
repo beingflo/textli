@@ -5,6 +5,7 @@ import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextStyle from '@tiptap/extension-text-style';
+import Link from '@tiptap/extension-link';
 import './editorStyles.css';
 
 export const Editor = (): React.ReactElement => {
@@ -17,13 +18,14 @@ export const Editor = (): React.ReactElement => {
         placeholder: 'Write something nice ...',
       }),
       TextStyle,
+      Link,
     ],
     autofocus: 'end',
     editable: true,
     content: null,
     editorProps: {
       attributes: {
-        class: 'prose p-2 focus:outline-none h-screen',
+        class: 'prose p-8 focus:outline-none h-screen',
       },
     },
   });
