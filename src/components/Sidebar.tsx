@@ -10,7 +10,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
   const notes = useNoteList();
 
   return (
-    <div className="absolute max-w-md p-4">
+    <div className="absolute p-4 w-full">
       <button className="mb-2" onClick={() => setHide()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
       <ul>
         {notes.map((note: NoteListEntry) => (
           <li onClick={setHide} key={note.id}>
-            {note.metainfo}
+            <div className="truncate">{JSON.parse(note?.metainfo)?.title}</div>
           </li>
         ))}
       </ul>

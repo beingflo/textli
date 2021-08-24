@@ -8,8 +8,8 @@ const App = (): React.ReactElement => {
   const [showSidebar, setShowSidebar] = React.useState(true);
 
   return (
-    <div className="h-screen flex justify-between">
-      <div className="w-1/4">
+    <div className="h-screen flex justify-between w-full">
+      <div className="w-1/4 relative">
         <Transition
           show={showSidebar}
           enter="transition ease-in-out duration-300 transform"
@@ -48,7 +48,7 @@ const App = (): React.ReactElement => {
           </button>
         </Transition>
       </div>
-      <div className="w-1/2">
+      <div className="flex-grow">
         <Editor />
       </div>
       <div className="pr-4 pt-8">
