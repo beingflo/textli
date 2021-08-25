@@ -8,7 +8,7 @@ const App = (): React.ReactElement => {
   const [showSidebar, setShowSidebar] = React.useState(true);
 
   return (
-    <div className="h-screen flex justify-between w-full">
+    <div className="h-auto flex justify-between w-full">
       <div className="w-1/3 relative">
         <Transition
           show={showSidebar}
@@ -51,7 +51,7 @@ const App = (): React.ReactElement => {
       <div className="flex-grow">
         <Editor />
       </div>
-      <div className="pr-4 pt-4">
+      <div className="pr-4 h-auto">
         <ActionGroup />
       </div>
     </div>

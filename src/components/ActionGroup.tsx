@@ -2,7 +2,7 @@ import React from 'react';
 
 export const ActionGroup = (): React.ReactElement => {
   return (
-    <div className="grid grid-cols-1 space-y-2">
+    <div className="grid grid-cols-1 space-y-2 sticky top-4">
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
