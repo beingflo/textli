@@ -1,4 +1,4 @@
-import React, { NewLifecycle } from 'react';
+import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
 import { NoteListEntry } from '../types';
 import '../style.css';
@@ -35,8 +35,8 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
 
   return (
     <div className="absolute p-4 w-full">
-      <div className="flex flex-row">
-        <button className="mb-2" onClick={() => setHide()}>
+      <div className="flex flex-row align-middle">
+        <button onClick={() => setHide()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
