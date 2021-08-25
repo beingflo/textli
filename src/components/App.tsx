@@ -9,7 +9,7 @@ const App = (): React.ReactElement => {
 
   return (
     <div className="h-screen flex justify-between w-full">
-      <div className="w-1/4 relative">
+      <div className="w-1/3 relative">
         <Transition
           show={showSidebar}
           enter="transition ease-in-out duration-300 transform"
@@ -51,7 +51,7 @@ const App = (): React.ReactElement => {
       <div className="flex-grow">
         <Editor />
       </div>
-      <div className="pr-4 pt-8">
+      <div className="pr-4 pt-4">
         <ActionGroup />
       </div>
     </div>
