@@ -9,7 +9,7 @@ const App = (): React.ReactElement => {
 
   return (
     <div className="h-auto flex justify-between w-full">
-      <div className="w-1/3 h-auto">
+      <div className="h-auto">
         <Transition
           show={showSidebar}
           enter="transition ease-in-out duration-300 transform"
@@ -53,7 +53,7 @@ const App = (): React.ReactElement => {
           </button>
         </Transition>
       </div>
-      <div className="flex-grow">
+      <div className="max-w-xxs sm:max-w-md md:min-w-sm lg:max-w-6xl">
         <Editor />
       </div>
       <div className="pr-6 h-auto">

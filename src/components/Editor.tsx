@@ -35,7 +35,8 @@ export const Editor = (): React.ReactElement => {
     content: null,
     editorProps: {
       attributes: {
-        class: 'prose p-8 focus:outline-none min-h-screen max-w-full',
+        class:
+          'prose prose-sm md:prose py-6 px-2 focus:outline-none min-h-screen',
       },
     },
   });
