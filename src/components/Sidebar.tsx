@@ -34,7 +34,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
   );
 
   return (
-    <div className="absolute p-4 pt-7 w-full">
+    <div className="absolute pl-6 pt-4 w-full">
       <div className="flex flex-row align-middle">
         <button className="pr-2" onClick={() => setHide()}>
           <svg
@@ -57,7 +57,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
           placeholder="Search"
           value={query}
           onChange={(event) => setQuery(event?.target?.value)}
-          className="border-none focus:ring-0 placeholder-gray-300 bg-gray-100 rounded-lg w-full"
+          className="border-none focus:ring-0 placeholder-gray-400 bg-gray-100 rounded-lg w-full"
         />
       </div>
       <ul className="space-y-0.5 pl-9 pt-4">
