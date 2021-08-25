@@ -2,15 +2,19 @@ import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
 import { NoteListEntry } from '../types';
 import '../style.css';
+import { useAppDispatch } from '../context';
+import { get_note } from '../api/note_api';
+import { useCurrentNote } from '../context/currentNoteReducer';
 
 export type Props = {
   setHide: () => void;
 };
 
 export const Sidebar = ({ setHide }: Props): React.ReactElement => {
-  const [selectedNote, setSelectedNote] = React.useState('');
-  const [query, setQuery] = React.useState('');
   const notes = useNoteList();
+  const currentNote = useCurrentNote();
+  const dispatch = useAppDispatch();
+  const [query, setQuery] = React.useState('');
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
     const metainfo: { title: string; tags: string } = JSON.parse(
@@ -22,17 +26,14 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
   });
 
   const isSelected = React.useCallback(
-    (id: string) => selectedNote === id,
-    [selectedNote]
+    (id: string) => currentNote?.id === id,
+    [currentNote]
   );
 
-  const handleSelection = React.useCallback(
-    (id: string) => {
-      setSelectedNote(id);
-      setHide();
-    },
-    [setSelectedNote]
-  );
+  const handleSelection = React.useCallback((id: string) => {
+    get_note(id, dispatch);
+    setHide();
+  }, []);
 
   return (
     <div className="px-6 w-full pt-4 pb-6">

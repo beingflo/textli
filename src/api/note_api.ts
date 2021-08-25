@@ -27,7 +27,12 @@ export const get_notes = (dispatch: AppDispatch): void => {
     });
 };
 
-export const get_note = (id: string, dispatch: AppDispatch): void => {
+export const get_note = (
+  id: string,
+  dispatch: AppDispatch,
+  onSuccess: () => void = () => {},
+  onFailure: any = handleException
+): void => {
   fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
     method: 'GET',
@@ -40,7 +45,8 @@ export const get_note = (id: string, dispatch: AppDispatch): void => {
     .then((data) => {
       setCurrentNote(data, dispatch);
     })
-    .catch(handleException);
+    .then(onSuccess)
+    .catch(onFailure);
 };
 
 export const save_note = (note: NoteSaveRequest): void => {

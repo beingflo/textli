@@ -11,9 +11,11 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
+import { useCurrentNote } from '../context/currentNoteReducer';
 import './editorStyles.css';
 
 export const Editor = (): React.ReactElement => {
+  const note = useCurrentNote();
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -32,7 +34,7 @@ export const Editor = (): React.ReactElement => {
     ],
     autofocus: 'end',
     editable: true,
-    content: null,
+    content: '',
     editorProps: {
       attributes: {
         class:
@@ -40,6 +42,10 @@ export const Editor = (): React.ReactElement => {
       },
     },
   });
+
+  React.useEffect(() => {
+    editor?.commands?.setContent(note?.content ?? '');
+  }, [note]);
 
   return <EditorContent editor={editor} />;
 };
