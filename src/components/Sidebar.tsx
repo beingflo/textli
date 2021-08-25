@@ -52,13 +52,29 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
             />
           </svg>
         </button>
-        <input
-          type="text"
-          placeholder="Search"
-          value={query}
-          onChange={(event) => setQuery(event?.target?.value)}
-          className="border-none focus:ring-0 placeholder-gray-400 bg-gray-100 rounded-lg w-full"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search"
+            value={query}
+            onChange={(event) => setQuery(event?.target?.value)}
+            className="border-none focus:ring-0 placeholder-gray-400 bg-gray-100 rounded-lg w-full"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 absolute top-2 right-2 text-gray-400 cursor-pointer"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
       </div>
       <ul className="space-y-0.5 pl-9 pt-4">
         {filteredNotes.map((note: NoteListEntry) => (
