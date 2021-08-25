@@ -8,8 +8,8 @@ const App = (): React.ReactElement => {
   const [showSidebar, setShowSidebar] = React.useState(false);
 
   return (
-    <div className="h-auto flex justify-between w-full">
-      <div className="h-auto">
+    <div className="h-auto flex justify-between w-full relative">
+      <div className="w-12">
         <Transition
           show={showSidebar}
           enter="transition ease-in-out duration-300 transform"
@@ -18,19 +18,19 @@ const App = (): React.ReactElement => {
           leave="transition ease-in-out duration-300 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
-          className="h-full"
+          className="absolute bg-gray-50 z-10 shadow-2xl h-full w-80 sm:w-96"
         >
           <Sidebar setHide={() => setShowSidebar(false)} />
         </Transition>
         <Transition
           show={!showSidebar}
-          enter="transition-opacity duration-150 delay-150"
+          enter="transition-opacity duration-150 delay-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leave="transition-opacity duration-150"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-          className="h-full"
+          className="absolute"
         >
           <button
             className="pl-6 pt-6"

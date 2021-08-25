@@ -29,12 +29,13 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
   const handleSelection = React.useCallback(
     (id: string) => {
       setSelectedNote(id);
+      setHide();
     },
     [setSelectedNote]
   );
 
   return (
-    <div className="pl-6 w-full pt-4">
+    <div className="px-6 w-full pt-4 pb-6">
       <div className="flex flex-row align-middle">
         <button className="pr-2" onClick={() => setHide()}>
           <svg
@@ -52,7 +53,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
             />
           </svg>
         </button>
-        <div className="relative">
+        <div className="relative w-full">
           <input
             type="text"
             placeholder="Search"
