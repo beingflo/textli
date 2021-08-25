@@ -34,7 +34,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
   );
 
   return (
-    <div className="absolute pl-6 pt-4 w-full">
+    <div className="pl-6 w-full pt-4">
       <div className="flex flex-row align-middle">
         <button className="pr-2" onClick={() => setHide()}>
           <svg

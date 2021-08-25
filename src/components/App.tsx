@@ -5,11 +5,11 @@ import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup';
 
 const App = (): React.ReactElement => {
-  const [showSidebar, setShowSidebar] = React.useState(true);
+  const [showSidebar, setShowSidebar] = React.useState(false);
 
   return (
     <div className="h-auto flex justify-between w-full">
-      <div className="w-1/3 relative">
+      <div className="w-1/3 h-auto">
         <Transition
           show={showSidebar}
           enter="transition ease-in-out duration-300 transform"
@@ -18,6 +18,7 @@ const App = (): React.ReactElement => {
           leave="transition ease-in-out duration-300 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
+          className="h-full"
         >
           <Sidebar setHide={() => setShowSidebar(false)} />
         </Transition>
@@ -29,8 +30,12 @@ const App = (): React.ReactElement => {
           leave="transition-opacity duration-150"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
+          className="h-full"
         >
-          <button className="p-6" onClick={() => setShowSidebar(!showSidebar)}>
+          <button
+            className="pl-6 pt-6"
+            onClick={() => setShowSidebar(!showSidebar)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -51,7 +56,7 @@ const App = (): React.ReactElement => {
       <div className="flex-grow">
         <Editor />
       </div>
-      <div className="pr-4 h-auto">
+      <div className="pr-6 h-auto">
         <ActionGroup />
       </div>
     </div>
