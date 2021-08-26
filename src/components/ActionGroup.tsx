@@ -61,7 +61,7 @@ export const ActionGroup = (): React.ReactElement => {
   }, [dispatch]);
 
   return (
-    <div className="grid grid-cols-1 space-y-2 sticky top-4">
+    <div className="grid grid-cols-1 space-y-2">
       <button onClick={handleSave}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

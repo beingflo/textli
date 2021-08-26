@@ -71,7 +71,7 @@ const App = (): React.ReactElement => {
       <div className="max-w-xxs sm:max-w-md md:min-w-sm lg:max-w-6xl">
         <Editor />
       </div>
-      <div className="pr-6 h-auto">
+      <div className="pr-6 pt-6 h-auto">
         <ActionGroup />
       </div>
     </div>
