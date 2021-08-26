@@ -1,6 +1,10 @@
 import React, { Dispatch } from 'react';
 import { NoteListReducer, NOTE_LIST_SET_NOTES } from './noteListReducer';
-import { CurrentNoteReducer, CURRENT_NOTE_SET } from './currentNoteReducer';
+import {
+  CurrentNoteReducer,
+  CURRENT_NOTE_SET,
+  CURRENT_NOTE_UPDATE,
+} from './currentNoteReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
 import { Note, NoteListEntry, Status } from '../types';
@@ -48,6 +52,7 @@ export const ContextProvider = ({
       [NOTE_LIST_SET_NOTES]: NoteListReducer,
       [SPINNER_SET_WAITING]: SpinnerReducer,
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
+      [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
       [STATUS_SET_STATUS]: StatusReducer,
       [EDITOR_SET_EDITOR]: EditorReducer,
     }),

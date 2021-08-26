@@ -6,7 +6,13 @@ export type SetCurrentNoteAction = {
   note: Note;
 };
 
+export type UpdateCurrentNoteAction = {
+  type: string;
+  note: Partial<Note>;
+};
+
 export const CURRENT_NOTE_SET = 'set-current-note';
+export const CURRENT_NOTE_UPDATE = 'update-current-note';
 
 export const CurrentNoteReducer = (
   state: State,
@@ -17,6 +23,12 @@ export const CurrentNoteReducer = (
       return {
         ...state,
         currentNote: action.note,
+      };
+    }
+    case CURRENT_NOTE_UPDATE: {
+      return {
+        ...state,
+        currentNote: { ...state.currentNote, ...action.note },
       };
     }
     default:
@@ -31,4 +43,11 @@ export const useCurrentNote = (): Note | undefined => {
 
 export const setCurrentNote = (note: Note, dispatch: AppDispatch): void => {
   dispatch({ type: CURRENT_NOTE_SET, note });
+};
+
+export const updateCurrentNote = (
+  note: Partial<Note>,
+  dispatch: AppDispatch
+): void => {
+  dispatch({ type: CURRENT_NOTE_UPDATE, note });
 };
