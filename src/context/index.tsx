@@ -34,7 +34,7 @@ const initialState: State = {
   currentNote: undefined,
   status: Status.OK,
   editor: null,
-  noteStatus: NoteStatus.UPTODATE,
+  noteStatus: NoteStatus.SYNCED,
 };
 
 export const AppContext = React.createContext<{

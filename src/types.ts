@@ -42,7 +42,7 @@ export enum Status {
 }
 
 export enum NoteStatus {
-  UPTODATE = 'UPTODATE',
+  CHANGED = 'CHANGED',
   INPROGRESS = 'INPROGRESS',
   SYNCED = 'SYNCED',
 }

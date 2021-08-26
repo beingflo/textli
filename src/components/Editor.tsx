@@ -15,6 +15,8 @@ import { useCurrentNote } from '../context/currentNoteReducer';
 import './editorStyles.css';
 import { useAppDispatch } from '../context';
 import { setAppEditor } from '../context/editorReducer';
+import { setNoteStatus } from '../context/noteStatusReducer';
+import { NoteStatus } from '../types';
 
 export const Editor = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -44,6 +46,9 @@ export const Editor = (): React.ReactElement => {
         class:
           'prose prose-sm md:prose py-6 px-2 focus:outline-none min-h-screen',
       },
+    },
+    onUpdate() {
+      setNoteStatus(NoteStatus.CHANGED, dispatch);
     },
   });
 
