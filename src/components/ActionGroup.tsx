@@ -25,13 +25,13 @@ export const ActionGroup = (): React.ReactElement => {
   const [deletedNote, setDeletedNote] = React.useState('');
 
   const handleDelete = React.useCallback(() => {
-    setShowUndelete(true);
-    setTimeout(() => setShowUndelete(false), 5000);
-
     if (!currentNote) {
       handleNew();
       return;
     }
+
+    setShowUndelete(true);
+    setTimeout(() => setShowUndelete(false), 5000);
 
     setDeletedNote(currentNote?.id);
 
