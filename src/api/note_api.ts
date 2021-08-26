@@ -49,7 +49,12 @@ export const get_note = (
     .catch(onFailure);
 };
 
-export const save_note = (note: NoteSaveRequest): void => {
+export const save_note = (
+  note: NoteSaveRequest,
+  dispatch: AppDispatch,
+  onSuccess: () => void = () => {},
+  onFailure: any = handleException
+): void => {
   fetch(NOTE_URL, {
     credentials: 'include',
     method: 'POST',
@@ -59,7 +64,20 @@ export const save_note = (note: NoteSaveRequest): void => {
     body: JSON.stringify(note),
   })
     .then(mapError)
-    .catch(handleException);
+    .then((response) => response.json())
+    .then((data) => {
+      const currentNote = {
+        id: data?.id,
+        created_at: data?.created_at,
+        modified_at: data?.modified_at,
+        metainfo: note?.metainfo,
+        content: note?.content,
+        encrypted_key: note?.encrypted_key,
+      };
+      setCurrentNote(currentNote, dispatch);
+    })
+    .then(onSuccess)
+    .catch(onFailure);
 };
 
 export const update_note = (id: string, note: NoteSaveRequest): void => {
