@@ -146,7 +146,7 @@ export const ActionGroup = (): React.ReactElement => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-gray-700 hover:-translate-x-0.5 transform transition active:text-yellow-300"
+          className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
         >
           <circle cx="12" cy="12" r="1"></circle>
           <circle cx="19" cy="12" r="1"></circle>
