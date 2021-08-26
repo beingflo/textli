@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
-import { NoteListEntry } from '../types';
+import { NoteListEntry, NoteStatus } from '../types';
 import '../style.css';
 import { useAppDispatch } from '../context';
 import { get_note } from '../api/note_api';
 import { useCurrentNote } from '../context/currentNoteReducer';
+import { setNoteStatus } from '../context/noteStatusReducer';
 
 export type Props = {
   setHide: () => void;
@@ -42,10 +43,14 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
     [currentNote]
   );
 
-  const handleSelection = React.useCallback((id: string) => {
-    get_note(id, dispatch);
-    setTimeout(setHide, 250);
-  }, []);
+  const handleSelection = React.useCallback(
+    (id: string) => {
+      setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+      get_note(id, dispatch, () => setNoteStatus(NoteStatus.SYNCED, dispatch));
+      setTimeout(setHide, 250);
+    },
+    [dispatch]
+  );
 
   return (
     <div className="px-6 w-full pt-4 pb-6">

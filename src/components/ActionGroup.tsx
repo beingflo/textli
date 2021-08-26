@@ -19,8 +19,7 @@ export const ActionGroup = (): React.ReactElement => {
 
   const handleDelete = React.useCallback(() => {
     if (!currentNote) {
-      //TODO Handle more gracefully
-      console.log('No file to delete');
+      handleNew();
       return;
     }
 
@@ -66,9 +65,10 @@ export const ActionGroup = (): React.ReactElement => {
 
   const handleNew = React.useCallback(() => {
     // If unsaved, handle gracefully
-
+    setNoteStatus(NoteStatus.SYNCED, dispatch);
+    editor?.commands.setContent('');
     setCurrentNote(undefined, dispatch);
-  }, [dispatch]);
+  }, [dispatch, editor]);
 
   return (
     <div className="grid grid-cols-1 space-y-2">
