@@ -7,9 +7,10 @@ import {
 } from './currentNoteReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
-import { Note, NoteListEntry, Status } from '../types';
+import { Note, NoteListEntry, NoteStatus, Status } from '../types';
 import { EditorReducer, EDITOR_SET_EDITOR } from './editorReducer';
 import { Editor } from '@tiptap/react';
+import { NoteStatusReducer, NOTE_STATUS_SET } from './noteStatusReducer';
 
 export type State = {
   waiting: number;
@@ -17,6 +18,7 @@ export type State = {
   currentNote: Note | undefined;
   status: Status;
   editor: Editor | null;
+  noteStatus: NoteStatus;
 };
 
 export type Action = {
@@ -32,6 +34,7 @@ const initialState: State = {
   currentNote: undefined,
   status: Status.OK,
   editor: null,
+  noteStatus: NoteStatus.UPTODATE,
 };
 
 export const AppContext = React.createContext<{
@@ -55,6 +58,7 @@ export const ContextProvider = ({
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
       [STATUS_SET_STATUS]: StatusReducer,
       [EDITOR_SET_EDITOR]: EditorReducer,
+      [NOTE_STATUS_SET]: NoteStatusReducer,
     }),
     []
   );
