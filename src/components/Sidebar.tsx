@@ -32,7 +32,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
 
   const handleSelection = React.useCallback((id: string) => {
     get_note(id, dispatch);
-    setHide();
+    setTimeout(setHide, 250);
   }, []);
 
   return (
