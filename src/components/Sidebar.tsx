@@ -60,7 +60,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
             placeholder="Search"
             value={query}
             onChange={(event) => setQuery(event?.target?.value)}
-            className="border-none focus:ring-0 placeholder-gray-400 bg-gray-100 rounded-lg w-full"
+            className="border-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400 bg-white rounded-lg w-full"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
