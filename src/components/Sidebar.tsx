@@ -25,6 +25,18 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
     return metainfo?.title?.includes(query) || metainfo?.tags?.includes(query);
   });
 
+  const sortedNotes = filteredNotes.sort((a, b) => {
+    const dateA = new Date(a.modified_at);
+    const dateB = new Date(b.modified_at);
+
+    if (dateA < dateB) {
+      return 1;
+    } else if (dateA > dateB) {
+      return -1;
+    }
+    return 0;
+  });
+
   const isSelected = React.useCallback(
     (id: string) => currentNote?.id === id,
     [currentNote]
@@ -79,7 +91,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
         </div>
       </div>
       <ul className="space-y-0.5 pl-9 pt-4">
-        {filteredNotes.map((note: NoteListEntry) => (
+        {sortedNotes.map((note: NoteListEntry) => (
           <li
             onClick={() => handleSelection(note?.id)}
             key={note?.id}
