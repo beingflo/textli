@@ -13,8 +13,8 @@ export const Spinner = (): React.ReactElement => {
 export const NoteStatusSpinner = (): React.ReactElement => {
   return (
     <div className="spinner w-4 h-4">
-      <div className="double-bounce1 bg-yellow-300"></div>
-      <div className="double-bounce2 bg-yellow-300"></div>
+      <div className="double-bounce1 bg-red-400"></div>
+      <div className="double-bounce2 bg-yellow-400"></div>
     </div>
   );
 };
