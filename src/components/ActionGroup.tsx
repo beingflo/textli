@@ -1,9 +1,55 @@
 import React from 'react';
+import { delete_note, save_note, update_note } from '../api/note_api';
+import { useAppDispatch } from '../context';
+import { useCurrentNote } from '../context/currentNoteReducer';
+import { useAppEditor } from '../context/editorReducer';
+import { getMetainfo } from './util';
 
 export const ActionGroup = (): React.ReactElement => {
+  const currentNote = useCurrentNote();
+  const dispatch = useAppDispatch();
+  const editor = useAppEditor();
+
+  const handleDelete = React.useCallback(() => {
+    if (!currentNote) {
+      //TODO Handle more gracefully
+      console.log('No file to delete');
+      return;
+    }
+
+    delete_note(currentNote?.id);
+  }, [currentNote]);
+
+  const handleSave = React.useCallback(() => {
+    const content = editor?.getHTML() ?? '';
+    // New note
+    if (!currentNote) {
+      const request = {
+        metainfo: getMetainfo(content),
+        encrypted_key: '',
+        content: content,
+      };
+      save_note(request, dispatch);
+      return;
+    }
+
+    // Existing note
+    const request = {
+      metainfo: getMetainfo(content),
+      encrypted_key: '',
+      content: content,
+    };
+
+    update_note(currentNote?.id ?? '', request, dispatch);
+  }, [currentNote, dispatch, editor]);
+
+  const handleNew = React.useCallback(() => {
+    console.log(editor?.getHTML());
+  }, [editor]);
+
   return (
     <div className="grid grid-cols-1 space-y-2 sticky top-4">
-      <button>
+      <button onClick={handleSave}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -20,7 +66,7 @@ export const ActionGroup = (): React.ReactElement => {
           <polyline points="7 3 7 8 15 8"></polyline>
         </svg>
       </button>
-      <button>
+      <button onClick={handleNew}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -38,7 +84,7 @@ export const ActionGroup = (): React.ReactElement => {
           <line x1="9" y1="15" x2="15" y2="15"></line>
         </svg>
       </button>
-      <button>
+      <button onClick={handleDelete}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

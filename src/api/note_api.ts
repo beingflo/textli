@@ -1,6 +1,9 @@
 import config from '../config.json';
 import { AppDispatch } from '../context';
-import { setCurrentNote } from '../context/currentNoteReducer';
+import {
+  setCurrentNote,
+  updateCurrentNote,
+} from '../context/currentNoteReducer';
 import { setNoteList } from '../context/noteListReducer';
 import { setStatus } from '../context/statusReducer';
 import { NoteSaveRequest, Status } from '../types';
@@ -80,7 +83,13 @@ export const save_note = (
     .catch(onFailure);
 };
 
-export const update_note = (id: string, note: NoteSaveRequest): void => {
+export const update_note = (
+  id: string,
+  note: NoteSaveRequest,
+  dispatch: AppDispatch,
+  onSuccess: () => void = () => {},
+  onFailure: any = handleException
+): void => {
   fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
     method: 'PUT',
@@ -90,7 +99,17 @@ export const update_note = (id: string, note: NoteSaveRequest): void => {
     body: JSON.stringify(note),
   })
     .then(mapError)
-    .catch(handleException);
+    .then((response) => response.json())
+    .then((data) => {
+      const currentNote = {
+        modified_at: data?.modified_at,
+        metainfo: note?.metainfo,
+        content: note?.content,
+      };
+      updateCurrentNote(currentNote, dispatch);
+    })
+    .then(onSuccess)
+    .catch(onFailure);
 };
 
 export const delete_note = (id: string): void => {
