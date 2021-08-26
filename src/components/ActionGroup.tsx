@@ -174,7 +174,8 @@ export const ActionGroup = (): React.ReactElement => {
         >
           <button
             onClick={handleUndelete}
-            className="absolute top-0 right-8 bg-yellow-300 rounded-sm px-1"
+            className="absolute top-0 right-8 text-gray-700 bg-yellow-100 rounded-sm px-1
+                       hover:-translate-x-0.5 transform transition active:scale-90"
           >
             Undo
           </button>
