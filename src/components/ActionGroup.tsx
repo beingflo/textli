@@ -73,7 +73,7 @@ export const ActionGroup = (): React.ReactElement => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-gray-700 hover:-translate-x-0.5 transform transition active:text-yellow-300"
+          className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
         >
           <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
           <polyline points="17 21 17 13 7 13 7 21"></polyline>
@@ -91,7 +91,7 @@ export const ActionGroup = (): React.ReactElement => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-gray-700 hover:-translate-x-0.5 transform transition active:text-yellow-300"
+          className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
         >
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
           <polyline points="14 2 14 8 20 8"></polyline>
@@ -110,7 +110,7 @@ export const ActionGroup = (): React.ReactElement => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-gray-700 hover:-translate-x-0.5 transform transition active:text-yellow-300"
+          className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
         >
           <polyline points="3 6 5 6 21 6"></polyline>
           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>

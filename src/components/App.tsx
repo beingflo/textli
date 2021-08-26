@@ -26,7 +26,7 @@ const App = (): React.ReactElement => {
             enter="transition-opacity ease-linear duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
+            leave="transition-opacity ease-linear duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
             className="absolute h-full w-full z-10"
@@ -53,7 +53,7 @@ const App = (): React.ReactElement => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-gray-700 hover:translate-x-0.5 transform transition active:text-yellow-300"
+              className="h-6 w-6 text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

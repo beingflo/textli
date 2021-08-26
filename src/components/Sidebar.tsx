@@ -56,7 +56,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            className="h-6 w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:text-yellow-300"
+            className="h-6 w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
           >
             <path
               strokeLinecap="round"
