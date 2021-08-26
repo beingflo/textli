@@ -8,7 +8,7 @@ import {
 import { useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
-import { setNoteStatus } from '../context/noteStatusReducer';
+import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
 import { NoteStatus } from '../types';
 import { getMetainfo } from './util';
 
@@ -16,6 +16,7 @@ export const ActionGroup = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
+  const noteStatus = useNoteStatus();
 
   const handleDelete = React.useCallback(() => {
     if (!currentNote) {
@@ -33,6 +34,12 @@ export const ActionGroup = (): React.ReactElement => {
 
   const handleSave = React.useCallback(() => {
     const content = editor?.getHTML() ?? '';
+
+    // No changes to be saved
+    if (noteStatus === NoteStatus.SYNCED) {
+      return;
+    }
+
     // New note
     if (!currentNote) {
       const request = {
@@ -61,7 +68,7 @@ export const ActionGroup = (): React.ReactElement => {
       get_notes(dispatch);
       setNoteStatus(NoteStatus.SYNCED, dispatch);
     });
-  }, [currentNote, dispatch, editor]);
+  }, [currentNote, dispatch, editor, noteStatus]);
 
   const handleNew = React.useCallback(() => {
     // If unsaved, handle gracefully
