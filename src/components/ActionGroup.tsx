@@ -6,7 +6,7 @@ import {
   update_note,
 } from '../api/note_api';
 import { useAppDispatch } from '../context';
-import { useCurrentNote } from '../context/currentNoteReducer';
+import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
 import { getMetainfo } from './util';
 
@@ -22,8 +22,11 @@ export const ActionGroup = (): React.ReactElement => {
       return;
     }
 
-    delete_note(currentNote?.id);
-  }, [currentNote]);
+    delete_note(currentNote?.id, () => {
+      get_notes(dispatch);
+      setCurrentNote(undefined, dispatch);
+    });
+  }, [currentNote, dispatch]);
 
   const handleSave = React.useCallback(() => {
     const content = editor?.getHTML() ?? '';
@@ -52,8 +55,10 @@ export const ActionGroup = (): React.ReactElement => {
   }, [currentNote, dispatch, editor]);
 
   const handleNew = React.useCallback(() => {
-    console.log(editor?.getHTML());
-  }, [editor]);
+    // If unsaved, handle gracefully
+
+    setCurrentNote(undefined, dispatch);
+  }, [dispatch]);
 
   return (
     <div className="grid grid-cols-1 space-y-2 sticky top-4">

@@ -41,7 +41,10 @@ export const useCurrentNote = (): Note | undefined => {
   return currentNote;
 };
 
-export const setCurrentNote = (note: Note, dispatch: AppDispatch): void => {
+export const setCurrentNote = (
+  note: Note | undefined,
+  dispatch: AppDispatch
+): void => {
   dispatch({ type: CURRENT_NOTE_SET, note });
 };
 
