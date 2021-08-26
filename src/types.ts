@@ -40,3 +40,9 @@ export enum Status {
   OK = 'OK',
   REDIRECT = 'REDIRECT',
 }
+
+export enum NoteStatus {
+  UPTODATE = 'UPTODATE',
+  SAVING = 'SAVING',
+  SAVED = 'SAVED',
+}
