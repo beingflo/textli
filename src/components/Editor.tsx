@@ -13,9 +13,13 @@ import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import './editorStyles.css';
+import { useAppDispatch } from '../context';
+import { setAppEditor } from '../context/editorReducer';
 
 export const Editor = (): React.ReactElement => {
+  const dispatch = useAppDispatch();
   const note = useCurrentNote();
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -46,6 +50,10 @@ export const Editor = (): React.ReactElement => {
   React.useEffect(() => {
     editor?.commands?.setContent(note?.content ?? '');
   }, [note]);
+
+  React.useEffect(() => {
+    setAppEditor(editor, dispatch);
+  }, [editor]);
 
   return <EditorContent editor={editor} />;
 };
