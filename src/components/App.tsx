@@ -23,20 +23,6 @@ const App = (): React.ReactElement => {
           >
             <Sidebar setHide={() => setShowSidebar(false)} />
           </Transition.Child>
-          <Transition.Child
-            enter="transition-opacity ease-linear duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-            className="absolute h-full w-full z-10"
-          >
-            <div
-              onClick={() => setShowSidebar(false)}
-              className="h-screen w-full"
-            ></div>
-          </Transition.Child>
         </Transition>
         <Transition
           show={!showSidebar}
