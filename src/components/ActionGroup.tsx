@@ -1,5 +1,10 @@
 import React from 'react';
-import { delete_note, save_note, update_note } from '../api/note_api';
+import {
+  delete_note,
+  get_notes,
+  save_note,
+  update_note,
+} from '../api/note_api';
 import { useAppDispatch } from '../context';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
@@ -29,7 +34,8 @@ export const ActionGroup = (): React.ReactElement => {
         encrypted_key: '',
         content: content,
       };
-      save_note(request, dispatch);
+
+      save_note(request, dispatch, () => get_notes(dispatch));
       return;
     }
 
@@ -40,7 +46,9 @@ export const ActionGroup = (): React.ReactElement => {
       content: content,
     };
 
-    update_note(currentNote?.id ?? '', request, dispatch);
+    update_note(currentNote?.id ?? '', request, dispatch, () =>
+      get_notes(dispatch)
+    );
   }, [currentNote, dispatch, editor]);
 
   const handleNew = React.useCallback(() => {
