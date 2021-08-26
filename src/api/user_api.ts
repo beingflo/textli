@@ -23,7 +23,10 @@ export const user_login = (
     .catch(onFailure);
 };
 
-export const user_logout = (): void => {
+export const user_logout = (
+  onSuccess: (res: Response) => void = () => {},
+  onFailure: any = handleException
+): void => {
   fetch(SESSION_URL, {
     credentials: 'include',
     method: 'DELETE',
@@ -32,7 +35,8 @@ export const user_logout = (): void => {
     },
   })
     .then(mapError)
-    .catch(handleException);
+    .then(onSuccess)
+    .catch(onFailure);
 };
 
 export const user_signup = (

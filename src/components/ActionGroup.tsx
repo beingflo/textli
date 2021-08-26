@@ -1,4 +1,4 @@
-import { Transition } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import React from 'react';
 import {
   delete_note,
@@ -8,6 +8,7 @@ import {
   undelete_note,
   update_note,
 } from '../api/note_api';
+import { user_logout } from '../api/user_api';
 import { useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
@@ -99,6 +100,10 @@ export const ActionGroup = (): React.ReactElement => {
     setCurrentNote(undefined, dispatch);
   }, [dispatch, editor]);
 
+  const handleLogout = React.useCallback(() => {
+    user_logout(() => get_notes(dispatch));
+  }, [dispatch]);
+
   return (
     <div className="grid grid-cols-1 space-y-2">
       <button onClick={handleSave}>
@@ -175,24 +180,98 @@ export const ActionGroup = (): React.ReactElement => {
           </button>
         </Transition>
       </div>
-      <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+      <Popover className="relative">
+        <Popover.Button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+          >
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="19" cy="12" r="1"></circle>
+            <circle cx="5" cy="12" r="1"></circle>
+          </svg>
+        </Popover.Button>
+        <Transition
+          enter="transition-opacity ease-linear duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity ease-linear duration-75"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
         >
-          <circle cx="12" cy="12" r="1"></circle>
-          <circle cx="19" cy="12" r="1"></circle>
-          <circle cx="5" cy="12" r="1"></circle>
-        </svg>
-      </button>
+          <Popover.Panel className="absolute top-8 left-0">
+            <div className="bg-white space-y-2">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+                >
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </button>
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+                >
+                  <line x1="4" y1="21" x2="4" y2="14"></line>
+                  <line x1="4" y1="10" x2="4" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12" y2="3"></line>
+                  <line x1="20" y1="21" x2="20" y2="16"></line>
+                  <line x1="20" y1="12" x2="20" y2="3"></line>
+                  <line x1="1" y1="14" x2="7" y2="14"></line>
+                  <line x1="9" y1="8" x2="15" y2="8"></line>
+                  <line x1="17" y1="16" x2="23" y2="16"></line>
+                </svg>
+              </button>
+              <button onClick={handleLogout}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+          </Popover.Panel>
+        </Transition>
+      </Popover>
     </div>
   );
 };
