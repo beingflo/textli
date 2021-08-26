@@ -8,6 +8,8 @@ import {
 import { useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
+import { setNoteStatus } from '../context/noteStatusReducer';
+import { NoteStatus } from '../types';
 import { getMetainfo } from './util';
 
 export const ActionGroup = (): React.ReactElement => {
@@ -22,9 +24,11 @@ export const ActionGroup = (): React.ReactElement => {
       return;
     }
 
+    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
     delete_note(currentNote?.id, () => {
       get_notes(dispatch);
       setCurrentNote(undefined, dispatch);
+      setNoteStatus(NoteStatus.SYNCED, dispatch);
     });
   }, [currentNote, dispatch]);
 
@@ -38,7 +42,11 @@ export const ActionGroup = (): React.ReactElement => {
         content: content,
       };
 
-      save_note(request, dispatch, () => get_notes(dispatch));
+      setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+      save_note(request, dispatch, () => {
+        get_notes(dispatch);
+        setNoteStatus(NoteStatus.SYNCED, dispatch);
+      });
       return;
     }
 
@@ -49,9 +57,11 @@ export const ActionGroup = (): React.ReactElement => {
       content: content,
     };
 
-    update_note(currentNote?.id ?? '', request, dispatch, () =>
-      get_notes(dispatch)
-    );
+    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+    update_note(currentNote?.id ?? '', request, dispatch, () => {
+      get_notes(dispatch);
+      setNoteStatus(NoteStatus.SYNCED, dispatch);
+    });
   }, [currentNote, dispatch, editor]);
 
   const handleNew = React.useCallback(() => {

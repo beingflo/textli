@@ -6,16 +6,15 @@ import { NoteStatusSpinner } from './Spinner';
 export const NoteStatus = (): React.ReactElement => {
   const status = useNoteStatus();
 
-  if (status === Status.SAVING) {
+  if (status === Status.INPROGRESS) {
     return (
       <div className="fixed bottom-1 right-1 text-xs flex">
         <NoteStatusSpinner />
-        <span className="pl-1 w-10 text-right">Saving</span>
       </div>
     );
   }
 
-  if (status === Status.SAVED) {
+  if (status === Status.SYNCED) {
     return (
       <div className="fixed bottom-1 right-1 text-xs flex">
         <svg
@@ -32,7 +31,6 @@ export const NoteStatus = (): React.ReactElement => {
             d="M5 13l4 4L19 7"
           />
         </svg>
-        <span className="pl-1 w-10 text-right">Saved</span>
       </div>
     );
   }
