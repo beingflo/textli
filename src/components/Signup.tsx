@@ -81,7 +81,7 @@ const Signup = (): React.ReactElement => {
                 height="16"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 className="fill-current text-green-500 absolute top-3 right-3"
               >
                 <path
@@ -98,7 +98,7 @@ const Signup = (): React.ReactElement => {
                 height="16"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 className="fill-current text-red-500 absolute top-3 right-3"
               >
                 <path
