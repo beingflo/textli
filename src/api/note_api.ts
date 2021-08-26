@@ -126,11 +126,16 @@ export const delete_note = (
     .catch(onFailure);
 };
 
-export const undelete_note = (id: string): void => {
+export const undelete_note = (
+  id: string,
+  onSuccess: () => void = () => {},
+  onFailure: any = handleException
+): void => {
   fetch(`${NOTE_URL}/undelete/${id}`, {
     credentials: 'include',
     method: 'POST',
   })
     .then(mapError)
-    .catch(handleException);
+    .then(onSuccess)
+    .catch(onFailure);
 };
