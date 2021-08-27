@@ -6,6 +6,7 @@ import { useAppDispatch } from '../context';
 import { get_note } from '../api/note_api';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import { setNoteStatus } from '../context/noteStatusReducer';
+import { ArrowLeftIcon, SearchIcon } from '../icons';
 
 export type Props = {
   setHide: () => void;
@@ -56,20 +57,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
     <div className="px-6 w-full pt-4 pb-6">
       <div className="flex flex-row align-middle">
         <button className="pr-2" onClick={() => setHide()}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="h-6 w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M11 17l-5-5m0 0l5-5m-5 5h12"
-            />
-          </svg>
+          <ArrowLeftIcon className="h-6 w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
         </button>
         <div className="relative w-full">
           <input
@@ -79,20 +67,7 @@ export const Sidebar = ({ setHide }: Props): React.ReactElement => {
             onChange={(event) => setQuery(event?.target?.value)}
             className="border-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400 bg-white rounded-lg w-full"
           />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 absolute top-2 right-2 text-gray-400 cursor-pointer"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
+          <SearchIcon className="h-6 w-6 absolute top-2 right-2 text-gray-400 cursor-pointer" />
         </div>
       </div>
       <ul className="space-y-0.5 pl-9 pt-4">
