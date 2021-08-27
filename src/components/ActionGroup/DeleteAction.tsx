@@ -57,6 +57,7 @@ export const DeleteAction = (): React.ReactElement => {
       get_note(deletedNote, dispatch);
       setNoteStatus(NoteStatus.SYNCED, dispatch);
       setDeletedNote('');
+      setShowUndelete(false);
     });
   }, [dispatch, deletedNote]);
 
