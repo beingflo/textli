@@ -24,6 +24,7 @@ export const ActionGroup = (): React.ReactElement => {
 
   const [showUndelete, setShowUndelete] = React.useState(false);
   const [deletedNote, setDeletedNote] = React.useState('');
+  const [showSaveConfirm, setShowSaveConfirm] = React.useState(false);
 
   const handleDelete = React.useCallback(() => {
     if (!currentNote) {
@@ -57,6 +58,9 @@ export const ActionGroup = (): React.ReactElement => {
 
   const handleSave = React.useCallback(() => {
     const content = editor?.getHTML() ?? '';
+
+    setShowSaveConfirm(true);
+    setTimeout(() => setShowSaveConfirm(false), 1000);
 
     // No changes to be saved
     if (noteStatus === NoteStatus.SYNCED) {
@@ -106,24 +110,50 @@ export const ActionGroup = (): React.ReactElement => {
 
   return (
     <div className="grid grid-cols-1 space-y-2">
-      <button onClick={handleSave}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+      <div className="relative">
+        <button onClick={handleSave}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90"
+          >
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+        </button>
+        <Transition
+          show={showSaveConfirm}
+          enter="transition-opacity ease-linear duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity ease-linear duration-300"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
         >
-          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-          <polyline points="17 21 17 13 7 13 7 21"></polyline>
-          <polyline points="7 3 7 8 15 8"></polyline>
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="h-4 w-4 text-green-600 absolute top-0.5 right-8 rounded-sm"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        </Transition>
+      </div>
       <button onClick={handleNew}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
