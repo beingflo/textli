@@ -25,9 +25,13 @@ export const DeleteAction = (): React.ReactElement => {
   const [deletedNote, setDeletedNote] = React.useState('');
 
   const handleDelete = React.useCallback(() => {
+    editor?.commands?.focus();
+
     if (!currentNote) {
       setNoteStatus(NoteStatus.SYNCED, dispatch);
+
       editor?.commands.setContent('');
+
       setCurrentNote(undefined, dispatch);
       return;
     }

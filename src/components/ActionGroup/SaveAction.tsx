@@ -18,6 +18,8 @@ export const SaveAction = (): React.ReactElement => {
   const [showSaveConfirm, setShowSaveConfirm] = React.useState(false);
 
   const handleSave = React.useCallback(() => {
+    editor?.commands?.focus();
+
     const content = editor?.getHTML() ?? '';
 
     setShowSaveConfirm(true);

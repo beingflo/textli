@@ -3,30 +3,13 @@ import React from 'react';
 import { get_notes } from '../../api/note_api';
 import { user_logout } from '../../api/user_api';
 import { useAppDispatch } from '../../context';
-import { setCurrentNote } from '../../context/currentNoteReducer';
-import { useAppEditor } from '../../context/editorReducer';
-import { setNoteStatus } from '../../context/noteStatusReducer';
-import {
-  LinkIcon,
-  LogoutIcon,
-  MoreIcon,
-  NewIcon,
-  SettingsIcon,
-} from '../../icons';
-import { NoteStatus } from '../../types';
+import { LinkIcon, LogoutIcon, MoreIcon, SettingsIcon } from '../../icons';
 import { SaveAction } from './SaveAction';
 import { DeleteAction } from './DeleteAction';
+import { NewAction } from './NewAction';
 
 export const ActionGroup = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const editor = useAppEditor();
-
-  const handleNew = React.useCallback(() => {
-    // If unsaved, handle gracefully
-    setNoteStatus(NoteStatus.SYNCED, dispatch);
-    editor?.commands.setContent('');
-    setCurrentNote(undefined, dispatch);
-  }, [dispatch, editor]);
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => get_notes(dispatch));
@@ -35,9 +18,7 @@ export const ActionGroup = (): React.ReactElement => {
   return (
     <div className="space-y-2">
       <SaveAction />
-      <button onClick={handleNew}>
-        <NewIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
-      </button>
+      <NewAction />
       <DeleteAction />
       <Popover className="relative">
         <Popover.Button>
