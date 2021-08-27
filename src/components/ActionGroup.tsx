@@ -109,7 +109,7 @@ export const ActionGroup = (): React.ReactElement => {
   }, [dispatch]);
 
   return (
-    <div className="grid grid-cols-1 space-y-2">
+    <div className="space-y-2">
       <div className="relative">
         <button onClick={handleSave}>
           <svg
@@ -137,13 +137,14 @@ export const ActionGroup = (): React.ReactElement => {
           leave="transition-opacity ease-linear duration-300"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
+          className="absolute top-0.5 right-8"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            className="h-4 w-4 text-green-600 absolute top-0.5 right-8 rounded-sm"
+            className="h-4 w-4 text-green-600"
           >
             <path
               strokeLinecap="round"
@@ -239,7 +240,7 @@ export const ActionGroup = (): React.ReactElement => {
           leaveTo="opacity-0"
         >
           <Popover.Panel className="absolute top-8 left-0">
-            <div className="bg-white space-y-2">
+            <div className="space-y-2">
               <button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
