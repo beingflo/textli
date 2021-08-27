@@ -7,12 +7,15 @@ import {
   save_note,
   undelete_note,
   update_note,
-} from '../api/note_api';
-import { user_logout } from '../api/user_api';
-import { useAppDispatch } from '../context';
-import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
-import { useAppEditor } from '../context/editorReducer';
-import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
+} from '../../api/note_api';
+import { user_logout } from '../../api/user_api';
+import { useAppDispatch } from '../../context';
+import {
+  setCurrentNote,
+  useCurrentNote,
+} from '../../context/currentNoteReducer';
+import { useAppEditor } from '../../context/editorReducer';
+import { setNoteStatus, useNoteStatus } from '../../context/noteStatusReducer';
 import {
   CheckIcon,
   DeleteIcon,
@@ -22,9 +25,9 @@ import {
   NewIcon,
   SaveIcon,
   SettingsIcon,
-} from '../icons';
-import { NoteStatus } from '../types';
-import { getMetainfo } from './util';
+} from '../../icons';
+import { NoteStatus } from '../../types';
+import { getMetainfo } from '../util';
 
 export const ActionGroup = (): React.ReactElement => {
   const currentNote = useCurrentNote();

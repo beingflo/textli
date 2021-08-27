@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import React from 'react';
 import Editor from './Editor';
 import Sidebar from './Sidebar';
-import ActionGroup from './ActionGroup';
+import ActionGroup from './ActionGroup/ActionGroup';
 import { NoteStatus } from './NoteStatus';
 import { ArrowRightIcon } from '../icons';
 
