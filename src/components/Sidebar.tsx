@@ -10,13 +10,18 @@ import { ArrowLeftIcon, SearchIcon } from '../icons';
 
 export type Props = {
   setHide: () => void;
+  query: string;
+  setQuery: (query: string) => void;
 };
 
-export const Sidebar = ({ setHide }: Props): React.ReactElement => {
+export const Sidebar = ({
+  setHide,
+  query,
+  setQuery,
+}: Props): React.ReactElement => {
   const notes = useNoteList();
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
-  const [query, setQuery] = React.useState('');
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
     const metainfo: { title: string; tags: string } = JSON.parse(

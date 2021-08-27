@@ -8,6 +8,7 @@ import { ArrowRightIcon } from '../icons';
 
 const App = (): React.ReactElement => {
   const [showSidebar, setShowSidebar] = React.useState(false);
+  const [query, setQuery] = React.useState('');
 
   return (
     <div className="h-auto flex justify-between w-full relative">
@@ -22,7 +23,11 @@ const App = (): React.ReactElement => {
             leaveTo="-translate-x-full"
             className="absolute bg-gray-100 z-20 w-80 sm:w-96 min-h-full"
           >
-            <Sidebar setHide={() => setShowSidebar(false)} />
+            <Sidebar
+              setHide={() => setShowSidebar(false)}
+              query={query}
+              setQuery={setQuery}
+            />
           </Transition.Child>
         </Transition>
         <Transition
