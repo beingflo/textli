@@ -7,6 +7,7 @@ import { get_note } from '../api/note_api';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import { setNoteStatus } from '../context/noteStatusReducer';
 import { ArrowLeftIcon, SearchIcon } from '../icons';
+import { useAppEditor } from '../context/editorReducer';
 
 export type Props = {
   setHide: () => void;
@@ -22,6 +23,7 @@ export const Sidebar = ({
   const notes = useNoteList();
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
+  const editor = useAppEditor();
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
     const metainfo: { title: string; tags: string } = JSON.parse(
@@ -52,10 +54,13 @@ export const Sidebar = ({
   const handleSelection = React.useCallback(
     (id: string) => {
       setNoteStatus(NoteStatus.INPROGRESS, dispatch);
-      get_note(id, dispatch, () => setNoteStatus(NoteStatus.SYNCED, dispatch));
+      get_note(id, dispatch, () => {
+        setNoteStatus(NoteStatus.SYNCED, dispatch);
+        editor?.commands.focus();
+      });
       setTimeout(setHide, 250);
     },
-    [dispatch]
+    [dispatch, editor]
   );
 
   return (
