@@ -57,8 +57,8 @@ export const Sidebar = ({
       get_note(id, dispatch, () => {
         setNoteStatus(NoteStatus.SYNCED, dispatch);
         editor?.commands.focus();
+        setTimeout(setHide, 250);
       });
-      setTimeout(setHide, 250);
     },
     [dispatch, editor]
   );
