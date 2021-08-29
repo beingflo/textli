@@ -34,7 +34,10 @@ export const Sidebar = ({
     );
 
     // TODO more sophisticated searching (fuzzy, multiword, etc)
-    return metainfo?.title?.includes(query) || metainfo?.tags?.includes(query);
+    return (
+      metainfo?.title?.toLowerCase().includes(query.toLowerCase()) ||
+      metainfo?.tags?.toLocaleLowerCase().includes(query.toLowerCase())
+    );
   });
 
   const sortedNotes = filteredNotes.sort((a, b) => {
