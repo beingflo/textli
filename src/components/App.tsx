@@ -21,7 +21,7 @@ const App = (): React.ReactElement => {
             leave="transition ease-in-out duration-300 transform"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
-            className="absolute bg-gray-100 z-20 w-80 sm:w-96 min-h-full"
+            className="absolute bg-gray-50 border-r border-gray-100 z-20 w-80 sm:w-96 min-h-full"
           >
             <Sidebar
               setHide={() => setShowSidebar(false)}
