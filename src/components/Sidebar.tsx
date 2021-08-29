@@ -77,7 +77,7 @@ export const Sidebar = ({
         </button>
         <div className="relative w-full">
           <input
-            type="text"
+            type="search"
             placeholder="Search"
             value={query}
             ref={inputRef}
