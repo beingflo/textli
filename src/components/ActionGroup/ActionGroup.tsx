@@ -1,19 +1,14 @@
-import { Dialog, Popover, Transition } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import React from 'react';
 import { get_notes } from '../../api/note_api';
 import { user_logout } from '../../api/user_api';
 import { useAppDispatch } from '../../context';
-import {
-  CloseIcon,
-  LinkIcon,
-  LogoutIcon,
-  MoreIcon,
-  SettingsIcon,
-} from '../../icons';
+import { LinkIcon, LogoutIcon, MoreIcon, SettingsIcon } from '../../icons';
 import { SaveAction } from './SaveAction';
 import { DeleteAction } from './DeleteAction';
 import { NewAction } from './NewAction';
 import '../../style.css';
+import Settings from './Settings';
 
 export const ActionGroup = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -55,45 +50,7 @@ export const ActionGroup = (): React.ReactElement => {
           </Popover.Panel>
         </Transition>
       </Popover>
-      <Transition show={showSettings} as={React.Fragment}>
-        <Dialog
-          onClose={() => setShowSettings(false)}
-          className="fixed z-10 inset-0 overflow-y-auto"
-        >
-          <div className="flex items-center justify-center min-h-screen">
-            <Transition.Child
-              enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-200 opacity-40" />
-            </Transition.Child>
-            <Transition.Child
-              enter="transition-opacity ease-linear duration-150"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-75"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="relative p-6 bg-white rounded max-w-lg mx-auto">
-                <div className="flex flex-row justify-between min-w-md">
-                  <Dialog.Title className="text-2xl font-bold highlight inline">
-                    Settings
-                  </Dialog.Title>
-
-                  <button onClick={() => setShowSettings(false)}>
-                    <CloseIcon className="h-6 w-6" />
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+      <Settings showSettings={showSettings} setShowSettings={setShowSettings} />
     </div>
   );
 };
