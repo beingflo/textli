@@ -82,7 +82,7 @@ export const Sidebar = ({
             value={query}
             ref={inputRef}
             onChange={(event) => setQuery(event?.target?.value)}
-            className="border-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400 bg-white rounded-lg w-full"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
           />
           {query ? (
             <button
@@ -91,11 +91,11 @@ export const Sidebar = ({
                 setInputFocus();
               }}
             >
-              <ClearIcon className="h-6 w-6 absolute top-2 right-2 text-gray-400" />
+              <ClearIcon className="h-5 w-5 absolute top-2.5 right-2.5 text-gray-400" />
             </button>
           ) : (
             <button onClick={setInputFocus}>
-              <SearchIcon className="h-6 w-6 absolute top-2 right-2 text-gray-400" />
+              <SearchIcon className="h-5 w-5 absolute top-2.5 right-2.5 text-gray-400" />
             </button>
           )}
         </div>
