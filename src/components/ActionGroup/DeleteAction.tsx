@@ -13,7 +13,7 @@ import {
 } from '../../context/currentNoteReducer';
 import { useAppEditor } from '../../context/editorReducer';
 import { setNoteStatus } from '../../context/noteStatusReducer';
-import { DeleteIcon } from '../../icons';
+import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
 export const DeleteAction = (): React.ReactElement => {
@@ -64,7 +64,7 @@ export const DeleteAction = (): React.ReactElement => {
   return (
     <div className="relative">
       <button onClick={handleDelete}>
-        <DeleteIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+        <BinIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
       </button>
       <Transition
         show={showUndelete}

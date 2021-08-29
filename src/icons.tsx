@@ -74,7 +74,7 @@ export const NewIcon = ({
   );
 };
 
-export const DeleteIcon = ({
+export const BinIcon = ({
   className,
 }: {
   className?: string;
