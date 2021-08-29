@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, Tab, Transition } from '@headlessui/react';
 import React from 'react';
 import { CloseIcon } from '../../icons';
 
@@ -46,6 +46,21 @@ export const Settings = ({
                   <CloseIcon className="h-6 w-6" />
                 </button>
               </div>
+
+              <Tab.Group vertical>
+                <div className="flex justify-between mt-4">
+                  <Tab.List className="flex flex-col w-max">
+                    <Tab>Tab 1</Tab>
+                    <Tab>Tab 2</Tab>
+                    <Tab>Tab 3</Tab>
+                  </Tab.List>
+                  <Tab.Panels>
+                    <Tab.Panel>Content 1</Tab.Panel>
+                    <Tab.Panel>Content 2</Tab.Panel>
+                    <Tab.Panel>Content 3</Tab.Panel>
+                  </Tab.Panels>
+                </div>
+              </Tab.Group>
             </div>
           </Transition.Child>
         </div>
