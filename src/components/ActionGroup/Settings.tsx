@@ -44,7 +44,7 @@ export const Settings = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="relative p-6 bg-gray-50 shadow-lg rounded max-w-lg mx-auto">
+            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded max-w-lg mx-auto">
               <div className="flex flex-row justify-between min-w-md">
                 <Dialog.Title className="text-2xl font-bold highlight inline">
                   Settings
@@ -58,29 +58,65 @@ export const Settings = ({
               <Tab.Group vertical>
                 <div className="flex justify-between mt-8">
                   <Tab.List className="flex flex-col w-max space-y-4">
-                    <Tab className="flex">
-                      <CashIcon className="h-5 w-5 mr-2 self-center" />
-                      <span>Balance</span>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <CashIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Balance
+                          </span>
+                        </button>
+                      )}
                     </Tab>
-                    <Tab className="flex">
-                      <LinkIcon className="h-5 w-5 mr-2 self-center" />
-                      <span>Shares</span>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <LinkIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Shares
+                          </span>
+                        </button>
+                      )}
                     </Tab>
-                    <Tab className="flex">
-                      <EyeIcon className="h-5 w-5 mr-2 self-center" />
-                      <span>Publications</span>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <EyeIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Publications
+                          </span>
+                        </button>
+                      )}
                     </Tab>
-                    <Tab className="flex">
-                      <BinIcon className="h-5 w-5 mr-2 self-center" />
-                      <span>Bin</span>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <BinIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Bin
+                          </span>
+                        </button>
+                      )}
                     </Tab>
-                    <Tab className="flex">
-                      <KeyIcon className="h-5 w-5 mr-2 self-center" />
-                      Workspaces
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <KeyIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Workspaces
+                          </span>
+                        </button>
+                      )}
                     </Tab>
-                    <Tab className="flex">
-                      <UsersIcon className="h-5 w-5 mr-2 self-center" />
-                      <span>User settings</span>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <UsersIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            User settings
+                          </span>
+                        </button>
+                      )}
                     </Tab>
                   </Tab.List>
                   <Tab.Panels className="flex-grow ml-4">
