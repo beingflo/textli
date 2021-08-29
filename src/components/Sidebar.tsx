@@ -6,8 +6,9 @@ import { useAppDispatch } from '../context';
 import { get_note } from '../api/note_api';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import { setNoteStatus } from '../context/noteStatusReducer';
-import { ArrowLeftIcon, SearchIcon } from '../icons';
+import { ArrowLeftIcon, ClearIcon, SearchIcon } from '../icons';
 import { useAppEditor } from '../context/editorReducer';
+import { useFocus } from './util';
 
 export type Props = {
   setHide: () => void;
@@ -24,6 +25,8 @@ export const Sidebar = ({
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
+
+  const [inputRef, setInputFocus] = useFocus();
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
     const metainfo: { title: string; tags: string } = JSON.parse(
@@ -74,10 +77,24 @@ export const Sidebar = ({
             type="text"
             placeholder="Search"
             value={query}
+            ref={inputRef}
             onChange={(event) => setQuery(event?.target?.value)}
             className="border-none focus:ring-1 focus:ring-gray-400 placeholder-gray-400 bg-white rounded-lg w-full"
           />
-          <SearchIcon className="h-6 w-6 absolute top-2 right-2 text-gray-400 cursor-pointer" />
+          {query ? (
+            <button
+              onClick={() => {
+                setQuery('');
+                setInputFocus();
+              }}
+            >
+              <ClearIcon className="h-6 w-6 absolute top-2 right-2 text-gray-400" />
+            </button>
+          ) : (
+            <button onClick={setInputFocus}>
+              <SearchIcon className="h-6 w-6 absolute top-2 right-2 text-gray-400" />
+            </button>
+          )}
         </div>
       </div>
       <ul className="space-y-0.5 pl-9 pt-4">
