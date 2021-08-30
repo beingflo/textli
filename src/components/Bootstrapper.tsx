@@ -8,6 +8,7 @@ import { Status } from '../types';
 import App from './App';
 import { SpinnerPage } from './Spinner';
 import Start from './Start';
+import { user_info } from '../api/user_api';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,7 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     get_notes(dispatch);
+    user_info(dispatch);
     setWaiting(false);
   }, [dispatch]);
 
