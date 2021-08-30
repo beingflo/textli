@@ -1,6 +1,11 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import React from 'react';
-import { get_deleted_notes } from '../../api/note_api';
+import {
+  get_deleted_notes,
+  get_notes,
+  undelete_note,
+} from '../../api/note_api';
+import { useAppDispatch } from '../../context';
 import { useUserInfo } from '../../context/userInfoReducer';
 import {
   BinIcon,
@@ -23,6 +28,7 @@ export const Settings = ({
   setShowSettings,
 }: Props): React.ReactElement => {
   const userInfo = useUserInfo();
+  const dispatch = useAppDispatch();
 
   const balance = parseFloat(userInfo?.balance ?? '0').toFixed(2);
   const balance_days = parseFloat(userInfo?.remaining_days ?? '0');
@@ -49,6 +55,17 @@ export const Settings = ({
       return 0;
     });
   }, [deletedNotes]);
+
+  const recover_note = React.useCallback(
+    (id: string) => {
+      const success = () => {
+        get_deleted_notes(setDeletedNotes);
+        get_notes(dispatch);
+      };
+      undelete_note(id, success);
+    },
+    [setDeletedNotes, dispatch]
+  );
 
   return (
     <Transition show={showSettings} as={React.Fragment}>
@@ -188,7 +205,10 @@ export const Settings = ({
                                   note?.deleted_at
                                 ).toLocaleDateString()}
                               </span>
-                              <button className="text-yellow-400">
+                              <button
+                                onClick={() => recover_note(note?.id)}
+                                className="text-yellow-400"
+                              >
                                 Recover
                               </button>
                             </div>
