@@ -1,4 +1,6 @@
 import config from '../config.json';
+import { AppDispatch } from '../context';
+import { setUserInfo } from '../context/userInfoReducer';
 import { UserCredentials, UserCredentialsPasswordChange } from '../types';
 import { mapError, handleException } from './index';
 
@@ -85,7 +87,10 @@ export const user_password_change = (
     .catch(handleException);
 };
 
-export const user_info = (): void => {
+export const user_info = (
+  dispatch: AppDispatch,
+  onFailure: any = handleException
+): void => {
   fetch(`${USER_URL}/info`, {
     credentials: 'include',
     method: 'GET',
@@ -94,5 +99,9 @@ export const user_info = (): void => {
     },
   })
     .then(mapError)
-    .catch(handleException);
+    .then((response) => response.json())
+    .then((data) => {
+      setUserInfo(data, dispatch);
+    })
+    .catch(onFailure);
 };
