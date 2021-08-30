@@ -13,6 +13,10 @@ export type Note = {
   encrypted_key: string;
 };
 
+export type DeletedNote = Note & {
+  deleted_at: string;
+};
+
 export type NoteListEntry = {
   id: string;
   created_at: string;

@@ -30,6 +30,23 @@ export const get_notes = (dispatch: AppDispatch): void => {
     });
 };
 
+export const get_deleted_notes = (
+  onSuccess: (data: any) => void = () => {},
+  onFailure: any = handleException
+): void => {
+  fetch(`${NOTE_URL}?deleted`, {
+    credentials: 'include',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(mapError)
+    .then((response) => response.json())
+    .then(onSuccess)
+    .catch(onFailure);
+};
+
 export const get_note = (
   id: string,
   dispatch: AppDispatch,

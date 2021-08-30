@@ -1,5 +1,6 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import React from 'react';
+import { get_deleted_notes } from '../../api/note_api';
 import { useUserInfo } from '../../context/userInfoReducer';
 import {
   BinIcon,
@@ -10,6 +11,7 @@ import {
   LinkIcon,
   UsersIcon,
 } from '../../icons';
+import { DeletedNote } from '../../types';
 
 export type Props = {
   showSettings: boolean;
@@ -25,6 +27,28 @@ export const Settings = ({
   const balance = parseFloat(userInfo?.balance ?? '0').toFixed(2);
   const balance_days = parseFloat(userInfo?.remaining_days ?? '0');
   const remaining_weeks = (balance_days / 7).toFixed(2);
+
+  const [deletedNotes, setDeletedNotes] = React.useState([]);
+  React.useEffect(() => get_deleted_notes(setDeletedNotes), [setDeletedNotes]);
+
+  const getProcessedNotes = React.useMemo(() => {
+    const parsedNotes = deletedNotes?.map((note: DeletedNote) => ({
+      ...note,
+      ...JSON.parse(note?.metainfo),
+    }));
+
+    return parsedNotes.sort((a: any, b: any) => {
+      const dateA = new Date(a.deleted_at);
+      const dateB = new Date(b.deleted_at);
+
+      if (dateA < dateB) {
+        return 1;
+      } else if (dateA > dateB) {
+        return -1;
+      }
+      return 0;
+    });
+  }, [deletedNotes]);
 
   return (
     <Transition show={showSettings} as={React.Fragment}>
@@ -63,7 +87,7 @@ export const Settings = ({
               </div>
 
               <Tab.Group vertical>
-                <div className="flex justify-between mt-8">
+                <div className="flex flex-row mt-8">
                   <Tab.List className="flex flex-col w-max md:whitespace-nowrap space-y-4">
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
@@ -126,7 +150,7 @@ export const Settings = ({
                       )}
                     </Tab>
                   </Tab.List>
-                  <Tab.Panels className="flex-grow ml-8">
+                  <Tab.Panels className="flex-grow ml-8 min-w-0">
                     <Tab.Panel className="flex flex-col h-full">
                       <div className="flex justify-between">
                         <span className="">Balance</span>
@@ -151,7 +175,30 @@ export const Settings = ({
                     </Tab.Panel>
                     <Tab.Panel>Content 2</Tab.Panel>
                     <Tab.Panel>Content 3</Tab.Panel>
-                    <Tab.Panel>Content 4</Tab.Panel>
+                    <Tab.Panel className="overflow-y-scroll">
+                      <ul className="space-y-2">
+                        {getProcessedNotes?.map((note: any) => (
+                          <li
+                            key={note?.id}
+                            className="flex flex-col border-b pb-1.5"
+                          >
+                            <span className="truncate font-semibold">
+                              {note?.title}
+                            </span>
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">
+                                {new Date(
+                                  note?.deleted_at
+                                ).toLocaleDateString()}
+                              </span>
+                              <button className="text-yellow-400">
+                                Recover
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </Tab.Panel>
                     <Tab.Panel>Content 5</Tab.Panel>
                     <Tab.Panel>Content 6</Tab.Panel>
                   </Tab.Panels>
