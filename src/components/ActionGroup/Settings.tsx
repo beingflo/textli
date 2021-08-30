@@ -75,7 +75,7 @@ export const Settings = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl">
+            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl my-8">
               <div className="flex flex-row justify-between">
                 <Dialog.Title className="text-2xl font-bold highlight inline">
                   Settings
@@ -175,13 +175,10 @@ export const Settings = ({
                     </Tab.Panel>
                     <Tab.Panel>Content 2</Tab.Panel>
                     <Tab.Panel>Content 3</Tab.Panel>
-                    <Tab.Panel className="overflow-y-scroll">
-                      <ul className="space-y-2">
+                    <Tab.Panel>
+                      <ul className="space-y-4">
                         {getProcessedNotes?.map((note: any) => (
-                          <li
-                            key={note?.id}
-                            className="flex flex-col border-b pb-1.5"
-                          >
+                          <li key={note?.id} className="flex flex-col">
                             <span className="truncate font-semibold">
                               {note?.title}
                             </span>
