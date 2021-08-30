@@ -38,6 +38,7 @@ export type CreateShareRequest = {
 
 export type UserInfo = {
   balance: string;
+  remaining_days: string;
 };
 
 export enum Status {
