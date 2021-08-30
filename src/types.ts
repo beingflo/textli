@@ -36,6 +36,10 @@ export type CreateShareRequest = {
   note: string;
 };
 
+export type UserInfo = {
+  balance: string;
+};
+
 export enum Status {
   OK = 'OK',
   REDIRECT = 'REDIRECT',
