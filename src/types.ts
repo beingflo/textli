@@ -25,6 +25,14 @@ export type NoteListEntry = {
   encrypted_key: string;
 };
 
+export type ParsedNoteListEntry = {
+  id: string;
+  created_at: string;
+  modified_at: string;
+  metainfo: { title: string; tags: string };
+  encrypted_key: string;
+};
+
 export type Share = {
   token: string;
   note_token: string;
