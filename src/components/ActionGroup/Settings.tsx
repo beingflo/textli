@@ -288,7 +288,14 @@ export const Settings = ({
                       </ul>
                     </Tab.Panel>
                     <Tab.Panel>Coming soon :)</Tab.Panel>
-                    <Tab.Panel>Coming soon :)</Tab.Panel>
+                    <Tab.Panel>
+                      <div className="flex flex-col">
+                        <span className="font-semibold">Change password</span>
+                        <span className="font-semibold text-red-500 mt-4">
+                          Delete account
+                        </span>
+                      </div>
+                    </Tab.Panel>
                     <Tab.Panel>Coming soon :)</Tab.Panel>
                   </Tab.Panels>
                 </div>
