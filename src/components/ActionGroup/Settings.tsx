@@ -14,6 +14,7 @@ import {
   BinIcon,
   CashIcon,
   CloseIcon,
+  DataIcon,
   EyeIcon,
   KeyIcon,
   LinkIcon,
@@ -203,6 +204,16 @@ export const Settings = ({
                         </button>
                       )}
                     </Tab>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <DataIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Export
+                          </span>
+                        </button>
+                      )}
+                    </Tab>
                   </Tab.List>
                   <Tab.Panels className="flex-grow ml-8 min-w-0">
                     <Tab.Panel className="flex flex-col h-full">
@@ -251,7 +262,7 @@ export const Settings = ({
                         ))}
                       </ul>
                     </Tab.Panel>
-                    <Tab.Panel>Content 3</Tab.Panel>
+                    <Tab.Panel>Coming soon :)</Tab.Panel>
                     <Tab.Panel>
                       <ul className="space-y-4">
                         {getProcessedNotes?.map((note: any) => (
@@ -276,8 +287,9 @@ export const Settings = ({
                         ))}
                       </ul>
                     </Tab.Panel>
-                    <Tab.Panel>Content 5</Tab.Panel>
-                    <Tab.Panel>Content 6</Tab.Panel>
+                    <Tab.Panel>Coming soon :)</Tab.Panel>
+                    <Tab.Panel>Coming soon :)</Tab.Panel>
+                    <Tab.Panel>Coming soon :)</Tab.Panel>
                   </Tab.Panels>
                 </div>
               </Tab.Group>
