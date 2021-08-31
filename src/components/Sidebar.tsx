@@ -55,6 +55,9 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
 
   const handleSelection = React.useCallback(
     (id: string) => {
+      // Scroll to top incase we are further down the sidebar
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
       setNoteStatus(NoteStatus.INPROGRESS, dispatch);
       get_note(id, dispatch, () => {
         setNoteStatus(NoteStatus.SYNCED, dispatch);
