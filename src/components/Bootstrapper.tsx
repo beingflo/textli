@@ -9,6 +9,7 @@ import App from './App';
 import { SpinnerPage } from './Spinner';
 import Start from './Start';
 import { user_info } from '../api/user_api';
+import { list_shares } from '../api/share_api';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ const Bootstrapper = (): React.ReactElement => {
   React.useEffect(() => {
     get_notes(dispatch);
     user_info(dispatch);
+    list_shares(dispatch);
     setWaiting(false);
   }, [dispatch]);
 

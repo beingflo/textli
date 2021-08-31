@@ -25,6 +25,12 @@ export type NoteListEntry = {
   encrypted_key: string;
 };
 
+export type Share = {
+  token: string;
+  note_token: string;
+  created_at: string;
+};
+
 export type UserCredentials = {
   name: string;
   password: string;

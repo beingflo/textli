@@ -7,11 +7,19 @@ import {
 } from './currentNoteReducer';
 import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
-import { Note, NoteListEntry, NoteStatus, Status, UserInfo } from '../types';
+import {
+  Note,
+  NoteListEntry,
+  NoteStatus,
+  Share,
+  Status,
+  UserInfo,
+} from '../types';
 import { EditorReducer, EDITOR_SET_EDITOR } from './editorReducer';
 import { Editor } from '@tiptap/react';
 import { NoteStatusReducer, NOTE_STATUS_SET } from './noteStatusReducer';
 import { UserInfoReducer, USER_INFO_SET_INFO } from './userInfoReducer';
+import { SharesReducer, SHARES_SET_SHARES } from './sharesReducer';
 
 export type State = {
   waiting: number;
@@ -21,6 +29,7 @@ export type State = {
   editor: Editor | null;
   noteStatus: NoteStatus;
   userInfo: UserInfo | undefined;
+  shares: Array<Share>;
 };
 
 export type Action = {
@@ -38,6 +47,7 @@ const initialState: State = {
   editor: null,
   noteStatus: NoteStatus.SYNCED,
   userInfo: undefined,
+  shares: [],
 };
 
 export const AppContext = React.createContext<{
@@ -63,6 +73,7 @@ export const ContextProvider = ({
       [EDITOR_SET_EDITOR]: EditorReducer,
       [NOTE_STATUS_SET]: NoteStatusReducer,
       [USER_INFO_SET_INFO]: UserInfoReducer,
+      [SHARES_SET_SHARES]: SharesReducer,
     }),
     []
   );

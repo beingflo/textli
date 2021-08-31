@@ -1,10 +1,12 @@
 import config from '../config.json';
 import { mapError, handleException } from './index';
 import { CreateShareRequest } from '../types';
+import { setShares } from '../context/sharesReducer';
+import { AppDispatch } from '../context';
 
 const SHARE_URL = `${config.api_url}/share`;
 
-export const list_shares = (): void => {
+export const list_shares = (dispatch: AppDispatch): void => {
   fetch(SHARE_URL, {
     credentials: 'include',
     method: 'GET',
@@ -13,6 +15,10 @@ export const list_shares = (): void => {
     },
   })
     .then(mapError)
+    .then((response) => response.json())
+    .then((data) => {
+      setShares(data, dispatch);
+    })
     .catch(handleException);
 };
 

@@ -6,6 +6,7 @@ import {
   undelete_note,
 } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
+import { useShares } from '../../context/sharesReducer';
 import { useUserInfo } from '../../context/userInfoReducer';
 import {
   BinIcon,
@@ -29,6 +30,7 @@ export const Settings = ({
 }: Props): React.ReactElement => {
   const userInfo = useUserInfo();
   const dispatch = useAppDispatch();
+  const shares = useShares();
 
   const balance = parseFloat(userInfo?.balance ?? '0').toFixed(2);
   const balance_days = parseFloat(userInfo?.remaining_days ?? '0');
