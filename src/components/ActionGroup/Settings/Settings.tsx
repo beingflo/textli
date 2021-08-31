@@ -4,12 +4,12 @@ import {
   get_deleted_notes,
   get_notes,
   undelete_note,
-} from '../../api/note_api';
-import { delete_share, list_shares } from '../../api/share_api';
-import { useAppDispatch } from '../../context';
-import { useNoteList } from '../../context/noteListReducer';
-import { useShares } from '../../context/sharesReducer';
-import { useUserInfo } from '../../context/userInfoReducer';
+} from '../../../api/note_api';
+import { delete_share, list_shares } from '../../../api/share_api';
+import { useAppDispatch } from '../../../context';
+import { useNoteList } from '../../../context/noteListReducer';
+import { useShares } from '../../../context/sharesReducer';
+import { useUserInfo } from '../../../context/userInfoReducer';
 import {
   BinIcon,
   CashIcon,
@@ -19,13 +19,13 @@ import {
   KeyIcon,
   LinkIcon,
   UsersIcon,
-} from '../../icons';
+} from '../../../icons';
 import {
   DeletedNote,
   NoteListEntry,
   ParsedNoteListEntry,
   Share,
-} from '../../types';
+} from '../../../types';
 
 export type Props = {
   showSettings: boolean;

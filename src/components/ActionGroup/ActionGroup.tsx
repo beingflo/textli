@@ -8,7 +8,7 @@ import { SaveAction } from './SaveAction';
 import { DeleteAction } from './DeleteAction';
 import { NewAction } from './NewAction';
 import '../../style.css';
-import Settings from './Settings';
+import Settings from './Settings/Settings';
 
 export const ActionGroup = (): React.ReactElement => {
   const dispatch = useAppDispatch();
