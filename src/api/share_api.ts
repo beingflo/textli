@@ -4,7 +4,7 @@ import { CreateShareRequest } from '../types';
 import { setShares } from '../context/sharesReducer';
 import { AppDispatch } from '../context';
 
-const SHARE_URL = `${config.api_url}/share`;
+const SHARE_URL = `${config.api_url}/shares`;
 
 export const list_shares = (dispatch: AppDispatch): void => {
   fetch(SHARE_URL, {
