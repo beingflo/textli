@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useAppDispatch } from '../../context';
 import { setCurrentNote } from '../../context/currentNoteReducer';
 import { useAppEditor } from '../../context/editorReducer';
@@ -19,6 +20,16 @@ export const NewAction = (): React.ReactElement => {
 
     setCurrentNote(undefined, dispatch);
   }, [dispatch, editor]);
+
+  useHotkeys(
+    'command+c,ctrl+c',
+    (event: KeyboardEvent) => {
+      handleNew();
+      event.preventDefault();
+    },
+    { enableOnContentEditable: true },
+    [handleNew]
+  );
 
   return (
     <button onClick={handleNew}>

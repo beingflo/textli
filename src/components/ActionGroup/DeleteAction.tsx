@@ -1,5 +1,6 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import {
   delete_note,
   get_note,
@@ -48,6 +49,16 @@ export const DeleteAction = (): React.ReactElement => {
       setNoteStatus(NoteStatus.SYNCED, dispatch);
     });
   }, [currentNote, dispatch, showUndelete, editor]);
+
+  useHotkeys(
+    'command+d,ctrl+d',
+    (event: KeyboardEvent) => {
+      handleDelete();
+      event.preventDefault();
+    },
+    { enableOnContentEditable: true },
+    [handleDelete]
+  );
 
   const handleUndelete = React.useCallback(() => {
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
