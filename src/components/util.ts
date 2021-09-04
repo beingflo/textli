@@ -22,7 +22,10 @@ export const useFocus = (): any => {
   return [htmlElRef, setFocus];
 };
 
-export const generate_key = async (password: string): Promise<CryptoKey> => {
+export const generate_key = async (
+  password: string,
+  salt: Uint8Array
+): Promise<CryptoKey> => {
   const enc = new TextEncoder();
 
   const keyMaterial = await window.crypto.subtle.importKey(
@@ -32,9 +35,6 @@ export const generate_key = async (password: string): Promise<CryptoKey> => {
     false,
     ['deriveBits', 'deriveKey']
   );
-
-  // TODO: store in backend
-  const salt = window.crypto.getRandomValues(new Uint8Array(16));
 
   const key = window.crypto.subtle.deriveKey(
     {

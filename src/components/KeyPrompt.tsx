@@ -10,7 +10,9 @@ const KeyPrompt = (): React.ReactElement => {
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
   const submit = React.useCallback(async () => {
-    const key = await generate_key(password);
+    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    const key = await generate_key(password, salt);
+
     console.log(key);
   }, [dispatch, password]);
 
