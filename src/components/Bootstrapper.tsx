@@ -8,6 +8,7 @@ import { Status } from '../types';
 import App from './App';
 import { SpinnerPage } from './Spinner';
 import Start from './Start';
+import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
 
@@ -16,6 +17,10 @@ const Bootstrapper = (): React.ReactElement => {
   const status = useStatus();
 
   const [waiting, setWaiting] = React.useState(true);
+
+  const [showKeyPrompt, setShowKeyPrompt] = React.useState(
+    !localStorage.getItem('key')
+  );
 
   React.useEffect(() => {
     get_notes(dispatch);
@@ -39,7 +44,15 @@ const Bootstrapper = (): React.ReactElement => {
       {waiting ? (
         <SpinnerPage />
       ) : (
-        <>{status === Status.OK ? <App /> : <Start />}</>
+        <>
+          {status === Status.OK && !showKeyPrompt ? (
+            <App />
+          ) : status === Status.OK ? (
+            <KeyPrompt setDone={() => setShowKeyPrompt(false)} />
+          ) : (
+            <Start />
+          )}
+        </>
       )}
     </>
   );
