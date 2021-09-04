@@ -1,16 +1,17 @@
 export type NoteSaveRequest = {
-  metainfo: string;
+  metadata: string;
   content: string;
-  encrypted_key: string;
+  key: string;
+  public: boolean;
 };
 
 export type Note = {
   id: string;
   created_at: string;
   modified_at: string;
-  metainfo: string;
+  metadata: string;
   content: string;
-  encrypted_key: string;
+  key: string;
 };
 
 export type DeletedNote = Note & {
@@ -21,16 +22,18 @@ export type NoteListEntry = {
   id: string;
   created_at: string;
   modified_at: string;
-  metainfo: string;
-  encrypted_key: string;
+  metadata: string;
+  key: string;
+  public: boolean;
 };
 
 export type ParsedNoteListEntry = {
   id: string;
   created_at: string;
   modified_at: string;
-  metainfo: { title: string; tags: string };
-  encrypted_key: string;
+  metadata: { title: string; tags: string };
+  key: string;
+  public: boolean;
 };
 
 export type Share = {

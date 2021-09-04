@@ -90,9 +90,10 @@ export const save_note = (
         id: data?.id,
         created_at: data?.created_at,
         modified_at: data?.modified_at,
-        metainfo: note?.metainfo,
+        metadata: note?.metadata,
         content: note?.content,
-        encrypted_key: note?.encrypted_key,
+        key: note?.key,
+        public: note?.public,
       };
       setCurrentNote(currentNote, dispatch);
     })
@@ -120,8 +121,10 @@ export const update_note = (
     .then((data) => {
       const currentNote = {
         modified_at: data?.modified_at,
-        metainfo: note?.metainfo,
+        metadata: note?.metadata,
         content: note?.content,
+        key: note?.key,
+        public: note?.public,
       };
       updateCurrentNote(currentNote, dispatch);
     })

@@ -1,11 +1,11 @@
 import React from 'react';
 
-export type Metainfo = {
+export type Metadata = {
   title: string;
   tags: string;
 };
 
-export const getMetainfo = (content: string | undefined): string => {
+export const getMetadata = (content: string | undefined): string => {
   const title = new DOMParser().parseFromString(content ?? '', 'text/html');
   const trimmedTitle = title.body.firstElementChild?.textContent ?? '';
 

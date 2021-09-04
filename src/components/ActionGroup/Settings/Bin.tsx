@@ -16,7 +16,7 @@ export const Bin = (): React.ReactElement => {
   const getProcessedNotes = React.useMemo(() => {
     const parsedNotes = deletedNotes?.map((note: DeletedNote) => ({
       ...note,
-      ...JSON.parse(note?.metainfo),
+      ...JSON.parse(note?.metadata),
     }));
 
     return parsedNotes.sort((a: any, b: any) => {

@@ -25,14 +25,14 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const [inputRef, setInputFocus] = useFocus();
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
-    const metainfo: { title: string; tags: string } = JSON.parse(
-      note?.metainfo
+    const metadata: { title: string; tags: string } = JSON.parse(
+      note?.metadata
     );
 
     // TODO more sophisticated searching (fuzzy, multiword, etc)
     return (
-      metainfo?.title?.toLowerCase().includes(query.toLowerCase()) ||
-      metainfo?.tags?.toLocaleLowerCase().includes(query.toLowerCase())
+      metadata?.title?.toLowerCase().includes(query.toLowerCase()) ||
+      metadata?.tags?.toLocaleLowerCase().includes(query.toLowerCase())
     );
   });
 
@@ -125,7 +125,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
                     <span
                       className={`${isSelected(note?.id) ? 'highlight' : ''}`}
                     >
-                      {JSON.parse(note?.metainfo)?.title}
+                      {JSON.parse(note?.metadata)?.title}
                     </span>
                   </li>
                 ))}

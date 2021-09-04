@@ -13,7 +13,7 @@ export const Shares = (): React.ReactElement => {
   const getSharesInfo = React.useMemo(() => {
     const parsedNotes = noteList?.map((note: NoteListEntry) => ({
       ...note,
-      ...JSON.parse(note?.metainfo),
+      ...JSON.parse(note?.metadata),
     }));
 
     const matchedShares = shares.map((share: Share) => {

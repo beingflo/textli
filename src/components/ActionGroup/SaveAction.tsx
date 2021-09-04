@@ -7,7 +7,7 @@ import { useAppEditor } from '../../context/editorReducer';
 import { setNoteStatus, useNoteStatus } from '../../context/noteStatusReducer';
 import { CheckIcon, SaveIcon } from '../../icons';
 import { NoteStatus } from '../../types';
-import { getMetainfo } from '../util';
+import { getMetadata } from '../util';
 
 export const SaveAction = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -33,8 +33,9 @@ export const SaveAction = (): React.ReactElement => {
     // New note
     if (!currentNote) {
       const request = {
-        metainfo: getMetainfo(content),
-        encrypted_key: '',
+        metadata: getMetadata(content),
+        key: '',
+        public: false,
         content: content,
       };
 
@@ -48,8 +49,9 @@ export const SaveAction = (): React.ReactElement => {
 
     // Existing note
     const request = {
-      metainfo: getMetainfo(content),
-      encrypted_key: '',
+      metadata: getMetadata(content),
+      key: '',
+      public: false,
       content: content,
     };
 
