@@ -21,3 +21,33 @@ export const useFocus = (): any => {
 
   return [htmlElRef, setFocus];
 };
+
+export const generate_key = async (password: string): Promise<CryptoKey> => {
+  const enc = new TextEncoder();
+
+  const keyMaterial = await window.crypto.subtle.importKey(
+    'raw',
+    enc.encode(password),
+    'PBKDF2',
+    false,
+    ['deriveBits', 'deriveKey']
+  );
+
+  // TODO: store in backend
+  const salt = window.crypto.getRandomValues(new Uint8Array(16));
+
+  const key = window.crypto.subtle.deriveKey(
+    {
+      name: 'PBKDF2',
+      salt: salt,
+      iterations: 100000,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt', 'decrypt']
+  );
+
+  return key;
+};

@@ -18,9 +18,7 @@ const Bootstrapper = (): React.ReactElement => {
 
   const [waiting, setWaiting] = React.useState(true);
 
-  const [showKeyPrompt, setShowKeyPrompt] = React.useState(
-    !localStorage.getItem('key')
-  );
+  const [showKeyPrompt, setShowKeyPrompt] = [true, () => true];
 
   React.useEffect(() => {
     get_notes(dispatch);
@@ -48,7 +46,7 @@ const Bootstrapper = (): React.ReactElement => {
           {status === Status.OK && !showKeyPrompt ? (
             <App />
           ) : status === Status.OK ? (
-            <KeyPrompt setDone={() => setShowKeyPrompt(false)} />
+            <KeyPrompt />
           ) : (
             <Start />
           )}

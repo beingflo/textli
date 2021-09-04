@@ -1,25 +1,18 @@
 import React from 'react';
 import { useAppDispatch } from '../context';
 import '../style.css';
+import { generate_key } from './util';
 
-export type Props = {
-  setDone: () => void;
-};
-
-const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
+const KeyPrompt = (): React.ReactElement => {
   const dispatch = useAppDispatch();
 
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
-  const submit = React.useCallback(
-    (event: any) => {
-      localStorage.setItem('key', 'test');
-      setDone();
-      event.preventDefault();
-    },
-    [dispatch, password]
-  );
+  const submit = React.useCallback(async () => {
+    const key = await generate_key(password);
+    console.log(key);
+  }, [dispatch, password]);
 
   const passwordMatch: boolean =
     password === confirmPassword && password !== '';
@@ -44,7 +37,13 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
           </div>
         </div>
         <div className="mt-12">
-          <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
+          <form
+            className="grid grid-cols-1 gap-6"
+            onSubmit={(event) => {
+              event.preventDefault();
+              submit();
+            }}
+          >
             <label className="block">
               <span className="text-gray-700 text-sm">Password</span>
               <input

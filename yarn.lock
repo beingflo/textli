@@ -1604,6 +1604,13 @@ html-tags@^3.1.0:
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-3.1.0.tgz#7b5e6f7e665e9fb41f30007ed9e0d41e97fb2140"
   integrity sha512-1qYz89hW3lFDEazhjW0yVAV87lw8lVkrJocr72XmBkMKsoSVJCQx3W8BXsC7hO2qAt8BoVjYjtAcZ9perqGnNg==
 
+idb-keyval@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/idb-keyval/-/idb-keyval-5.1.3.tgz#6ef5dff371897c23f144322dc6374eadd6a345d9"
+  integrity sha512-N9HbCK/FaXSRVI+k6Xq4QgWxbcZRUv+SfG1y7HJ28JdV8yEJu6k+C/YLea7npGckX2DQJeEVuMc4bKOBeU/2LQ==
+  dependencies:
+    safari-14-idb-fix "^1.0.4"
+
 ignore@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
@@ -2426,6 +2433,11 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+safari-14-idb-fix@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/safari-14-idb-fix/-/safari-14-idb-fix-1.0.4.tgz#5c68ba63e2a8ae0d89a0aa1e13fe89e3aef7da19"
+  integrity sha512-4+Y2baQdgJpzu84d0QjySl70Kyygzf0pepVg8NVg4NnQEPpfC91fAn0baNvtStlCjUUxxiu0BOMiafa98fRRuA==
 
 safe-buffer@~5.1.1:
   version "5.1.2"
