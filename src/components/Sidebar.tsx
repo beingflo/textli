@@ -10,6 +10,7 @@ import { ArrowLeftIcon, ArrowRightIcon, ClearIcon, SearchIcon } from '../icons';
 import { useAppEditor } from '../context/editorReducer';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 export type Props = {
   query: string;
@@ -23,6 +24,18 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const editor = useAppEditor();
 
   const [inputRef, setInputFocus] = useFocus();
+
+  const openButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  useHotkeys(
+    'command+/,ctrl+/',
+    (event: KeyboardEvent) => {
+      openButtonRef?.current?.click();
+      event.preventDefault();
+    },
+    { enableOnContentEditable: true },
+    [openButtonRef]
+  );
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
     const metadata: { title: string; tags: string } = JSON.parse(
@@ -70,7 +83,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   return (
     <>
       <Popover>
-        <Popover.Button className="pl-6 pt-6">
+        <Popover.Button ref={openButtonRef} className="pl-6 pt-6 outline-none">
           <ArrowRightIcon className="h-6 w-6 text-gray-700 hover:translate-x-0.5 transform transition active:scale-90" />
         </Popover.Button>
 
