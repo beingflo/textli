@@ -38,7 +38,7 @@ export type ParsedNoteListEntry = {
 
 export type Share = {
   token: string;
-  note_token: string;
+  note: string;
   created_at: string;
 };
 

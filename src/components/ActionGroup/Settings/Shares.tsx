@@ -18,7 +18,7 @@ export const Shares = (): React.ReactElement => {
 
     const matchedShares = shares.map((share: Share) => {
       const title = parsedNotes.find(
-        (note: ParsedNoteListEntry) => note?.id === share?.note_token
+        (note: ParsedNoteListEntry) => note?.id === share?.note
       )?.title;
 
       return { ...share, title };
