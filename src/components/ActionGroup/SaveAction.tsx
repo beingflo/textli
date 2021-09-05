@@ -8,6 +8,7 @@ import { useAppEditor } from '../../context/editorReducer';
 import { setNoteStatus, useNoteStatus } from '../../context/noteStatusReducer';
 import { CheckIcon, SaveIcon } from '../../icons';
 import { NoteStatus } from '../../types';
+import { encrypt_note } from '../crypto';
 import { getMetadata } from '../util';
 
 export const SaveAction = (): React.ReactElement => {
@@ -33,18 +34,21 @@ export const SaveAction = (): React.ReactElement => {
 
     // New note
     if (!currentNote) {
-      const request = {
-        metadata: getMetadata(content),
-        key: '',
-        public: false,
-        content: content,
-      };
+      encrypt_note(content, getMetadata(content)).then((encryptionResult) => {
+        const request = {
+          metadata: encryptionResult.encrypted_metadata,
+          key: JSON.stringify(encryptionResult.key),
+          public: false,
+          content: encryptionResult.encrypted_content,
+        };
 
-      setNoteStatus(NoteStatus.INPROGRESS, dispatch);
-      save_note(request, dispatch, () => {
-        get_notes(dispatch);
-        setNoteStatus(NoteStatus.SYNCED, dispatch);
+        setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+        save_note(request, dispatch, () => {
+          get_notes(dispatch);
+          setNoteStatus(NoteStatus.SYNCED, dispatch);
+        });
       });
+
       return;
     }
 
