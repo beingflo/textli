@@ -46,7 +46,7 @@ export const generate_key = async (
     keyMaterial,
     { name: 'AES-GCM', length: 256 },
     false,
-    ['encrypt', 'decrypt']
+    ['encrypt', 'decrypt', 'wrapKey', 'unwrapKey']
   );
 
   return key;
