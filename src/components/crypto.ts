@@ -20,10 +20,38 @@ export const generate_main_key = async (
       hash: 'SHA-256',
     },
     keyMaterial,
-    { name: 'AES-GCM', length: 256 },
+    { name: 'AES-KW', length: 256 },
     false,
-    ['encrypt', 'decrypt', 'wrapKey', 'unwrapKey']
+    ['wrapKey', 'unwrapKey']
   );
 
   return key;
+};
+
+export const generate_note_key = async (): Promise<CryptoKey> => {
+  const key = window.crypto.subtle.generateKey(
+    {
+      name: 'AES-GCM',
+      length: 256,
+    },
+    true,
+    ['encrypt', 'decrypt']
+  );
+
+  return key;
+};
+
+export const wrap_note_key = async (
+  mainKey: CryptoKey,
+  noteKey: CryptoKey
+): Promise<string> => {
+  const dec = new TextDecoder();
+  const cypher = await window.crypto.subtle.wrapKey(
+    'raw',
+    noteKey,
+    mainKey,
+    'AES-KW'
+  );
+
+  return dec.decode(cypher);
 };
