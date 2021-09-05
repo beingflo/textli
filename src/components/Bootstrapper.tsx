@@ -11,6 +11,7 @@ import Start from './Start';
 import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
+import { keys } from 'idb-keyval';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,15 @@ const Bootstrapper = (): React.ReactElement => {
 
   const [waiting, setWaiting] = React.useState(true);
 
-  const [showKeyPrompt, setShowKeyPrompt] = [true, () => true];
+  const [showKeyPrompt, setShowKeyPrompt] = React.useState(true);
+
+  React.useEffect(() => {
+    keys().then((keys) => {
+      if (keys.length > 0) {
+        setShowKeyPrompt(false);
+      }
+    });
+  }, [setShowKeyPrompt]);
 
   React.useEffect(() => {
     get_notes(dispatch);
@@ -46,7 +55,7 @@ const Bootstrapper = (): React.ReactElement => {
           {status === Status.OK && !showKeyPrompt ? (
             <App />
           ) : status === Status.OK ? (
-            <KeyPrompt />
+            <KeyPrompt setDone={() => setShowKeyPrompt(false)} />
           ) : (
             <Start />
           )}

@@ -1,20 +1,25 @@
+import { set } from 'idb-keyval';
 import React from 'react';
-import { useAppDispatch } from '../context';
 import '../style.css';
 import { generate_key } from './util';
 
-const KeyPrompt = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
+export type Props = {
+  setDone: () => void;
+};
+
+const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
+  const [name, setName] = React.useState('personal');
 
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
   const submit = React.useCallback(async () => {
     const salt = window.crypto.getRandomValues(new Uint8Array(16));
+
     const key = await generate_key(password, salt);
 
-    console.log(key);
-  }, [dispatch, password]);
+    set(name, key).then(setDone);
+  }, [password, name, setDone]);
 
   const passwordMatch: boolean =
     password === confirmPassword && password !== '';
@@ -27,18 +32,24 @@ const KeyPrompt = (): React.ReactElement => {
         <span className="text-2xl font-bold mx-auto highlight">
           Encryption Password
         </span>
-        <div className="mt-8">
+        <div className="mt-6">
           <p>
             This password is used to derive your encryption & decryption key.
             Keep it save!
           </p>
-          <div className="mt-4">
+          <div className="mt-1">
             <span className="text-white bg-red-500">
               If you lose this, your data will be unrecoverable.
             </span>
           </div>
+          <div className="mt-1">
+            <span>
+              You can add additional passwords in the settings to have multiple
+              separate workspaces.
+            </span>
+          </div>
         </div>
-        <div className="mt-12">
+        <div className="mt-8">
           <form
             className="grid grid-cols-1 gap-6"
             onSubmit={(event) => {
@@ -46,6 +57,16 @@ const KeyPrompt = (): React.ReactElement => {
               submit();
             }}
           >
+            <label className="block">
+              <span className="text-gray-700 text-sm">Name this workspace</span>
+              <input
+                type="text"
+                className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
+                placeholder="Name"
+                value={name}
+                onChange={(event) => setName(event?.target?.value)}
+              />
+            </label>
             <label className="block">
               <span className="text-gray-700 text-sm">Password</span>
               <input
