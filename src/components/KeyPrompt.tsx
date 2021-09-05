@@ -1,5 +1,7 @@
 import { set } from 'idb-keyval';
 import React from 'react';
+import { user_salt } from '../api/user_api';
+import { useUserInfo } from '../context/userInfoReducer';
 import '../style.css';
 import { generate_main_key } from './crypto';
 
@@ -8,18 +10,27 @@ export type Props = {
 };
 
 const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
+  const user_info = useUserInfo();
   const [name, setName] = React.useState('personal');
 
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
   const submit = React.useCallback(async () => {
-    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    let salt;
+    if (user_info?.salt) {
+      salt = new TextEncoder().encode(user_info?.salt);
+    } else {
+      salt = window.crypto.getRandomValues(new Uint8Array(16));
+    }
+    const saltString = new TextDecoder().decode(salt);
 
     const key = await generate_main_key(password, salt);
 
-    set(name, key).then(setDone);
-  }, [password, name, setDone]);
+    user_salt(saltString, () => {
+      set(name, key).then(setDone);
+    });
+  }, [password, name, setDone, user_info]);
 
   const passwordMatch: boolean =
     password === confirmPassword && password !== '';

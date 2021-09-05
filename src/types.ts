@@ -59,6 +59,7 @@ export type CreateShareRequest = {
 
 export type UserInfo = {
   balance: string;
+  salt: string;
   remaining_days: string;
 };
 

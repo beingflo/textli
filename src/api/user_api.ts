@@ -105,3 +105,21 @@ export const user_info = (
     })
     .catch(onFailure);
 };
+
+export const user_salt = (
+  salt: string,
+  onSuccess: (res: Response) => void = () => {},
+  onFailure: any = handleException
+): void => {
+  fetch(`${USER_URL}/salt`, {
+    credentials: 'include',
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ salt }),
+  })
+    .then(mapError)
+    .then(onSuccess)
+    .catch(onFailure);
+};
