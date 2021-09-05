@@ -1,7 +1,7 @@
 import { set } from 'idb-keyval';
 import React from 'react';
 import '../style.css';
-import { generate_key } from './util';
+import { generate_main_key } from './crypto';
 
 export type Props = {
   setDone: () => void;
@@ -16,7 +16,7 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
   const submit = React.useCallback(async () => {
     const salt = window.crypto.getRandomValues(new Uint8Array(16));
 
-    const key = await generate_key(password, salt);
+    const key = await generate_main_key(password, salt);
 
     set(name, key).then(setDone);
   }, [password, name, setDone]);
