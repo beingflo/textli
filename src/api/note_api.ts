@@ -1,13 +1,15 @@
 import { decrypt_note } from '../components/crypto';
 import config from '../config.json';
-import { AppDispatch } from '../context';
+import { AppDispatch, useAppDispatch } from '../context';
 import {
   setCurrentNote,
   updateCurrentNote,
 } from '../context/currentNoteReducer';
+import { useAppEditor } from '../context/editorReducer';
 import { setNoteList } from '../context/noteListReducer';
+import { setNoteStatus } from '../context/noteStatusReducer';
 import { setStatus } from '../context/statusReducer';
-import { NoteSaveRequest, Status } from '../types';
+import { Note, NoteSaveRequest, Status, NoteStatus } from '../types';
 import { mapError, handleException } from './index';
 
 const NOTE_URL = `${config.api_url}/notes`;
@@ -48,13 +50,8 @@ export const get_deleted_notes = (
     .catch(onFailure);
 };
 
-export const get_note = (
-  id: string,
-  dispatch: AppDispatch,
-  onSuccess: () => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(`${NOTE_URL}/${id}`, {
+export const get_note = (id: string): Promise<Note> => {
+  return fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
     method: 'GET',
     headers: {
@@ -62,14 +59,31 @@ export const get_note = (
     },
   })
     .then(mapError)
-    .then((response) => response.json())
-    .then((data) => {
-      decrypt_note(data?.key, data?.metadata, data?.content).then((result) => {
-        setCurrentNote({ ...data, ...result }, dispatch);
-      });
-    })
-    .then(onSuccess)
-    .catch(onFailure);
+    .then((response) => response.json());
+};
+
+export const useGetNote = (): ((id: string) => Promise<void>) => {
+  const dispatch = useAppDispatch();
+  const editor = useAppEditor();
+
+  return async (id: string) => {
+    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+    const note = await get_note(id).catch(handleException);
+    setNoteStatus(NoteStatus.SYNCED, dispatch);
+
+    if (!note) {
+      return;
+    }
+
+    const decrypted_note = await decrypt_note(
+      note?.key,
+      note?.metadata,
+      note?.content
+    );
+
+    setCurrentNote({ ...note, ...decrypted_note }, dispatch);
+    editor?.commands.focus();
+  };
 };
 
 export const save_note = (

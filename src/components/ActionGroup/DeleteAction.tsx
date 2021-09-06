@@ -3,9 +3,9 @@ import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
   delete_note,
-  get_note,
   get_notes,
   undelete_note,
+  useGetNote,
 } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
 import {
@@ -21,6 +21,7 @@ export const DeleteAction = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
+  const getNote = useGetNote();
 
   const [showUndelete, setShowUndelete] = React.useState(false);
   const [deletedNote, setDeletedNote] = React.useState('');
@@ -65,8 +66,7 @@ export const DeleteAction = (): React.ReactElement => {
 
     undelete_note(deletedNote, () => {
       get_notes(dispatch);
-      get_note(deletedNote, dispatch);
-      setNoteStatus(NoteStatus.SYNCED, dispatch);
+      getNote(deletedNote);
       setDeletedNote('');
       setShowUndelete(false);
     });

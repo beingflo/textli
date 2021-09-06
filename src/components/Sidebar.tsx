@@ -1,17 +1,16 @@
 import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
-import { NoteListEntry, NoteStatus } from '../types';
+import { NoteListEntry } from '../types';
 import '../style.css';
 import { useAppDispatch } from '../context';
-import { get_note } from '../api/note_api';
 import { useCurrentNote } from '../context/currentNoteReducer';
-import { setNoteStatus } from '../context/noteStatusReducer';
 import { ArrowLeftIcon, ArrowRightIcon, ClearIcon, SearchIcon } from '../icons';
 import { useAppEditor } from '../context/editorReducer';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { decrypt_note } from './crypto';
+import { useGetNote } from '../api/note_api';
 
 export type Props = {
   query: string;
@@ -23,6 +22,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
+  const getNote = useGetNote();
 
   const [notes, setNotes] = React.useState<Array<NoteListEntry>>([]);
 
@@ -106,11 +106,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
       // Scroll to top incase we are further down the sidebar
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      setNoteStatus(NoteStatus.INPROGRESS, dispatch);
-      get_note(id, dispatch, () => {
-        setNoteStatus(NoteStatus.SYNCED, dispatch);
-        editor?.commands.focus();
-      });
+      getNote(id);
     },
     [dispatch, editor]
   );

@@ -12,6 +12,7 @@ export type Note = {
   metadata: string;
   content: string;
   key: string;
+  public: boolean;
 };
 
 export type DeletedNote = Note & {
