@@ -53,17 +53,19 @@ export const SaveAction = (): React.ReactElement => {
     }
 
     // Existing note
-    const request = {
-      metadata: getMetadata(content),
-      key: '',
-      public: false,
-      content: content,
-    };
+    encrypt_note(content, getMetadata(content)).then((encryptionResult) => {
+      const request = {
+        metadata: encryptionResult.encrypted_metadata,
+        key: JSON.stringify(encryptionResult.key),
+        public: false,
+        content: encryptionResult.encrypted_content,
+      };
 
-    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
-    update_note(currentNote?.id ?? '', request, dispatch, () => {
-      get_notes(dispatch);
-      setNoteStatus(NoteStatus.SYNCED, dispatch);
+      setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+      update_note(currentNote?.id ?? '', request, dispatch, () => {
+        get_notes(dispatch);
+        setNoteStatus(NoteStatus.SYNCED, dispatch);
+      });
     });
   }, [currentNote, dispatch, editor, noteStatus]);
 
