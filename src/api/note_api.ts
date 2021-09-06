@@ -1,3 +1,4 @@
+import { decrypt_note } from '../components/crypto';
 import config from '../config.json';
 import { AppDispatch } from '../context';
 import {
@@ -63,7 +64,9 @@ export const get_note = (
     .then(mapError)
     .then((response) => response.json())
     .then((data) => {
-      setCurrentNote(data, dispatch);
+      decrypt_note(data?.key, data?.metadata, data?.content).then((result) => {
+        setCurrentNote({ ...data, ...result }, dispatch);
+      });
     })
     .then(onSuccess)
     .catch(onFailure);
