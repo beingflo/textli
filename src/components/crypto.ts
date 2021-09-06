@@ -1,9 +1,20 @@
 import { get } from 'idb-keyval';
 
+export type KeyMaterial = {
+  wrapped_key: string;
+  iv_content: string;
+  iv_metadata: string;
+};
+
 export type EncryptionResult = {
   encrypted_content: string;
   encrypted_metadata: string;
-  key: { wrapped_key: string; iv_content: string; iv_metadata: string };
+  key: KeyMaterial;
+};
+
+export type DecryptionResult = {
+  content: string;
+  metadata: string;
 };
 
 export const generate_main_key = async (
@@ -56,12 +67,36 @@ export const wrap_note_key = async (
   return window.crypto.subtle.wrapKey('raw', noteKey, mainKey, 'AES-KW');
 };
 
+export const arrayBuffer2string = (
+  buffer: ArrayBuffer | Uint8Array
+): string => {
+  return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+};
+
+export const string2arrayBuffer = (str: string): ArrayBuffer => {
+  return Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
+};
+
+export const unwrap_note_key = async (
+  mainKey: CryptoKey,
+  wrapped_key: ArrayBuffer
+): Promise<CryptoKey> => {
+  return window.crypto.subtle.unwrapKey(
+    'raw',
+    wrapped_key,
+    mainKey,
+    'AES-KW',
+    'AES-GCM',
+    false,
+    ['encrypt', 'decrypt']
+  );
+};
+
 export const encrypt_note = async (
   content: string,
   metadata: string
 ): Promise<EncryptionResult> => {
   const enc = new TextEncoder();
-  const dec = new TextDecoder();
 
   const key = await generate_note_key();
   const main_key = await get('personal');
@@ -93,12 +128,66 @@ export const encrypt_note = async (
   const wrapped_key = await wrap_note_key(main_key, key);
 
   return {
-    encrypted_content: dec.decode(await cypher_content),
-    encrypted_metadata: dec.decode(await cypher_metadata),
+    encrypted_content: arrayBuffer2string(await cypher_content),
+    encrypted_metadata: arrayBuffer2string(await cypher_metadata),
     key: {
-      wrapped_key: dec.decode(wrapped_key),
-      iv_content: dec.decode(iv_content),
-      iv_metadata: dec.decode(iv_metadata),
+      wrapped_key: arrayBuffer2string(wrapped_key),
+      iv_content: arrayBuffer2string(iv_content),
+      iv_metadata: arrayBuffer2string(iv_metadata),
     },
+  };
+};
+
+export const decrypt_note = async (
+  key: string,
+  encrypted_metadata?: string,
+  encrypted_content?: string
+): Promise<DecryptionResult | null> => {
+  const dec = new TextDecoder();
+
+  const main_key = await get('personal');
+
+  if (!main_key) {
+    return null;
+  }
+
+  const keyMaterial: KeyMaterial = JSON.parse(key);
+
+  const note_key = await unwrap_note_key(
+    main_key,
+    string2arrayBuffer(keyMaterial.wrapped_key)
+  );
+
+  let metadata = null;
+  if (encrypted_metadata) {
+    const iv_metadata = string2arrayBuffer(keyMaterial.iv_metadata);
+
+    metadata = await window.crypto.subtle.decrypt(
+      {
+        name: 'AES-GCM',
+        iv: iv_metadata,
+      },
+      note_key,
+      string2arrayBuffer(encrypted_metadata)
+    );
+  }
+
+  let content = null;
+  if (encrypted_content) {
+    const iv_content = string2arrayBuffer(keyMaterial.iv_content);
+
+    content = await window.crypto.subtle.decrypt(
+      {
+        name: 'AES-GCM',
+        iv: iv_content,
+      },
+      note_key,
+      string2arrayBuffer(encrypted_content)
+    );
+  }
+
+  return {
+    content: content ? dec.decode(content) : '',
+    metadata: metadata ? dec.decode(metadata) : '',
   };
 };

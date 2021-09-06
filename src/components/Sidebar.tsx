@@ -11,6 +11,7 @@ import { useAppEditor } from '../context/editorReducer';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { decrypt_note } from './crypto';
 
 export type Props = {
   query: string;
@@ -18,10 +19,40 @@ export type Props = {
 };
 
 export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
-  const notes = useNoteList();
+  const encrypted_notes = useNoteList();
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
+
+  const [notes, setNotes] = React.useState<Array<NoteListEntry>>([]);
+
+  React.useEffect(() => {
+    const decrypt_notes = async () => {
+      Promise.all(
+        encrypted_notes.map(
+          async (note: NoteListEntry): Promise<NoteListEntry> => {
+            const decrypted_note = await decrypt_note(
+              note?.key,
+              note?.metadata
+            );
+
+            return {
+              key: note?.key,
+              id: note?.id,
+              created_at: note?.created_at,
+              modified_at: note?.modified_at,
+              public: note?.public,
+              metadata: decrypted_note?.metadata ?? '',
+            };
+          }
+        )
+      ).then((notes: Array<NoteListEntry>) => {
+        setNotes(notes);
+      });
+    };
+
+    decrypt_notes();
+  }, [encrypted_notes, setNotes]);
 
   const [inputRef, setInputFocus] = useFocus();
 
@@ -38,6 +69,10 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   );
 
   const filteredNotes = notes.filter((note: NoteListEntry) => {
+    if (!note?.metadata) {
+      return false;
+    }
+
     const metadata: { title: string; tags: string } = JSON.parse(
       note?.metadata
     );
