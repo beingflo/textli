@@ -2,23 +2,19 @@ import { Transition } from '@headlessui/react';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSaveNote } from '../../api/hooks';
-import { useCurrentNote } from '../../context/currentNoteReducer';
-import { useNoteStatus } from '../../context/noteStatusReducer';
 import { CheckIcon, SaveIcon } from '../../icons';
 
 export const SaveAction = (): React.ReactElement => {
   const saveNote = useSaveNote();
-  const noteStatus = useNoteStatus();
-  const currentNote = useCurrentNote();
 
   const [showSaveConfirm, setShowSaveConfirm] = React.useState(false);
 
-  const handleSave = React.useCallback(() => {
+  const handleSave = () => {
     saveNote();
 
     setShowSaveConfirm(true);
     setTimeout(() => setShowSaveConfirm(false), 1000);
-  }, [currentNote, noteStatus]);
+  };
 
   useHotkeys(
     'command+s,ctrl+s',
