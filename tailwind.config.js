@@ -14,6 +14,7 @@ module.exports = {
         sm: '24rem',
         md: '28rem',
         lg: '32rem',
+        xl: '36rem',
         '2xl': '42rem',
         '3xl': '48rem',
         full: '100%',
