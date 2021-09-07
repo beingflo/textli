@@ -86,7 +86,7 @@ export const DeleteAction = (): React.ReactElement => {
       <button
         onClick={handleDelete}
         disabled={!currentNote}
-        className="disabled:opacity-40"
+        className="disabled:opacity-60"
       >
         <BinIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
       </button>

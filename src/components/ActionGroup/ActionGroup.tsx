@@ -43,7 +43,7 @@ export const ActionGroup = (): React.ReactElement => {
               <button
                 onClick={() => setShowSharing(true)}
                 disabled={!currentNote}
-                className="disabled:opacity-40"
+                className="disabled:opacity-60"
               >
                 <LinkIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
               </button>
