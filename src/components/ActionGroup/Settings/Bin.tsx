@@ -32,11 +32,10 @@ export const Bin = (): React.ReactElement => {
 
   const recover_note = React.useCallback(
     (id: string) => {
-      const success = () => {
+      undelete_note(id).then(() => {
         get_deleted_notes(setDeletedNotes);
         getNoteList();
-      };
-      undelete_note(id, success);
+      });
     },
     [setDeletedNotes, dispatch]
   );
