@@ -8,10 +8,14 @@ import { NewAction } from './NewAction';
 import '../../style.css';
 import Settings from './Settings/Settings';
 import { useGetNoteList } from '../../api/hooks';
+import { Sharing } from './Sharing';
+import { useCurrentNote } from '../../context/currentNoteReducer';
 
 export const ActionGroup = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
+  const currentNote = useCurrentNote();
   const [showSettings, setShowSettings] = React.useState(false);
+  const [showSharing, setShowSharing] = React.useState(false);
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => getNoteList());
@@ -36,7 +40,11 @@ export const ActionGroup = (): React.ReactElement => {
         >
           <Popover.Panel className="absolute top-8 left-0">
             <div className="space-y-2">
-              <button>
+              <button
+                onClick={() => setShowSharing(true)}
+                disabled={!currentNote}
+                className="disabled:opacity-40"
+              >
                 <LinkIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
               </button>
               <button onClick={() => setShowSettings(true)}>
@@ -50,6 +58,7 @@ export const ActionGroup = (): React.ReactElement => {
         </Transition>
       </Popover>
       <Settings showSettings={showSettings} setShowSettings={setShowSettings} />
+      <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
     </div>
   );
 };

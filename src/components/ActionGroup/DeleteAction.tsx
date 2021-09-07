@@ -83,7 +83,11 @@ export const DeleteAction = (): React.ReactElement => {
 
   return (
     <div className="relative">
-      <button onClick={handleDelete}>
+      <button
+        onClick={handleDelete}
+        disabled={!currentNote}
+        className="disabled:opacity-40"
+      >
         <BinIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
       </button>
       <Transition
