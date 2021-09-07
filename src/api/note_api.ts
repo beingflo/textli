@@ -1,12 +1,13 @@
 import config from '../config.json';
 import {
+  DeletedNoteListItemDto,
   NoteDto,
   NoteListItemDto,
   NoteSaveRequest,
   NoteSaveResponse,
   NoteUpdateResponse,
 } from '../types';
-import { mapError, handleException } from './index';
+import { mapError } from './index';
 
 const NOTE_URL = `${config.api_url}/notes`;
 
@@ -22,11 +23,8 @@ export const get_notes = (): Promise<Array<NoteListItemDto>> => {
     .then((response) => response.json());
 };
 
-export const get_deleted_notes = (
-  onSuccess: (data: any) => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(`${NOTE_URL}?deleted`, {
+export const get_deleted_notes = (): Promise<Array<DeletedNoteListItemDto>> => {
+  return fetch(`${NOTE_URL}?deleted`, {
     credentials: 'include',
     method: 'GET',
     headers: {
@@ -34,9 +32,7 @@ export const get_deleted_notes = (
     },
   })
     .then(mapError)
-    .then((response) => response.json())
-    .then(onSuccess)
-    .catch(onFailure);
+    .then((response) => response.json());
 };
 
 export const get_note = (id: string): Promise<NoteDto> => {

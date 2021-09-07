@@ -1,13 +1,25 @@
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
-import { getMetadata, sortNotes } from '../components/util';
+import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
 import { useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
 import { addToNoteList, setNoteList } from '../context/noteListReducer';
 import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
-import { NoteListItem, NoteListItemDto, NoteStatus } from '../types';
-import { get_note, get_notes, save_note, update_note } from './note_api';
+import {
+  DeletedNoteListItem,
+  DeletedNoteListItemDto,
+  NoteListItem,
+  NoteListItemDto,
+  NoteStatus,
+} from '../types';
+import {
+  get_deleted_notes,
+  get_note,
+  get_notes,
+  save_note,
+  update_note,
+} from './note_api';
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
   const dispatch = useAppDispatch();
@@ -153,5 +165,43 @@ export const useGetNoteList = (): (() => Promise<void>) => {
     const sortedNotes = sortNotes(notes);
 
     setNoteList(sortedNotes, dispatch);
+  };
+};
+
+export const useGetDeletedNoteList = (): ((
+  setDeletedNotes: (notes: Array<DeletedNoteListItem>) => void
+) => Promise<void>) => {
+  return async (
+    setDeletedNotes: (notes: Array<DeletedNoteListItem>) => void
+  ) => {
+    const encrypted_notes = await get_deleted_notes().catch(handleException);
+
+    if (!encrypted_notes) {
+      return;
+    }
+
+    const notes = await Promise.all(
+      encrypted_notes.map(
+        async (note: DeletedNoteListItemDto): Promise<DeletedNoteListItem> => {
+          const key = JSON.parse(note?.key);
+          const decrypted_note = await decrypt_note(key, note?.metadata);
+
+          const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
+
+          return {
+            key,
+            id: note?.id,
+            created_at: note?.created_at,
+            modified_at: note?.modified_at,
+            deleted_at: note?.deleted_at,
+            public: note?.public,
+            metadata: parsedMetadata,
+          };
+        }
+      )
+    );
+
+    const sortedNotes = sortDeletedNotes(notes);
+    setDeletedNotes(sortedNotes);
   };
 };

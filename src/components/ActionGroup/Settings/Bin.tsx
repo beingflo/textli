@@ -1,51 +1,35 @@
 import React from 'react';
-import { useGetNoteList } from '../../../api/hooks';
-import { get_deleted_notes, undelete_note } from '../../../api/note_api';
-import { useAppDispatch } from '../../../context';
-import { DeletedNote } from '../../../types';
+import { useGetDeletedNoteList, useGetNoteList } from '../../../api/hooks';
+import { undelete_note } from '../../../api/note_api';
+import { NoteListItem } from '../../../types';
 
 export const Bin = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
+  const getDeletedNoteList = useGetDeletedNoteList();
 
-  const [deletedNotes, setDeletedNotes] = React.useState([]);
-  React.useEffect(() => get_deleted_notes(setDeletedNotes), [setDeletedNotes]);
-
-  const getProcessedNotes = React.useMemo(() => {
-    const parsedNotes = deletedNotes?.map((note: DeletedNote) => ({
-      ...note,
-      ...JSON.parse(note?.metadata),
-    }));
-
-    return parsedNotes.sort((a: any, b: any) => {
-      const dateA = new Date(a.deleted_at);
-      const dateB = new Date(b.deleted_at);
-
-      if (dateA < dateB) {
-        return 1;
-      } else if (dateA > dateB) {
-        return -1;
-      }
-      return 0;
-    });
-  }, [deletedNotes]);
-
-  const recover_note = React.useCallback(
-    (id: string) => {
-      undelete_note(id).then(() => {
-        get_deleted_notes(setDeletedNotes);
-        getNoteList();
-      });
-    },
-    [setDeletedNotes, dispatch]
+  const [deletedNotes, setDeletedNotes] = React.useState<Array<NoteListItem>>(
+    []
   );
+
+  React.useEffect(() => {
+    getDeletedNoteList(setDeletedNotes);
+  }, [setDeletedNotes]);
+
+  const recover_note = (id: string) => {
+    undelete_note(id).then(() => {
+      getDeletedNoteList(setDeletedNotes);
+      getNoteList();
+    });
+  };
 
   return (
     <>
       <ul className="space-y-4">
-        {getProcessedNotes?.map((note: any) => (
+        {deletedNotes?.map((note: any) => (
           <li key={note?.id} className="flex flex-col">
-            <span className="truncate font-semibold">{note?.title}</span>
+            <span className="truncate font-semibold">
+              {note?.metadata.title}
+            </span>
             <div className="flex justify-between">
               <span className="text-gray-500">
                 {new Date(note?.deleted_at).toLocaleDateString()}

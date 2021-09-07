@@ -9,6 +9,10 @@ export type NoteListItemDto = {
   public: boolean;
 };
 
+export type DeletedNoteListItemDto = NoteListItemDto & {
+  deleted_at: string;
+};
+
 export type NoteDto = NoteListItemDto & {
   content: string;
 };
@@ -25,6 +29,10 @@ export type NoteListItem = {
   metadata: Metadata;
   key: KeyMaterial;
   public: boolean;
+};
+
+export type DeletedNoteListItem = NoteListItem & {
+  deleted_at: string;
 };
 
 export type Note = NoteListItem & {
