@@ -80,30 +80,16 @@ export const update_note = (
     .then((response) => response.json());
 };
 
-export const delete_note = (
-  id: string,
-  onSuccess: () => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(`${NOTE_URL}/${id}`, {
+export const delete_note = (id: string): Promise<Response> => {
+  return fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
     method: 'DELETE',
-  })
-    .then(mapError)
-    .then(onSuccess)
-    .catch(onFailure);
+  }).then(mapError);
 };
 
-export const undelete_note = (
-  id: string,
-  onSuccess: () => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(`${NOTE_URL}/undelete/${id}`, {
+export const undelete_note = (id: string): Promise<Response> => {
+  return fetch(`${NOTE_URL}/undelete/${id}`, {
     credentials: 'include',
     method: 'POST',
-  })
-    .then(mapError)
-    .then(onSuccess)
-    .catch(onFailure);
+  }).then(mapError);
 };

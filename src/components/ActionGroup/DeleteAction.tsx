@@ -1,6 +1,7 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { handleException } from '../../api';
 import { useGetNote, useGetNoteList } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
@@ -35,17 +36,24 @@ export const DeleteAction = (): React.ReactElement => {
       return;
     }
 
-    setShowUndelete(true);
-    setTimeout(() => setShowUndelete(false), 5000);
-
-    setDeletedNote(currentNote?.id);
-
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
-    delete_note(currentNote?.id, () => {
-      getNoteList();
-      setCurrentNote(undefined, dispatch);
-      setNoteStatus(NoteStatus.SYNCED, dispatch);
-    });
+    delete_note(currentNote?.id)
+      .then(() => {
+        setCurrentNote(undefined, dispatch);
+
+        setDeletedNote(currentNote?.id);
+
+        setShowUndelete(true);
+        setTimeout(() => setShowUndelete(false), 5000);
+
+        getNoteList();
+      })
+      .catch((error) => {
+        handleException(error);
+      })
+      .finally(() => {
+        setNoteStatus(NoteStatus.SYNCED, dispatch);
+      });
   }, [currentNote, dispatch, showUndelete, editor]);
 
   useHotkeys(
@@ -61,12 +69,17 @@ export const DeleteAction = (): React.ReactElement => {
   const handleUndelete = React.useCallback(() => {
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
 
-    undelete_note(deletedNote, () => {
-      getNoteList();
-      getNote(deletedNote);
-      setDeletedNote('');
-      setShowUndelete(false);
-    });
+    undelete_note(deletedNote)
+      .then(() => {
+        getNoteList();
+        getNote(deletedNote);
+        setDeletedNote('');
+        setShowUndelete(false);
+      })
+      .catch((error) => handleException(error))
+      .finally(() => {
+        setNoteStatus(NoteStatus.SYNCED, dispatch);
+      });
   }, [dispatch, deletedNote]);
 
   return (
