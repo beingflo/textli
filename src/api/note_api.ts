@@ -87,9 +87,9 @@ export const delete_note = (id: string): Promise<Response> => {
   }).then(mapError);
 };
 
-export const undelete_note = (id: string): Promise<Response> => {
+export const undelete_note = (id: string): Promise<NoteDto> => {
   return fetch(`${NOTE_URL}/undelete/${id}`, {
     credentials: 'include',
-    method: 'POST',
+    method: 'GET',
   }).then(mapError);
 };
