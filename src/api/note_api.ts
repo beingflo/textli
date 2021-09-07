@@ -1,6 +1,11 @@
 import config from '../config.json';
-import { AppDispatch } from '../context';
-import { NoteDto, NoteListItemDto, NoteSaveRequest } from '../types';
+import {
+  NoteDto,
+  NoteListItemDto,
+  NoteSaveRequest,
+  NoteSaveResponse,
+  NoteUpdateResponse,
+} from '../types';
 import { mapError, handleException } from './index';
 
 const NOTE_URL = `${config.api_url}/notes`;
@@ -46,13 +51,8 @@ export const get_note = (id: string): Promise<NoteDto> => {
     .then((response) => response.json());
 };
 
-export const save_note = (
-  note: NoteSaveRequest,
-  dispatch: AppDispatch,
-  onSuccess: () => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(NOTE_URL, {
+export const save_note = (note: NoteSaveRequest): Promise<NoteSaveResponse> => {
+  return fetch(NOTE_URL, {
     credentials: 'include',
     method: 'POST',
     headers: {
@@ -61,31 +61,14 @@ export const save_note = (
     body: JSON.stringify(note),
   })
     .then(mapError)
-    .then((response) => response.json())
-    .then((data) => {
-      const currentNote = {
-        id: data?.id,
-        created_at: data?.created_at,
-        modified_at: data?.modified_at,
-        metadata: note?.metadata,
-        content: note?.content,
-        key: note?.key,
-        public: note?.public,
-      };
-      // setCurrentNote(currentNote, dispatch);
-    })
-    .then(onSuccess)
-    .catch(onFailure);
+    .then((response) => response.json());
 };
 
 export const update_note = (
   id: string,
-  note: NoteSaveRequest,
-  dispatch: AppDispatch,
-  onSuccess: () => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(`${NOTE_URL}/${id}`, {
+  note: NoteSaveRequest
+): Promise<NoteUpdateResponse> => {
+  return fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
     method: 'PUT',
     headers: {
@@ -94,19 +77,7 @@ export const update_note = (
     body: JSON.stringify(note),
   })
     .then(mapError)
-    .then((response) => response.json())
-    .then((data) => {
-      const currentNote = {
-        modified_at: data?.modified_at,
-        metadata: note?.metadata,
-        content: note?.content,
-        key: note?.key,
-        public: note?.public,
-      };
-      // updateCurrentNote(currentNote, dispatch);
-    })
-    .then(onSuccess)
-    .catch(onFailure);
+    .then((response) => response.json());
 };
 
 export const delete_note = (

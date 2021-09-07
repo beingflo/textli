@@ -31,6 +31,17 @@ export type Note = NoteListItem & {
   content: string;
 };
 
+export type NoteSaveResponse = {
+  id: string;
+  modified_at: string;
+  created_at: string;
+};
+
+export type NoteUpdateResponse = {
+  id: string;
+  modified_at: string;
+};
+
 export type NoteSaveRequest = {
   metadata: string;
   content: string;
