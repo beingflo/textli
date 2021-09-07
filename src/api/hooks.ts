@@ -1,10 +1,10 @@
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
-import { getMetadata } from '../components/util';
+import { getMetadata, sortNotes } from '../components/util';
 import { useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
-import { setNoteList } from '../context/noteListReducer';
+import { addToNoteList, setNoteList } from '../context/noteListReducer';
 import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
 import { NoteListItem, NoteListItemDto, NoteStatus } from '../types';
 import { get_note, get_notes, save_note, update_note } from './note_api';
@@ -15,42 +15,42 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
 
   return async (id: string) => {
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
-    const note = await get_note(id).catch(handleException);
+    const noteDto = await get_note(id).catch(handleException);
     setNoteStatus(NoteStatus.SYNCED, dispatch);
 
-    if (!note) {
+    if (!noteDto) {
       return;
     }
 
-    const key: KeyMaterial = JSON.parse(note?.key);
+    const key: KeyMaterial = JSON.parse(noteDto?.key);
 
     const decrypted_note = await decrypt_note(
       key,
-      note?.metadata,
-      note?.content
+      noteDto?.metadata,
+      noteDto?.content
     );
 
     const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
 
-    setCurrentNote(
-      {
-        key,
-        id: note?.id,
-        created_at: note?.created_at,
-        modified_at: note?.modified_at,
-        public: note?.public,
-        metadata: parsedMetadata,
-        content: decrypted_note?.content ?? '',
-      },
-      dispatch
-    );
+    const note = {
+      key,
+      id: noteDto?.id,
+      created_at: noteDto?.created_at,
+      modified_at: noteDto?.modified_at,
+      public: noteDto?.public,
+      metadata: parsedMetadata,
+      content: decrypted_note?.content ?? '',
+    };
+
+    setCurrentNote(note, dispatch);
+    addToNoteList(note, dispatch);
+
     editor?.commands.focus();
   };
 };
 
 export const useSaveNote = (): (() => Promise<void>) => {
   const dispatch = useAppDispatch();
-  const getNoteList = useGetNoteList();
   const editor = useAppEditor();
   const noteStatus = useNoteStatus();
   const currentNote = useCurrentNote();
@@ -84,16 +84,15 @@ export const useSaveNote = (): (() => Promise<void>) => {
         handleException(error);
       });
       if (result) {
-        setCurrentNote(
-          {
-            content,
-            metadata: JSON.parse(metadata),
-            key: encrypted_note?.key,
-            public: false,
-            ...result,
-          },
-          dispatch
-        );
+        const note = {
+          content,
+          metadata: JSON.parse(metadata),
+          key: encrypted_note?.key,
+          public: false,
+          ...result,
+        };
+        setCurrentNote(note, dispatch);
+        addToNoteList(note, dispatch);
       }
     } else {
       // Existing note
@@ -105,21 +104,18 @@ export const useSaveNote = (): (() => Promise<void>) => {
       );
 
       if (result) {
-        setCurrentNote(
-          {
-            created_at: currentNote?.created_at,
-            content,
-            metadata: JSON.parse(metadata),
-            key: encrypted_note?.key,
-            public: currentNote?.public,
-            ...result,
-          },
-          dispatch
-        );
+        const note = {
+          created_at: currentNote?.created_at,
+          content,
+          metadata: JSON.parse(metadata),
+          key: encrypted_note?.key,
+          public: currentNote?.public,
+          ...result,
+        };
+        setCurrentNote(note, dispatch);
+        addToNoteList(note, dispatch);
       }
     }
-    // TODO put result into list so it doesn't have to be refetched
-    getNoteList();
     setNoteStatus(NoteStatus.SYNCED, dispatch);
   };
 };
@@ -154,17 +150,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
       )
     );
 
-    const sortedNotes = notes?.sort((a, b) => {
-      const dateA = new Date(a?.modified_at);
-      const dateB = new Date(b?.modified_at);
-
-      if (dateA < dateB) {
-        return 1;
-      } else if (dateA > dateB) {
-        return -1;
-      }
-      return 0;
-    });
+    const sortedNotes = sortNotes(notes);
 
     setNoteList(sortedNotes, dispatch);
   };

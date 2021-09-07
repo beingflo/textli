@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
-import { useGetNote, useGetNoteList } from '../../api/hooks';
+import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
 import {
@@ -10,6 +10,7 @@ import {
   useCurrentNote,
 } from '../../context/currentNoteReducer';
 import { useAppEditor } from '../../context/editorReducer';
+import { deleteFromNoteList } from '../../context/noteListReducer';
 import { setNoteStatus } from '../../context/noteStatusReducer';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
@@ -17,7 +18,6 @@ import { NoteStatus } from '../../types';
 export const DeleteAction = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
-  const getNoteList = useGetNoteList();
   const editor = useAppEditor();
   const getNote = useGetNote();
 
@@ -46,7 +46,7 @@ export const DeleteAction = (): React.ReactElement => {
         setShowUndelete(true);
         setTimeout(() => setShowUndelete(false), 5000);
 
-        getNoteList();
+        deleteFromNoteList(currentNote?.id, dispatch);
       })
       .catch((error) => {
         handleException(error);
@@ -71,7 +71,6 @@ export const DeleteAction = (): React.ReactElement => {
 
     undelete_note(deletedNote)
       .then(() => {
-        getNoteList();
         getNote(deletedNote);
         setDeletedNote('');
         setShowUndelete(false);

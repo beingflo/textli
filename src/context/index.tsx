@@ -1,5 +1,10 @@
 import React, { Dispatch } from 'react';
-import { NoteListReducer, NOTE_LIST_SET_NOTES } from './noteListReducer';
+import {
+  NoteListReducer,
+  NOTE_LIST_ADD_NOTE,
+  NOTE_LIST_DELETE_NOTE,
+  NOTE_LIST_SET_NOTES,
+} from './noteListReducer';
 import {
   CurrentNoteReducer,
   CURRENT_NOTE_SET,
@@ -66,6 +71,8 @@ export const ContextProvider = ({
   const actionReducerMapping = React.useMemo(
     () => ({
       [NOTE_LIST_SET_NOTES]: NoteListReducer,
+      [NOTE_LIST_ADD_NOTE]: NoteListReducer,
+      [NOTE_LIST_DELETE_NOTE]: NoteListReducer,
       [SPINNER_SET_WAITING]: SpinnerReducer,
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,

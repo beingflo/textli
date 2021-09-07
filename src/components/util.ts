@@ -1,4 +1,5 @@
 import React from 'react';
+import { NoteListItem } from '../types';
 
 export const getMetadata = (content: string | undefined): string => {
   const title = new DOMParser().parseFromString(content ?? '', 'text/html');
@@ -15,4 +16,18 @@ export const useFocus = (): any => {
   };
 
   return [htmlElRef, setFocus];
+};
+
+export const sortNotes = (notes: Array<NoteListItem>): Array<NoteListItem> => {
+  return notes?.sort((a, b) => {
+    const dateA = new Date(a?.modified_at);
+    const dateB = new Date(b?.modified_at);
+
+    if (dateA < dateB) {
+      return 1;
+    } else if (dateA > dateB) {
+      return -1;
+    }
+    return 0;
+  });
 };
