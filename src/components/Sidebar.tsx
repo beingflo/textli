@@ -10,7 +10,7 @@ import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { decrypt_note } from './crypto';
-import { useGetNote } from '../api/note_api';
+import { useGetNote } from '../api/hooks';
 
 export type Props = {
   query: string;

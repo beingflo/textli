@@ -1,12 +1,8 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import {
-  delete_note,
-  get_notes,
-  undelete_note,
-  useGetNote,
-} from '../../api/note_api';
+import { useGetNote } from '../../api/hooks';
+import { delete_note, get_notes, undelete_note } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
 import {
   setCurrentNote,
