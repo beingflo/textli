@@ -1,7 +1,8 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { get_notes, save_note, update_note } from '../../api/note_api';
+import { useGetNoteList } from '../../api/hooks';
+import { save_note, update_note } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
 import { useCurrentNote } from '../../context/currentNoteReducer';
 import { useAppEditor } from '../../context/editorReducer';
@@ -13,6 +14,7 @@ import { getMetadata } from '../util';
 
 export const SaveAction = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
   const editor = useAppEditor();
   const noteStatus = useNoteStatus();
   const currentNote = useCurrentNote();
@@ -44,7 +46,7 @@ export const SaveAction = (): React.ReactElement => {
 
         setNoteStatus(NoteStatus.INPROGRESS, dispatch);
         save_note(request, dispatch, () => {
-          get_notes(dispatch);
+          getNoteList();
           setNoteStatus(NoteStatus.SYNCED, dispatch);
         });
       });
@@ -63,7 +65,7 @@ export const SaveAction = (): React.ReactElement => {
 
       setNoteStatus(NoteStatus.INPROGRESS, dispatch);
       update_note(currentNote?.id ?? '', request, dispatch, () => {
-        get_notes(dispatch);
+        getNoteList();
         setNoteStatus(NoteStatus.SYNCED, dispatch);
       });
     });

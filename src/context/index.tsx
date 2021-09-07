@@ -9,7 +9,7 @@ import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
 import {
   Note,
-  NoteListEntry,
+  NoteListItem,
   NoteStatus,
   Share,
   Status,
@@ -23,7 +23,7 @@ import { SharesReducer, SHARES_SET_SHARES } from './sharesReducer';
 
 export type State = {
   waiting: number;
-  noteList: Array<NoteListEntry>;
+  noteList: Array<NoteListItem>;
   currentNote: Note | undefined;
   status: Status;
   editor: Editor | null;

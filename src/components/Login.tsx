@@ -1,11 +1,12 @@
 import React from 'react';
-import { get_notes } from '../api/note_api';
+import { useGetNoteList } from '../api/hooks';
 import { user_login } from '../api/user_api';
 import { useAppDispatch } from '../context';
 import { Spinner } from './Spinner';
 
 const Login = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -15,7 +16,7 @@ const Login = (): React.ReactElement => {
   const submit = React.useCallback(
     (event: any) => {
       const success = () => {
-        get_notes(dispatch);
+        getNoteList();
         setWaiting(false);
       };
 

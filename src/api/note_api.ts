@@ -1,18 +1,12 @@
 import config from '../config.json';
 import { AppDispatch } from '../context';
-import {
-  setCurrentNote,
-  updateCurrentNote,
-} from '../context/currentNoteReducer';
-import { setNoteList } from '../context/noteListReducer';
-import { setStatus } from '../context/statusReducer';
-import { Note, NoteSaveRequest, Status } from '../types';
+import { NoteDto, NoteListItemDto, NoteSaveRequest } from '../types';
 import { mapError, handleException } from './index';
 
 const NOTE_URL = `${config.api_url}/notes`;
 
-export const get_notes = (dispatch: AppDispatch): void => {
-  fetch(NOTE_URL, {
+export const get_notes = (): Promise<Array<NoteListItemDto>> => {
+  return fetch(NOTE_URL, {
     credentials: 'include',
     method: 'GET',
     headers: {
@@ -20,14 +14,7 @@ export const get_notes = (dispatch: AppDispatch): void => {
     },
   })
     .then(mapError)
-    .then((response) => response.json())
-    .then((data) => {
-      setNoteList(data, dispatch);
-      setStatus(Status.OK, dispatch);
-    })
-    .catch(() => {
-      setStatus(Status.REDIRECT, dispatch);
-    });
+    .then((response) => response.json());
 };
 
 export const get_deleted_notes = (
@@ -47,7 +34,7 @@ export const get_deleted_notes = (
     .catch(onFailure);
 };
 
-export const get_note = (id: string): Promise<Note> => {
+export const get_note = (id: string): Promise<NoteDto> => {
   return fetch(`${NOTE_URL}/${id}`, {
     credentials: 'include',
     method: 'GET',
@@ -85,7 +72,7 @@ export const save_note = (
         key: note?.key,
         public: note?.public,
       };
-      setCurrentNote(currentNote, dispatch);
+      // setCurrentNote(currentNote, dispatch);
     })
     .then(onSuccess)
     .catch(onFailure);
@@ -116,7 +103,7 @@ export const update_note = (
         key: note?.key,
         public: note?.public,
       };
-      updateCurrentNote(currentNote, dispatch);
+      // updateCurrentNote(currentNote, dispatch);
     })
     .then(onSuccess)
     .catch(onFailure);

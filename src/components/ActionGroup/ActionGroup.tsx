@@ -1,22 +1,21 @@
 import { Popover, Transition } from '@headlessui/react';
 import React from 'react';
-import { get_notes } from '../../api/note_api';
 import { user_logout } from '../../api/user_api';
-import { useAppDispatch } from '../../context';
 import { LinkIcon, LogoutIcon, MoreIcon, SettingsIcon } from '../../icons';
 import { SaveAction } from './SaveAction';
 import { DeleteAction } from './DeleteAction';
 import { NewAction } from './NewAction';
 import '../../style.css';
 import Settings from './Settings/Settings';
+import { useGetNoteList } from '../../api/hooks';
 
 export const ActionGroup = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
   const [showSettings, setShowSettings] = React.useState(false);
 
   const handleLogout = React.useCallback(() => {
-    user_logout(() => get_notes(dispatch));
-  }, [dispatch]);
+    user_logout(() => getNoteList());
+  }, []);
 
   return (
     <div className="space-y-2">

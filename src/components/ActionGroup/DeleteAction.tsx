@@ -1,8 +1,8 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useGetNote } from '../../api/hooks';
-import { delete_note, get_notes, undelete_note } from '../../api/note_api';
+import { useGetNote, useGetNoteList } from '../../api/hooks';
+import { delete_note, undelete_note } from '../../api/note_api';
 import { useAppDispatch } from '../../context';
 import {
   setCurrentNote,
@@ -16,6 +16,7 @@ import { NoteStatus } from '../../types';
 export const DeleteAction = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
   const editor = useAppEditor();
   const getNote = useGetNote();
 
@@ -41,7 +42,7 @@ export const DeleteAction = (): React.ReactElement => {
 
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
     delete_note(currentNote?.id, () => {
-      get_notes(dispatch);
+      getNoteList();
       setCurrentNote(undefined, dispatch);
       setNoteStatus(NoteStatus.SYNCED, dispatch);
     });
@@ -61,7 +62,7 @@ export const DeleteAction = (): React.ReactElement => {
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
 
     undelete_note(deletedNote, () => {
-      get_notes(dispatch);
+      getNoteList();
       getNote(deletedNote);
       setDeletedNote('');
       setShowUndelete(false);

@@ -1,9 +1,9 @@
 import { State, useAppState, AppDispatch } from '.';
-import { NoteListEntry } from '../types';
+import { NoteListItem } from '../types';
 
 export type NoteListAction = {
   type: string;
-  noteList: Array<NoteListEntry>;
+  noteList: Array<NoteListItem>;
 };
 
 export const NOTE_LIST_SET_NOTES = 'set-notes';
@@ -21,13 +21,13 @@ export const NoteListReducer = (state: State, action: NoteListAction): any => {
   }
 };
 
-export const useNoteList = (): Array<NoteListEntry> => {
+export const useNoteList = (): Array<NoteListItem> => {
   const { noteList } = useAppState();
   return noteList;
 };
 
 export const setNoteList = (
-  noteList: Array<NoteListEntry>,
+  noteList: Array<NoteListItem>,
   dispatch: AppDispatch
 ): void => {
   dispatch({ type: NOTE_LIST_SET_NOTES, noteList });

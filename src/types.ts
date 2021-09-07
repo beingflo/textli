@@ -1,3 +1,36 @@
+import { KeyMaterial } from './components/crypto';
+
+export type NoteListItemDto = {
+  id: string;
+  created_at: string;
+  modified_at: string;
+  metadata: string;
+  key: string;
+  public: boolean;
+};
+
+export type NoteDto = NoteListItemDto & {
+  content: string;
+};
+
+export type Metadata = {
+  title: string;
+  tags: string;
+};
+
+export type NoteListItem = {
+  id: string;
+  created_at: string;
+  modified_at: string;
+  metadata: Metadata;
+  key: KeyMaterial;
+  public: boolean;
+};
+
+export type Note = NoteListItem & {
+  content: string;
+};
+
 export type NoteSaveRequest = {
   metadata: string;
   content: string;
@@ -5,27 +38,8 @@ export type NoteSaveRequest = {
   public: boolean;
 };
 
-export type Note = {
-  id: string;
-  created_at: string;
-  modified_at: string;
-  metadata: string;
-  content: string;
-  key: string;
-  public: boolean;
-};
-
-export type DeletedNote = Note & {
+export type DeletedNote = NoteDto & {
   deleted_at: string;
-};
-
-export type NoteListEntry = {
-  id: string;
-  created_at: string;
-  modified_at: string;
-  metadata: string;
-  key: string;
-  public: boolean;
 };
 
 export type ParsedNoteListEntry = {

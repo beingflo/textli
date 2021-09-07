@@ -3,7 +3,7 @@ import { delete_share, list_shares } from '../../../api/share_api';
 import { useAppDispatch } from '../../../context';
 import { useNoteList } from '../../../context/noteListReducer';
 import { useShares } from '../../../context/sharesReducer';
-import { NoteListEntry, ParsedNoteListEntry, Share } from '../../../types';
+import { NoteListItem, Share } from '../../../types';
 
 export const Shares = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -11,15 +11,10 @@ export const Shares = (): React.ReactElement => {
   const noteList = useNoteList();
 
   const getSharesInfo = React.useMemo(() => {
-    const parsedNotes = noteList?.map((note: NoteListEntry) => ({
-      ...note,
-      ...JSON.parse(note?.metadata),
-    }));
-
     const matchedShares = shares.map((share: Share) => {
-      const title = parsedNotes.find(
-        (note: ParsedNoteListEntry) => note?.id === share?.note
-      )?.title;
+      const title = noteList.find(
+        (note: NoteListItem) => note?.id === share?.note
+      )?.metadata?.title;
 
       return { ...share, title };
     });

@@ -139,7 +139,7 @@ export const encrypt_note = async (
 };
 
 export const decrypt_note = async (
-  key: string,
+  key: KeyMaterial,
   encrypted_metadata?: string,
   encrypted_content?: string
 ): Promise<DecryptionResult | null> => {
@@ -151,16 +151,14 @@ export const decrypt_note = async (
     return null;
   }
 
-  const keyMaterial: KeyMaterial = JSON.parse(key);
-
   const note_key = await unwrap_note_key(
     main_key,
-    string2arrayBuffer(keyMaterial.wrapped_key)
+    string2arrayBuffer(key.wrapped_key)
   );
 
   let metadata = null;
   if (encrypted_metadata) {
-    const iv_metadata = string2arrayBuffer(keyMaterial.iv_metadata);
+    const iv_metadata = string2arrayBuffer(key.iv_metadata);
 
     metadata = await window.crypto.subtle.decrypt(
       {
@@ -174,7 +172,7 @@ export const decrypt_note = async (
 
   let content = null;
   if (encrypted_content) {
-    const iv_content = string2arrayBuffer(keyMaterial.iv_content);
+    const iv_content = string2arrayBuffer(key.iv_content);
 
     content = await window.crypto.subtle.decrypt(
       {

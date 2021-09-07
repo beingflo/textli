@@ -1,11 +1,12 @@
 import React from 'react';
-import { get_notes } from '../api/note_api';
+import { useGetNoteList } from '../api/hooks';
 import { user_login, user_signup } from '../api/user_api';
 import { useAppDispatch } from '../context';
 import { Spinner } from './Spinner';
 
 const Signup = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -19,7 +20,7 @@ const Signup = (): React.ReactElement => {
       // TODO use email
       const success = () => {
         const loginSucces = () => {
-          get_notes(dispatch);
+          getNoteList();
           setWaiting(false);
         };
         user_login({ name: username, password: password }, loginSucces);

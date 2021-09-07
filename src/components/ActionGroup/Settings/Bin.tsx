@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-  get_deleted_notes,
-  get_notes,
-  undelete_note,
-} from '../../../api/note_api';
+import { useGetNoteList } from '../../../api/hooks';
+import { get_deleted_notes, undelete_note } from '../../../api/note_api';
 import { useAppDispatch } from '../../../context';
 import { DeletedNote } from '../../../types';
 
 export const Bin = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
 
   const [deletedNotes, setDeletedNotes] = React.useState([]);
   React.useEffect(() => get_deleted_notes(setDeletedNotes), [setDeletedNotes]);
@@ -36,7 +34,7 @@ export const Bin = (): React.ReactElement => {
     (id: string) => {
       const success = () => {
         get_deleted_notes(setDeletedNotes);
-        get_notes(dispatch);
+        getNoteList();
       };
       undelete_note(id, success);
     },

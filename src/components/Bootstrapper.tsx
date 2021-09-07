@@ -1,6 +1,5 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { get_notes } from '../api/note_api';
 import { useAppDispatch } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStatus } from '../context/statusReducer';
@@ -12,9 +11,11 @@ import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
 import { keys } from 'idb-keyval';
+import { useGetNoteList } from '../api/hooks';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const getNoteList = useGetNoteList();
   const status = useStatus();
 
   const [waiting, setWaiting] = React.useState(true);
@@ -30,7 +31,7 @@ const Bootstrapper = (): React.ReactElement => {
   }, [setShowKeyPrompt]);
 
   React.useEffect(() => {
-    get_notes(dispatch);
+    getNoteList();
     user_info(dispatch);
     list_shares(dispatch);
     setWaiting(false);
