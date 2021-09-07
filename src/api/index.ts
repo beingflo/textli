@@ -7,6 +7,8 @@ export const mapError = (response: Response): any => {
   return response;
 };
 
-export const handleException = (error: Error): void => {
-  toast.error(error.toString());
+export const handleException = (error: Error, silent = false): void => {
+  if (!silent) {
+    toast.error(error.toString());
+  }
 };

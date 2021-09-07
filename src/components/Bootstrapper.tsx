@@ -32,8 +32,8 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     getNoteList();
-    user_info(dispatch);
-    list_shares(dispatch);
+    user_info(dispatch, true);
+    list_shares(dispatch, true);
     setWaiting(false);
   }, [dispatch]);
 

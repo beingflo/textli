@@ -6,12 +6,14 @@ import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { useAppEditor } from '../context/editorReducer';
 import { addToNoteList, setNoteList } from '../context/noteListReducer';
 import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
+import { setStatus } from '../context/statusReducer';
 import {
   DeletedNoteListItem,
   DeletedNoteListItemDto,
   NoteListItem,
   NoteListItemDto,
   NoteStatus,
+  Status,
 } from '../types';
 import {
   get_deleted_notes,
@@ -136,7 +138,10 @@ export const useGetNoteList = (): (() => Promise<void>) => {
   const dispatch = useAppDispatch();
 
   return async () => {
-    const encrypted_notes = await get_notes().catch(handleException);
+    const encrypted_notes = await get_notes().catch((error) => {
+      handleException(error);
+      setStatus(Status.REDIRECT, dispatch);
+    });
 
     if (!encrypted_notes) {
       return;

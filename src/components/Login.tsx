@@ -2,6 +2,8 @@ import React from 'react';
 import { useGetNoteList } from '../api/hooks';
 import { user_login } from '../api/user_api';
 import { useAppDispatch } from '../context';
+import { setStatus } from '../context/statusReducer';
+import { Status } from '../types';
 import { Spinner } from './Spinner';
 
 const Login = (): React.ReactElement => {
@@ -18,6 +20,7 @@ const Login = (): React.ReactElement => {
       const success = () => {
         getNoteList();
         setWaiting(false);
+        setStatus(Status.OK, dispatch);
       };
 
       setWaiting(true);

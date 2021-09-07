@@ -87,10 +87,7 @@ export const user_password_change = (
     .catch(handleException);
 };
 
-export const user_info = (
-  dispatch: AppDispatch,
-  onFailure: any = handleException
-): void => {
+export const user_info = (dispatch: AppDispatch, silent = false): void => {
   fetch(`${USER_URL}/info`, {
     credentials: 'include',
     method: 'GET',
@@ -103,7 +100,7 @@ export const user_info = (
     .then((data) => {
       setUserInfo(data, dispatch);
     })
-    .catch(onFailure);
+    .catch((error) => handleException(error, silent));
 };
 
 export const user_salt = (

@@ -6,7 +6,7 @@ import { AppDispatch } from '../context';
 
 const SHARE_URL = `${config.api_url}/shares`;
 
-export const list_shares = (dispatch: AppDispatch): void => {
+export const list_shares = (dispatch: AppDispatch, silent = false): void => {
   fetch(SHARE_URL, {
     credentials: 'include',
     method: 'GET',
@@ -19,7 +19,7 @@ export const list_shares = (dispatch: AppDispatch): void => {
     .then((data) => {
       setShares(data, dispatch);
     })
-    .catch(handleException);
+    .catch((error) => handleException(error, silent));
 };
 
 export const create_share = (share: CreateShareRequest): void => {
