@@ -13,8 +13,8 @@ export const Balance = (): React.ReactElement => {
       <div className="flex justify-between">
         <span className="">Balance</span>
         <div>
-          <span className="mr-1 text-xs text-gray-600">CHF</span>
-          <span className="font-bold">{balance}</span>
+          <span className="mr-1 text-xs text-gray-600">USD</span>
+          <span className="font-bold">${balance}</span>
         </div>
       </div>
       <div className="mt-2 flex justify-between">
