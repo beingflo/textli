@@ -1,6 +1,6 @@
 import config from '../config.json';
 import { mapError, handleException } from './index';
-import { CreateShareRequest } from '../types';
+import { CreateShareRequest, Share } from '../types';
 import { setShares } from '../context/sharesReducer';
 import { AppDispatch } from '../context';
 
@@ -22,8 +22,8 @@ export const list_shares = (dispatch: AppDispatch, silent = false): void => {
     .catch((error) => handleException(error, silent));
 };
 
-export const create_share = (share: CreateShareRequest): void => {
-  fetch(SHARE_URL, {
+export const create_share = (share: CreateShareRequest): Promise<Share> => {
+  return fetch(SHARE_URL, {
     credentials: 'include',
     method: 'POST',
     headers: {
@@ -32,6 +32,7 @@ export const create_share = (share: CreateShareRequest): void => {
     body: JSON.stringify(share),
   })
     .then(mapError)
+    .then((response) => response.json())
     .catch(handleException);
 };
 

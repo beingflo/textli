@@ -74,6 +74,7 @@ export type Share = {
   token: string;
   note: string;
   created_at: string;
+  expires_at: string;
 };
 
 export type UserCredentials = {
@@ -89,6 +90,7 @@ export type UserCredentialsPasswordChange = {
 
 export type CreateShareRequest = {
   note: string;
+  expires_in?: number;
 };
 
 export type UserInfo = {
