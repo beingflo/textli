@@ -147,7 +147,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
       return;
     }
 
-    const notes = await Promise.all(
+    const notes = await Promise.allSettled(
       encrypted_notes.map(
         async (note: NoteListItemDto): Promise<NoteListItem> => {
           const key = JSON.parse(note?.key);
@@ -167,7 +167,14 @@ export const useGetNoteList = (): (() => Promise<void>) => {
       )
     );
 
-    const sortedNotes = sortNotes(notes);
+    const filteredNotes = notes
+      .filter(
+        (result: PromiseSettledResult<NoteListItem>) =>
+          result.status === 'fulfilled'
+      )
+      .map((result: any) => result?.value);
+
+    const sortedNotes = sortNotes(filteredNotes);
 
     setNoteList(sortedNotes, dispatch);
   };
