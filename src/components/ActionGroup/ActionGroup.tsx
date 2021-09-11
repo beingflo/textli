@@ -57,7 +57,12 @@ export const ActionGroup = (): React.ReactElement => {
           </Popover.Panel>
         </Transition>
       </Popover>
-      <Settings showSettings={showSettings} setShowSettings={setShowSettings} />
+      {showSettings && (
+        <Settings
+          showSettings={showSettings}
+          setShowSettings={setShowSettings}
+        />
+      )}
       {showSharing && (
         <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
       )}

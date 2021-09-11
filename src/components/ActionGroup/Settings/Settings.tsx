@@ -24,7 +24,7 @@ export const Settings = ({
   setShowSettings,
 }: Props): React.ReactElement => {
   return (
-    <Transition show={showSettings} as={React.Fragment}>
+    <Transition show={showSettings} as={React.Fragment} appear>
       <Dialog
         onClose={() => setShowSettings(false)}
         className="fixed z-10 inset-0 overflow-y-auto"
