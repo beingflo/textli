@@ -47,12 +47,8 @@ export const access_share = (id: string): void => {
     .catch(handleException);
 };
 
-export const delete_share = (
-  id: string,
-  onSuccess: () => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(`${SHARE_URL}/${id}`, {
+export const delete_share = (id: string): Promise<void> => {
+  return fetch(`${SHARE_URL}/${id}`, {
     credentials: 'include',
     method: 'DELETE',
     headers: {
@@ -60,6 +56,5 @@ export const delete_share = (
     },
   })
     .then(mapError)
-    .then(onSuccess)
-    .catch(onFailure);
+    .catch(handleException);
 };

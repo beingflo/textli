@@ -24,10 +24,9 @@ export const Shares = (): React.ReactElement => {
 
   const revoke_share = React.useCallback(
     (token: string) => {
-      const success = () => {
+      delete_share(token).then(() => {
         list_shares(dispatch);
-      };
-      delete_share(token, success);
+      });
     },
     [dispatch]
   );
