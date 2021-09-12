@@ -80,7 +80,7 @@ export const ActionGroup = (): React.ReactElement => {
                 className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
               >
                 {isPublic && (
-                  <span className="absolute bg-yellow-400 w-1.5 h-1.5 bottom-0 right-0 rounded-full" />
+                  <span className="absolute bg-yellow-400 w-1.5 h-1.5 top-5 right-0 rounded-full" />
                 )}
                 <EyeIcon className="text-gray-700 z-10 relative" />
               </button>
