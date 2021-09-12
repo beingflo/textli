@@ -3,6 +3,7 @@ import { delete_share, list_shares } from '../../../api/share_api';
 import { useAppDispatch } from '../../../context';
 import { useNoteList } from '../../../context/noteListReducer';
 import { useShares } from '../../../context/sharesReducer';
+import { ClockIcon, EditIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Shares = (): React.ReactElement => {
@@ -38,14 +39,25 @@ export const Shares = (): React.ReactElement => {
           <li key={share?.token} className="flex flex-col">
             <span className="truncate font-semibold">{share?.title}</span>
             <div className="flex justify-between">
-              <span className="text-gray-500">
-                {new Date(share?.created_at).toLocaleDateString()}
-              </span>
+              <div className="flex flex-col md:flex-row md:space-x-4">
+                <div className="flex flex-row space-x-1">
+                  <EditIcon className="h-4 w-4 self-center" />
+                  <span className="text-gray-500">
+                    {new Date(share?.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+                <div className="flex flex-row space-x-1">
+                  <ClockIcon className="h-4 w-4 self-center" />
+                  <span className="text-gray-500">
+                    {new Date(share?.expires_at).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
               <button
                 onClick={() => revoke_share(share?.token)}
                 className="text-yellow-400"
               >
-                Revoke
+                Delete
               </button>
             </div>
           </li>
