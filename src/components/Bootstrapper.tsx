@@ -10,7 +10,7 @@ import Start from './Start';
 import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
-import { keys } from 'idb-keyval';
+import { get } from 'idb-keyval';
 import { useGetNoteList } from '../api/hooks';
 
 const Bootstrapper = (): React.ReactElement => {
@@ -23,8 +23,8 @@ const Bootstrapper = (): React.ReactElement => {
   const [showKeyPrompt, setShowKeyPrompt] = React.useState(true);
 
   React.useEffect(() => {
-    keys().then((keys) => {
-      if (keys.length > 0) {
+    get('workspaces').then((workspaces) => {
+      if (workspaces.length > 0) {
         setShowKeyPrompt(false);
       }
     });

@@ -1,5 +1,6 @@
-import { set } from 'idb-keyval';
+import { update, get } from 'idb-keyval';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { user_salt } from '../api/user_api';
 import { useUserInfo } from '../context/userInfoReducer';
 import '../style.css';
@@ -27,9 +28,32 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
 
     const key = await generate_main_key(password, salt);
 
-    user_salt(saltString, () => {
-      set(name, key).then(setDone);
+    const workspaces = await get('workspaces');
+
+    if (
+      workspaces &&
+      workspaces.find((workspace: any) => workspace?.name === name)
+    ) {
+      toast.error('Workspace with this name already exists');
+      return;
+    }
+
+    if (!user_info?.salt) {
+      await user_salt(saltString);
+    }
+
+    update('workspaces', (workspaces) => {
+      if (!workspaces) {
+        const newKey = { name, key, default: true };
+        return [newKey];
+      }
+      const newKey = { name, key, default: false };
+      workspaces.push(newKey);
+
+      return workspaces;
     });
+
+    setDone();
   }, [password, name, setDone, user_info]);
 
   const passwordMatch: boolean =
