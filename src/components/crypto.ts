@@ -80,21 +80,34 @@ export const string2arrayBuffer = (str: string): ArrayBuffer => {
 export const unwrap_note_key = async (
   wrapped_key: ArrayBuffer
 ): Promise<CryptoKey> => {
-  const mainKey = (await get('workspaces'))[0].key;
+  const mainKeys:
+    | [{ name: string; key: CryptoKey; default: boolean }]
+    | undefined = await get('workspaces');
 
-  if (!mainKey) {
+  if (!mainKeys) {
     return Promise.reject();
   }
 
-  return window.crypto.subtle.unwrapKey(
-    'raw',
-    wrapped_key,
-    mainKey,
-    'AES-KW',
-    'AES-GCM',
-    true,
-    ['encrypt', 'decrypt']
-  );
+  for (const mainKey of mainKeys) {
+    if (!mainKey) {
+      return Promise.reject();
+    }
+
+    try {
+      const unwrapped_key = await window.crypto.subtle.unwrapKey(
+        'raw',
+        wrapped_key,
+        mainKey?.key,
+        'AES-KW',
+        'AES-GCM',
+        true,
+        ['encrypt', 'decrypt']
+      );
+
+      return unwrapped_key;
+    } catch (error) {}
+  }
+  return Promise.reject();
 };
 
 export const exportKey = async (key: CryptoKey): Promise<string> => {
@@ -104,13 +117,13 @@ export const exportKey = async (key: CryptoKey): Promise<string> => {
 };
 
 export const encrypt_note = async (
+  mainKey: CryptoKey,
   content: string,
   metadata: string
 ): Promise<EncryptionResult> => {
   const enc = new TextEncoder();
 
-  const key = await generate_note_key();
-  const main_key = (await get('workspaces'))[0].key;
+  const noteKey = await generate_note_key();
 
   const encoded_content = enc.encode(content);
   const encoded_metadata = enc.encode(metadata);
@@ -123,7 +136,7 @@ export const encrypt_note = async (
       name: 'AES-GCM',
       iv: iv_content,
     },
-    key,
+    noteKey,
     encoded_content
   );
 
@@ -132,11 +145,11 @@ export const encrypt_note = async (
       name: 'AES-GCM',
       iv: iv_metadata,
     },
-    key,
+    noteKey,
     encoded_metadata
   );
 
-  const wrapped_key = await wrap_note_key(main_key, key);
+  const wrapped_key = await wrap_note_key(mainKey, noteKey);
 
   return {
     encrypted_content: arrayBuffer2string(await cypher_content),

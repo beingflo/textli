@@ -12,7 +12,8 @@ export const SaveAction = (): React.ReactElement => {
 
   const [workspaces, setWorkspaces] = React.useState([]);
 
-  const [selectedWorkspace, setSelectedWorkspace] = React.useState();
+  const [selectedWorkspace, setSelectedWorkspace] =
+    React.useState<{ name: string; key: CryptoKey; default: boolean }>();
 
   React.useEffect(() => {
     const defaultWorkspace =
@@ -25,10 +26,12 @@ export const SaveAction = (): React.ReactElement => {
   }, []);
 
   const handleSave = () => {
-    saveNote();
-
-    setShowSaveConfirm(true);
-    setTimeout(() => setShowSaveConfirm(false), 1000);
+    if (selectedWorkspace) {
+      saveNote(selectedWorkspace?.key);
+      console.log('Saving with', selectedWorkspace?.name);
+      setShowSaveConfirm(true);
+      setTimeout(() => setShowSaveConfirm(false), 1000);
+    }
   };
 
   useHotkeys(

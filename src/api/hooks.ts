@@ -63,13 +63,13 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   };
 };
 
-export const useSaveNote = (): (() => Promise<void>) => {
+export const useSaveNote = (): ((key: CryptoKey) => Promise<void>) => {
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
   const noteStatus = useNoteStatus();
   const currentNote = useCurrentNote();
 
-  return async () => {
+  return async (key: CryptoKey) => {
     editor?.commands?.focus();
 
     const content = editor?.getHTML() ?? '';
@@ -80,7 +80,7 @@ export const useSaveNote = (): (() => Promise<void>) => {
       return;
     }
 
-    const encrypted_note = await encrypt_note(content, metadata);
+    const encrypted_note = await encrypt_note(key, content, metadata);
 
     const request = {
       metadata: encrypted_note?.encrypted_metadata,
