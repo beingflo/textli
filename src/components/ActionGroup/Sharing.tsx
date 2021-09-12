@@ -1,15 +1,24 @@
-import { Dialog, Transition } from '@headlessui/react';
-import React from 'react';
+import { Dialog, Listbox, Transition } from '@headlessui/react';
+import React, { Fragment } from 'react';
 import { create_share } from '../../api/share_api';
 import { useCurrentNote } from '../../context/currentNoteReducer';
 import { useShares } from '../../context/sharesReducer';
-import { CheckIcon, CloseIcon, CopyIcon } from '../../icons';
+import { CheckIcon, CloseIcon, CopyIcon, SelectorIcon } from '../../icons';
 import { Share } from '../../types';
 
 export type Props = {
   showSharing: boolean;
   setShowSharing: (show: boolean) => void;
 };
+
+const expirationOptions = [
+  { id: 0, value: 'No expiration' },
+  { id: 1, value: '1 hour' },
+  { id: 2, value: '1 day' },
+  { id: 3, value: '1 week' },
+  { id: 4, value: '1 month' },
+  { id: 5, value: '1 year' },
+];
 
 export const Sharing = ({
   showSharing,
@@ -19,6 +28,7 @@ export const Sharing = ({
   const shares = useShares();
   const [shareToken, setShareToken] = React.useState('');
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
+  const [expiration, setExpiration] = React.useState(expirationOptions[3]);
 
   React.useEffect(() => {
     const share = shares.find(
@@ -83,6 +93,74 @@ export const Sharing = ({
                 <button onClick={() => setShowSharing(false)}>
                   <CloseIcon className="h-6 w-6" />
                 </button>
+              </div>
+              <div className="mt-8">
+                <div className="flex flex-row justify-between">
+                  <span className="inline-flex self-center">
+                    Share expires in
+                  </span>
+                  <Listbox value={expiration} onChange={setExpiration}>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-48 py-2 pl-3 pr-10 text-left bg-gray-50 shadow-md rounded-md cursor-default focus:outline-none sm:text-sm">
+                        <span className="block truncate">
+                          {expiration.value}
+                        </span>
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                          <SelectorIcon
+                            className="w-5 h-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Listbox.Button>
+                      <Transition
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options className="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg sm:text-sm">
+                          {expirationOptions.map((option) => (
+                            <Listbox.Option
+                              key={option?.id}
+                              className={({ active }) =>
+                                `${active ? 'bg-yellow-100' : 'bg-white'}
+                              cursor-default select-none relative py-2 pl-10 pr-4`
+                              }
+                              value={option}
+                            >
+                              {({ selected, active }) => (
+                                <>
+                                  <span
+                                    className={`${
+                                      selected ? 'font-medium' : 'font-normal'
+                                    } block truncate`}
+                                  >
+                                    {option?.value}
+                                  </span>
+                                  {selected ? (
+                                    <span
+                                      className={`${
+                                        active
+                                          ? 'text-amber-600'
+                                          : 'text-amber-600'
+                                      }
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                    >
+                                      <CheckIcon
+                                        className="w-5 h-5"
+                                        aria-hidden="true"
+                                      />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </Listbox>
+                </div>
               </div>
               <div className="mt-8 flex flex-row justify-between bg-gray-100 p-4 rounded-md">
                 <input
