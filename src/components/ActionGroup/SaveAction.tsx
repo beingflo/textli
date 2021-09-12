@@ -18,10 +18,10 @@ export const SaveAction = (): React.ReactElement => {
     React.useState<{ name: string; key: CryptoKey; default: boolean }>();
 
   React.useEffect(() => {
-    const savedWorkspace = workspaces.find(
+    const savedWorkspace = workspaces?.find(
       (workspace: any) => workspace?.name === currentNote?.workspace
     );
-    const defaultWorkspace = workspaces.find(
+    const defaultWorkspace = workspaces?.find(
       (workspace: any) => workspace?.default
     );
 
@@ -68,7 +68,7 @@ export const SaveAction = (): React.ReactElement => {
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute top-0 right-full mr-8 p-1 -mt-3 space-y-2 bg-white rounded-md shadow-lg">
-            {workspaces.map((workspace: any) => (
+            {workspaces?.map((workspace: any) => (
               <Listbox.Option
                 key={workspace?.name}
                 className={({ active, selected }) =>

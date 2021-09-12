@@ -2,11 +2,12 @@ import { get, update } from 'idb-keyval';
 import React from 'react';
 import { useAppDispatch } from '../../../context';
 import { setShowKeyprompt } from '../../../context/showKeypromtReducer';
-import { AddIcon } from '../../../icons';
+import { AddIcon, FilledStarIcon, StarIcon } from '../../../icons';
 
 export const Workspaces = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const [workspaces, setWorkspaces] = React.useState<[any]>();
+  const [defaultWS, setDefaultWS] = React.useState();
 
   const getWorkspaces = () => {
     get('workspaces').then((workspaces) => setWorkspaces(workspaces));
@@ -24,6 +25,25 @@ export const Workspaces = (): React.ReactElement => {
     [workspaces]
   );
 
+  React.useEffect(() => {
+    update('workspaces', (workspaces) => {
+      return workspaces?.map((workspace: any) => {
+        if (workspace?.name === defaultWS) {
+          return { ...workspace, default: true };
+        } else {
+          return { ...workspace, default: false };
+        }
+      });
+    });
+  }, [workspaces, defaultWS]);
+
+  React.useEffect(() => {
+    const defaultWorkspace = workspaces?.find(
+      (workspace: any) => workspace?.default === true
+    );
+    setDefaultWS(defaultWorkspace?.name);
+  }, [workspaces]);
+
   const handleAddNew = React.useCallback(() => {
     setShowKeyprompt(true, dispatch);
   }, [dispatch, setShowKeyprompt]);
@@ -33,7 +53,19 @@ export const Workspaces = (): React.ReactElement => {
       <ul className="space-y-4">
         {workspaces?.map((workspace: any) => (
           <li key={workspace?.name} className="flex flex-row justify-between">
-            <span className="truncate font-semibold">{workspace?.name}</span>
+            <div className="flex flex-row space-x-4">
+              <button
+                onClick={() => setDefaultWS(workspace?.name)}
+                className=""
+              >
+                {workspace?.name === defaultWS ? (
+                  <FilledStarIcon className="w-4 h-4 self-baseline text-yellow-400 transform scale-110" />
+                ) : (
+                  <StarIcon className="w-4 h-4 self-baseline" />
+                )}
+              </button>
+              <span className="truncate font-semibold">{workspace?.name}</span>
+            </div>
             <button
               onClick={() => deleteWorkspace(workspace?.name)}
               className="text-yellow-400"
