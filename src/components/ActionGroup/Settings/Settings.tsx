@@ -13,6 +13,7 @@ import {
 import { Balance } from './Balance';
 import Bin from './Bin';
 import Shares from './Shares';
+import Workspaces from './Workspaces';
 
 export type Props = {
   showSettings: boolean;
@@ -144,7 +145,9 @@ export const Settings = ({
                     <Tab.Panel>
                       <Bin />
                     </Tab.Panel>
-                    <Tab.Panel>Coming soon :)</Tab.Panel>
+                    <Tab.Panel>
+                      <Workspaces />
+                    </Tab.Panel>
                     <Tab.Panel>
                       <div className="flex flex-col">
                         <span className="font-semibold">Change password</span>

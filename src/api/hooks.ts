@@ -204,7 +204,7 @@ export const useGetDeletedNoteList = (): ((
       return;
     }
 
-    const notes = await Promise.all(
+    const notes = await Promise.allSettled(
       encrypted_notes.map(
         async (note: DeletedNoteListItemDto): Promise<DeletedNoteListItem> => {
           const key = JSON.parse(note?.key);
@@ -226,7 +226,14 @@ export const useGetDeletedNoteList = (): ((
       )
     );
 
-    const sortedNotes = sortDeletedNotes(notes);
+    const filteredNotes = notes
+      .filter(
+        (result: PromiseSettledResult<NoteListItem>) =>
+          result.status === 'fulfilled'
+      )
+      .map((result: any) => result?.value);
+
+    const sortedNotes = sortDeletedNotes(filteredNotes);
     setDeletedNotes(sortedNotes);
   };
 };

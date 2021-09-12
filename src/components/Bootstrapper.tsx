@@ -12,23 +12,26 @@ import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
 import { get } from 'idb-keyval';
 import { useGetNoteList } from '../api/hooks';
+import {
+  setShowKeyprompt,
+  useShowKeypromt,
+} from '../context/showKeypromtReducer';
 
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
   const status = useStatus();
+  const showKeyprompt = useShowKeypromt();
 
   const [waiting, setWaiting] = React.useState(true);
 
-  const [showKeyPrompt, setShowKeyPrompt] = React.useState(true);
-
   React.useEffect(() => {
     get('workspaces').then((workspaces) => {
-      if (workspaces.length > 0) {
-        setShowKeyPrompt(false);
+      if (workspaces.length === 0) {
+        setShowKeyprompt(true, dispatch);
       }
     });
-  }, [setShowKeyPrompt]);
+  }, [dispatch]);
 
   React.useEffect(() => {
     getNoteList();
@@ -53,10 +56,10 @@ const Bootstrapper = (): React.ReactElement => {
         <SpinnerPage />
       ) : (
         <>
-          {status === Status.OK && !showKeyPrompt ? (
+          {status === Status.OK && !showKeyprompt ? (
             <App />
           ) : status === Status.OK ? (
-            <KeyPrompt setDone={() => setShowKeyPrompt(false)} />
+            <KeyPrompt setDone={() => setShowKeyprompt(false, dispatch)} />
           ) : (
             <Start />
           )}

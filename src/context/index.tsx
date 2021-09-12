@@ -25,6 +25,10 @@ import { Editor } from '@tiptap/react';
 import { NoteStatusReducer, NOTE_STATUS_SET } from './noteStatusReducer';
 import { UserInfoReducer, USER_INFO_SET_INFO } from './userInfoReducer';
 import { SharesReducer, SHARES_SET_SHARES } from './sharesReducer';
+import {
+  KEYPROMPT_SET_SHOW_KEYPROMPT,
+  ShowKeypromptReducer,
+} from './showKeypromtReducer';
 
 export type State = {
   waiting: number;
@@ -35,6 +39,7 @@ export type State = {
   noteStatus: NoteStatus;
   userInfo: UserInfo | undefined;
   shares: Array<Share>;
+  showKeyprompt: boolean;
 };
 
 export type Action = {
@@ -53,6 +58,7 @@ const initialState: State = {
   noteStatus: NoteStatus.SYNCED,
   userInfo: undefined,
   shares: [],
+  showKeyprompt: false,
 };
 
 export const AppContext = React.createContext<{
@@ -81,6 +87,7 @@ export const ContextProvider = ({
       [NOTE_STATUS_SET]: NoteStatusReducer,
       [USER_INFO_SET_INFO]: UserInfoReducer,
       [SHARES_SET_SHARES]: SharesReducer,
+      [KEYPROMPT_SET_SHOW_KEYPROMPT]: ShowKeypromptReducer,
     }),
     []
   );
