@@ -176,6 +176,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
 
     const sortedNotes = sortNotes(filteredNotes);
 
+    setStatus(Status.OK, dispatch);
     setNoteList(sortedNotes, dispatch);
   };
 };
