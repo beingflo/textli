@@ -10,16 +10,27 @@ import Settings from './Settings/Settings';
 import { useGetNoteList } from '../../api/hooks';
 import { Sharing } from './Sharing';
 import { useCurrentNote } from '../../context/currentNoteReducer';
+import { useShares } from '../../context/sharesReducer';
+import { Share } from '../../types';
 
 export const ActionGroup = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
+  const shares = useShares();
   const currentNote = useCurrentNote();
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
+  const [isShared, setIsShared] = React.useState(false);
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => getNoteList());
   }, []);
+
+  React.useEffect(() => {
+    const share = shares.find(
+      (share: Share) => share?.note === currentNote?.id
+    );
+    setIsShared(!!share);
+  }, [shares, currentNote]);
 
   return (
     <div className="space-y-2">
@@ -43,9 +54,12 @@ export const ActionGroup = (): React.ReactElement => {
               <button
                 onClick={() => setShowSharing(true)}
                 disabled={!currentNote}
-                className="disabled:opacity-60"
+                className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
               >
-                <LinkIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                {isShared && (
+                  <span className="absolute bg-yellow-300 w-6 h-2 bottom-0 right-0 rounded-full" />
+                )}
+                <LinkIcon className="text-gray-700 z-10 relative" />
               </button>
               <button onClick={() => setShowSettings(true)}>
                 <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
