@@ -1,7 +1,13 @@
 import { Popover, Transition } from '@headlessui/react';
 import React from 'react';
 import { user_logout } from '../../api/user_api';
-import { LinkIcon, LogoutIcon, MoreIcon, SettingsIcon } from '../../icons';
+import {
+  EyeIcon,
+  LinkIcon,
+  LogoutIcon,
+  MoreIcon,
+  SettingsIcon,
+} from '../../icons';
 import { SaveAction } from './SaveAction';
 import { DeleteAction } from './DeleteAction';
 import { NewAction } from './NewAction';
@@ -19,7 +25,9 @@ export const ActionGroup = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
+  const [showPublication, setShowPublication] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
+  const [isPublic, setIsPublic] = React.useState(false);
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => getNoteList());
@@ -31,6 +39,11 @@ export const ActionGroup = (): React.ReactElement => {
     );
     setIsShared(!!share);
   }, [shares, currentNote]);
+
+  React.useEffect(() => {
+    // TODO get publications
+    setIsPublic(false);
+  }, [currentNote]);
 
   return (
     <div className="space-y-2">
@@ -54,12 +67,22 @@ export const ActionGroup = (): React.ReactElement => {
               <button
                 onClick={() => setShowSharing(true)}
                 disabled={!currentNote}
-                className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
+                className="pt-1 disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
               >
                 {isShared && (
                   <span className="absolute bg-yellow-400 w-1.5 h-1.5 bottom-0 right-0 rounded-full" />
                 )}
                 <LinkIcon className="text-gray-700 z-10 relative" />
+              </button>
+              <button
+                onClick={() => setShowPublication(true)}
+                disabled={!currentNote}
+                className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
+              >
+                {isPublic && (
+                  <span className="absolute bg-yellow-400 w-1.5 h-1.5 bottom-0 right-0 rounded-full" />
+                )}
+                <EyeIcon className="text-gray-700 z-10 relative" />
               </button>
               <button onClick={() => setShowSettings(true)}>
                 <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
@@ -80,6 +103,7 @@ export const ActionGroup = (): React.ReactElement => {
       {showSharing && (
         <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
       )}
+      {showPublication && <></>}
     </div>
   );
 };
