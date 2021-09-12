@@ -80,7 +80,7 @@ export const string2arrayBuffer = (str: string): ArrayBuffer => {
 export const unwrap_note_key = async (
   wrapped_key: ArrayBuffer
 ): Promise<CryptoKey> => {
-  const mainKey = (await get('workspaces'))[0];
+  const mainKey = (await get('workspaces'))[0].key;
 
   if (!mainKey) {
     return Promise.reject();
@@ -110,7 +110,7 @@ export const encrypt_note = async (
   const enc = new TextEncoder();
 
   const key = await generate_note_key();
-  const main_key = (await get('workspaces'))[0];
+  const main_key = (await get('workspaces'))[0].key;
 
   const encoded_content = enc.encode(content);
   const encoded_metadata = enc.encode(metadata);
