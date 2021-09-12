@@ -6,6 +6,8 @@ import { useCurrentNote } from '../../context/currentNoteReducer';
 import { useShares } from '../../context/sharesReducer';
 import { CheckIcon, CloseIcon, CopyIcon, SelectorIcon } from '../../icons';
 import { Share } from '../../types';
+import config from '../../config.json';
+import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
 
 export type Props = {
   showSharing: boolean;
@@ -32,6 +34,8 @@ export const Sharing = ({
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
   const [expiration, setExpiration] = React.useState(expirationOptions[3]);
 
+  const [shareLink, setShareLink] = React.useState('');
+
   React.useEffect(() => {
     const share = shares.find(
       (share: Share) => share?.note === currentNote?.id
@@ -40,6 +44,23 @@ export const Sharing = ({
       setShare(share);
     }
   }, [shares, currentNote]);
+
+  React.useEffect(() => {
+    const func = async () => {
+      if (!currentNote?.key?.wrapped_key) {
+        return '';
+      }
+      const url = config.share_url;
+      const rawKey = await unwrap_note_key(
+        string2arrayBuffer(currentNote?.key?.wrapped_key)
+      );
+      const key = await exportKey(rawKey);
+
+      setShareLink(`${url}/${share?.token}#${key}`);
+    };
+
+    func();
+  }, [currentNote, share, config]);
 
   const handleCreateShare = React.useCallback(() => {
     const func = async () => {
@@ -67,11 +88,11 @@ export const Sharing = ({
   }, [share, dispatch]);
 
   const copyToClipboard = React.useCallback(() => {
-    navigator.clipboard.writeText(share?.token ?? '').then(() => {
+    navigator.clipboard.writeText(shareLink).then(() => {
       setShowClipboardConfirm(true);
       setTimeout(() => setShowClipboardConfirm(false), 1000);
     });
-  }, [share]);
+  }, [shareLink]);
 
   return (
     <Transition show={showSharing} as={React.Fragment} appear>
@@ -112,7 +133,7 @@ export const Sharing = ({
                 {share ? (
                   <>
                     <div className="flex flex-row justify-between">
-                      <span>Share expires on</span>
+                      <span>Share expires at</span>
                       <span>
                         {share?.expires_at
                           ? new Date(share?.expires_at).toLocaleString()
@@ -121,7 +142,7 @@ export const Sharing = ({
                     </div>
                     <div className="mt-4 flex flex-row justify-between bg-gray-100 p-4 rounded-md">
                       <input
-                        value={share?.token}
+                        value={shareLink}
                         readOnly
                         className="outline-none bg-gray-100 w-4/5 truncate"
                       />

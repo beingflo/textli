@@ -78,18 +78,29 @@ export const string2arrayBuffer = (str: string): ArrayBuffer => {
 };
 
 export const unwrap_note_key = async (
-  mainKey: CryptoKey,
   wrapped_key: ArrayBuffer
 ): Promise<CryptoKey> => {
+  const mainKey = await get('personal');
+
+  if (!mainKey) {
+    return Promise.reject();
+  }
+
   return window.crypto.subtle.unwrapKey(
     'raw',
     wrapped_key,
     mainKey,
     'AES-KW',
     'AES-GCM',
-    false,
+    true,
     ['encrypt', 'decrypt']
   );
+};
+
+export const exportKey = async (key: CryptoKey): Promise<string> => {
+  const rawKey = await window.crypto.subtle.exportKey('raw', key);
+
+  return arrayBuffer2string(rawKey);
 };
 
 export const encrypt_note = async (
@@ -145,16 +156,7 @@ export const decrypt_note = async (
 ): Promise<DecryptionResult | null> => {
   const dec = new TextDecoder();
 
-  const main_key = await get('personal');
-
-  if (!main_key) {
-    return null;
-  }
-
-  const note_key = await unwrap_note_key(
-    main_key,
-    string2arrayBuffer(key.wrapped_key)
-  );
+  const note_key = await unwrap_note_key(string2arrayBuffer(key.wrapped_key));
 
   let metadata = null;
   if (encrypted_metadata) {
