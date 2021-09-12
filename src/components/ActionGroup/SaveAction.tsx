@@ -3,10 +3,12 @@ import { get } from 'idb-keyval';
 import React, { Fragment } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSaveNote } from '../../api/hooks';
+import { useCurrentNote } from '../../context/currentNoteReducer';
 import { CheckIcon, ChevronLeftIcon, SaveIcon } from '../../icons';
 
 export const SaveAction = (): React.ReactElement => {
   const saveNote = useSaveNote();
+  const currentNote = useCurrentNote();
 
   const [showSaveConfirm, setShowSaveConfirm] = React.useState(false);
 
@@ -16,10 +18,19 @@ export const SaveAction = (): React.ReactElement => {
     React.useState<{ name: string; key: CryptoKey; default: boolean }>();
 
   React.useEffect(() => {
-    const defaultWorkspace =
-      workspaces.find((workspace: any) => workspace?.default) ?? workspaces[0];
-    setSelectedWorkspace(defaultWorkspace);
-  }, [workspaces]);
+    const savedWorkspace = workspaces.find(
+      (workspace: any) => workspace?.name === currentNote?.workspace
+    );
+    const defaultWorkspace = workspaces.find(
+      (workspace: any) => workspace?.default
+    );
+
+    if (savedWorkspace) {
+      setSelectedWorkspace(savedWorkspace);
+    } else {
+      setSelectedWorkspace(defaultWorkspace);
+    }
+  }, [workspaces, currentNote]);
 
   React.useMemo(() => {
     get('workspaces').then(setWorkspaces);
@@ -27,7 +38,7 @@ export const SaveAction = (): React.ReactElement => {
 
   const handleSave = () => {
     if (selectedWorkspace) {
-      saveNote(selectedWorkspace?.key);
+      saveNote(selectedWorkspace);
       console.log('Saving with', selectedWorkspace?.name);
       setShowSaveConfirm(true);
       setTimeout(() => setShowSaveConfirm(false), 1000);

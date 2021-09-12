@@ -29,6 +29,7 @@ export type NoteListItem = {
   metadata: Metadata;
   key: KeyMaterial;
   public: boolean;
+  workspace: string;
 };
 
 export type DeletedNoteListItem = NoteListItem & {

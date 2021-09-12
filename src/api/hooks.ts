@@ -54,6 +54,7 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
       public: noteDto?.public,
       metadata: parsedMetadata,
       content: decrypted_note?.content ?? '',
+      workspace: decrypted_note?.workspace ?? '',
     };
 
     setCurrentNote(note, dispatch);
@@ -63,13 +64,16 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   };
 };
 
-export const useSaveNote = (): ((key: CryptoKey) => Promise<void>) => {
+export const useSaveNote = (): ((workspace: {
+  key: CryptoKey;
+  name: string;
+}) => Promise<void>) => {
   const dispatch = useAppDispatch();
   const editor = useAppEditor();
   const noteStatus = useNoteStatus();
   const currentNote = useCurrentNote();
 
-  return async (key: CryptoKey) => {
+  return async (workspace: { key: CryptoKey; name: string }) => {
     editor?.commands?.focus();
 
     const content = editor?.getHTML() ?? '';
@@ -80,7 +84,11 @@ export const useSaveNote = (): ((key: CryptoKey) => Promise<void>) => {
       return;
     }
 
-    const encrypted_note = await encrypt_note(key, content, metadata);
+    const encrypted_note = await encrypt_note(
+      workspace?.key,
+      content,
+      metadata
+    );
 
     const request = {
       metadata: encrypted_note?.encrypted_metadata,
@@ -103,6 +111,7 @@ export const useSaveNote = (): ((key: CryptoKey) => Promise<void>) => {
           metadata: JSON.parse(metadata),
           key: encrypted_note?.key,
           public: false,
+          workspace: workspace?.name,
           ...result,
         };
         setCurrentNote(note, dispatch);
@@ -124,6 +133,7 @@ export const useSaveNote = (): ((key: CryptoKey) => Promise<void>) => {
           metadata: JSON.parse(metadata),
           key: encrypted_note?.key,
           public: currentNote?.public,
+          workspace: workspace?.name,
           ...result,
         };
         setCurrentNote(note, dispatch);
@@ -162,6 +172,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
             modified_at: note?.modified_at,
             public: note?.public,
             metadata: parsedMetadata,
+            workspace: decrypted_note?.workspace ?? '',
           };
         }
       )
@@ -209,6 +220,7 @@ export const useGetDeletedNoteList = (): ((
             deleted_at: note?.deleted_at,
             public: note?.public,
             metadata: parsedMetadata,
+            workspace: decrypted_note?.workspace ?? '',
           };
         }
       )

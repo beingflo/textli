@@ -13,6 +13,7 @@ export type EncryptionResult = {
 };
 
 export type DecryptionResult = {
+  workspace: string;
   content: string;
   metadata: string;
 };
@@ -79,7 +80,7 @@ export const string2arrayBuffer = (str: string): ArrayBuffer => {
 
 export const unwrap_note_key = async (
   wrapped_key: ArrayBuffer
-): Promise<CryptoKey> => {
+): Promise<{ key: CryptoKey; workspace: string }> => {
   const mainKeys:
     | [{ name: string; key: CryptoKey; default: boolean }]
     | undefined = await get('workspaces');
@@ -104,7 +105,7 @@ export const unwrap_note_key = async (
         ['encrypt', 'decrypt']
       );
 
-      return unwrapped_key;
+      return { key: unwrapped_key, workspace: mainKey?.name };
     } catch (error) {}
   }
   return Promise.reject();
@@ -180,7 +181,7 @@ export const decrypt_note = async (
         name: 'AES-GCM',
         iv: iv_metadata,
       },
-      note_key,
+      note_key?.key,
       string2arrayBuffer(encrypted_metadata)
     );
   }
@@ -194,12 +195,13 @@ export const decrypt_note = async (
         name: 'AES-GCM',
         iv: iv_content,
       },
-      note_key,
+      note_key?.key,
       string2arrayBuffer(encrypted_content)
     );
   }
 
   return {
+    workspace: note_key?.workspace,
     content: content ? dec.decode(content) : '',
     metadata: metadata ? dec.decode(metadata) : '',
   };
