@@ -27,7 +27,7 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     get('workspaces').then((workspaces) => {
-      if (workspaces?.length === 0) {
+      if (!workspaces || workspaces?.length === 0) {
         setShowKeyprompt(true, dispatch);
       }
     });

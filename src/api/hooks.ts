@@ -51,7 +51,6 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
       id: noteDto?.id,
       created_at: noteDto?.created_at,
       modified_at: noteDto?.modified_at,
-      public: noteDto?.public,
       metadata: parsedMetadata,
       content: decrypted_note?.content ?? '',
       workspace: decrypted_note?.workspace ?? '',
@@ -93,7 +92,6 @@ export const useSaveNote = (): ((workspace: {
     const request = {
       metadata: encrypted_note?.encrypted_metadata,
       key: JSON.stringify(encrypted_note?.key),
-      public: false,
       content: encrypted_note?.encrypted_content,
     };
 
@@ -132,7 +130,6 @@ export const useSaveNote = (): ((workspace: {
           content,
           metadata: JSON.parse(metadata),
           key: encrypted_note?.key,
-          public: currentNote?.public,
           workspace: workspace?.name,
           ...result,
         };
@@ -170,7 +167,6 @@ export const useGetNoteList = (): (() => Promise<void>) => {
             id: note?.id,
             created_at: note?.created_at,
             modified_at: note?.modified_at,
-            public: note?.public,
             metadata: parsedMetadata,
             workspace: decrypted_note?.workspace ?? '',
           };
@@ -218,7 +214,6 @@ export const useGetDeletedNoteList = (): ((
             created_at: note?.created_at,
             modified_at: note?.modified_at,
             deleted_at: note?.deleted_at,
-            public: note?.public,
             metadata: parsedMetadata,
             workspace: decrypted_note?.workspace ?? '',
           };

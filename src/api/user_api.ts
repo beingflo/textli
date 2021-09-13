@@ -1,7 +1,11 @@
 import config from '../config.json';
 import { AppDispatch } from '../context';
 import { setUserInfo } from '../context/userInfoReducer';
-import { UserCredentials, UserCredentialsPasswordChange } from '../types';
+import {
+  SignupCredentials,
+  UserCredentials,
+  UserCredentialsPasswordChange,
+} from '../types';
 import { mapError, handleException } from './index';
 
 const USER_URL = `${config.api_url}/user`;
@@ -42,7 +46,7 @@ export const user_logout = (
 };
 
 export const user_signup = (
-  credentials: UserCredentials,
+  credentials: SignupCredentials,
   onSuccess: (res: Response) => void = () => {},
   onFailure: any = handleException
 ): void => {

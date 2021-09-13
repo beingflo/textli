@@ -26,11 +26,14 @@ const Signup = (): React.ReactElement => {
         user_login({ name: username, password: password }, loginSucces);
       };
       setWaiting(true);
-      user_signup({ name: username, password: password }, success);
+      user_signup(
+        { name: username, password: password, email: email },
+        success
+      );
 
       event.preventDefault();
     },
-    [dispatch, username, password, waiting]
+    [dispatch, username, password, email, waiting]
   );
 
   const passwordMatch: boolean =

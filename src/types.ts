@@ -6,7 +6,6 @@ export type NoteListItemDto = {
   modified_at: string;
   metadata: string;
   key: string;
-  public: boolean;
 };
 
 export type DeletedNoteListItemDto = NoteListItemDto & {
@@ -28,7 +27,6 @@ export type NoteListItem = {
   modified_at: string;
   metadata: Metadata;
   key: KeyMaterial;
-  public: boolean;
   workspace: string;
 };
 
@@ -55,7 +53,6 @@ export type NoteSaveRequest = {
   metadata: string;
   content: string;
   key: string;
-  public: boolean;
 };
 
 export type DeletedNote = NoteDto & {
@@ -68,12 +65,12 @@ export type ParsedNoteListEntry = {
   modified_at: string;
   metadata: { title: string; tags: string };
   key: string;
-  public: boolean;
 };
 
 export type Share = {
   token: string;
   note: string;
+  public?: string;
   created_at: string;
   expires_at: string;
 };
@@ -81,6 +78,10 @@ export type Share = {
 export type UserCredentials = {
   name: string;
   password: string;
+};
+
+export type SignupCredentials = UserCredentials & {
+  email: string;
 };
 
 export type UserCredentialsPasswordChange = {
@@ -92,6 +93,7 @@ export type UserCredentialsPasswordChange = {
 export type CreateShareRequest = {
   note: string;
   expires_in?: number;
+  public?: string;
 };
 
 export type UserInfo = {
