@@ -18,6 +18,7 @@ import { Sharing } from './Sharing';
 import { useCurrentNote } from '../../context/currentNoteReducer';
 import { useShares } from '../../context/sharesReducer';
 import { Share } from '../../types';
+import Publishing from './Publishing';
 
 export const ActionGroup = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
@@ -25,7 +26,7 @@ export const ActionGroup = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
-  const [showPublication, setShowPublication] = React.useState(false);
+  const [showPublishing, setShowPublishing] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
 
@@ -75,7 +76,7 @@ export const ActionGroup = (): React.ReactElement => {
                 <LinkIcon className="text-gray-700 z-10 relative" />
               </button>
               <button
-                onClick={() => setShowPublication(true)}
+                onClick={() => setShowPublishing(true)}
                 disabled={!currentNote}
                 className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
               >
@@ -103,7 +104,12 @@ export const ActionGroup = (): React.ReactElement => {
       {showSharing && (
         <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
       )}
-      {showPublication && <></>}
+      {showPublishing && (
+        <Publishing
+          showPublishing={showPublishing}
+          setShowPublishing={setShowPublishing}
+        />
+      )}
     </div>
   );
 };
