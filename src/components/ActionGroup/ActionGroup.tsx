@@ -42,9 +42,11 @@ export const ActionGroup = (): React.ReactElement => {
   }, [shares, currentNote]);
 
   React.useEffect(() => {
-    // TODO get publications
-    setIsPublic(false);
-  }, [currentNote]);
+    const share = shares.find(
+      (share: Share) => share?.note === currentNote?.id && share?.public
+    );
+    setIsPublic(!!share);
+  }, [currentNote, shares]);
 
   return (
     <div className="space-y-2">
@@ -53,7 +55,11 @@ export const ActionGroup = (): React.ReactElement => {
       <DeleteAction />
       <Popover className="relative">
         <Popover.Button>
-          <MoreIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+          <MoreIcon
+            className={`${
+              isShared || isPublic ? 'text-yellow-400' : 'text-gray-700'
+            } hover:-translate-x-0.5 transform transition active:scale-90`}
+          />
         </Popover.Button>
         <Transition
           enter="transition-opacity ease-linear duration-75"
@@ -68,22 +74,23 @@ export const ActionGroup = (): React.ReactElement => {
               <button
                 onClick={() => setShowSharing(true)}
                 disabled={!currentNote}
-                className="pt-1 disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
+                className="pt-1"
               >
-                {isShared && (
-                  <span className="absolute bg-yellow-400 w-1.5 h-1.5 bottom-0 right-0 rounded-full" />
-                )}
-                <LinkIcon className="text-gray-700 z-10 relative" />
+                <LinkIcon
+                  className={`${
+                    isShared ? 'text-yellow-400' : 'text-gray-700'
+                  } disabled:opacity-60 hover:-translate-x-0.5 transform transition active:scale-90`}
+                />
               </button>
               <button
                 onClick={() => setShowPublishing(true)}
                 disabled={!currentNote}
-                className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
               >
-                {isPublic && (
-                  <span className="absolute bg-yellow-400 w-1.5 h-1.5 top-5 right-0 rounded-full" />
-                )}
-                <EyeIcon className="text-gray-700 z-10 relative" />
+                <EyeIcon
+                  className={`${
+                    isPublic ? 'text-yellow-400' : 'text-gray-700'
+                  } disabled:opacity-60 hover:-translate-x-0.5 transform transition active:scale-90`}
+                />
               </button>
               <button onClick={() => setShowSettings(true)}>
                 <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
