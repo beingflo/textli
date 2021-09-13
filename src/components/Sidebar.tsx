@@ -112,7 +112,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
                   )}
                 </div>
               </div>
-              <ul className="space-y-0.5 pl-9 pt-4">
+              <ul className="space-y-1 pl-9 pt-4">
                 {filteredNotes.map((note: NoteListItem) => (
                   <li
                     onClick={() => handleSelection(note?.id)}
