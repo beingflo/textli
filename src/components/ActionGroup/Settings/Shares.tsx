@@ -49,7 +49,9 @@ export const Shares = (): React.ReactElement => {
                 <div className="flex flex-row space-x-1">
                   <ClockIcon className="h-4 w-4 self-center" />
                   <span className="text-gray-500">
-                    {new Date(share?.expires_at).toLocaleDateString()}
+                    {share?.expires_at
+                      ? new Date(share?.expires_at).toLocaleDateString()
+                      : 'Never'}
                   </span>
                 </div>
               </div>
