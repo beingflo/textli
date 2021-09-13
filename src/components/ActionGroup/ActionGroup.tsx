@@ -74,22 +74,23 @@ export const ActionGroup = (): React.ReactElement => {
               <button
                 onClick={() => setShowSharing(true)}
                 disabled={!currentNote}
-                className="pt-1"
+                className="pt-1 disabled:opacity-60"
               >
                 <LinkIcon
                   className={`${
                     isShared ? 'text-yellow-400' : 'text-gray-700'
-                  } disabled:opacity-60 hover:-translate-x-0.5 transform transition active:scale-90`}
+                  } hover:-translate-x-0.5 transform transition active:scale-90`}
                 />
               </button>
               <button
                 onClick={() => setShowPublishing(true)}
                 disabled={!currentNote}
+                className="disabled:opacity-60"
               >
                 <EyeIcon
                   className={`${
                     isPublic ? 'text-yellow-400' : 'text-gray-700'
-                  } disabled:opacity-60 hover:-translate-x-0.5 transform transition active:scale-90`}
+                  } hover:-translate-x-0.5 transform transition active:scale-90`}
                 />
               </button>
               <button onClick={() => setShowSettings(true)}>
