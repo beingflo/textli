@@ -12,6 +12,7 @@ import {
 } from '../../../icons';
 import { Balance } from './Balance';
 import Bin from './Bin';
+import Publications from './Publications';
 import Shares from './Shares';
 import Workspaces from './Workspaces';
 
@@ -141,7 +142,9 @@ export const Settings = ({
                     <Tab.Panel>
                       <Shares />
                     </Tab.Panel>
-                    <Tab.Panel>Coming soon :)</Tab.Panel>
+                    <Tab.Panel>
+                      <Publications />
+                    </Tab.Panel>
                     <Tab.Panel>
                       <Bin />
                     </Tab.Panel>

@@ -3,27 +3,33 @@ import { delete_share, list_shares } from '../../../api/share_api';
 import { useAppDispatch } from '../../../context';
 import { useNoteList } from '../../../context/noteListReducer';
 import { useShares } from '../../../context/sharesReducer';
-import { AddIcon, ClockIcon } from '../../../icons';
+import { AddIcon, EditIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
-export const Shares = (): React.ReactElement => {
+export const Publications = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const shares = useShares();
   const noteList = useNoteList();
 
-  const getSharesInfo = React.useMemo(() => {
-    const matchedShares = shares.map((share: Share) => {
-      const title = noteList.find(
-        (note: NoteListItem) => note?.id === share?.note
-      )?.metadata?.title;
+  const getPublicationsInfo = React.useMemo(() => {
+    const matchedPubs = shares
+      .filter((share: Share) => share?.public)
+      .map((share: Share) => {
+        const note = noteList.find(
+          (note: NoteListItem) => note?.id === share?.note
+        );
 
-      return { ...share, title };
-    });
+        return {
+          ...share,
+          title: note?.metadata?.title,
+          modified_at: note?.modified_at,
+        };
+      });
 
-    return matchedShares;
+    return matchedPubs;
   }, [shares, noteList]);
 
-  const revoke_share = React.useCallback(
+  const unpublish = React.useCallback(
     (token: string) => {
       delete_share(token).then(() => {
         list_shares(dispatch);
@@ -35,7 +41,7 @@ export const Shares = (): React.ReactElement => {
   return (
     <>
       <ul className="space-y-4">
-        {getSharesInfo?.map((share: any) => (
+        {getPublicationsInfo?.map((share: any) => (
           <li key={share?.token} className="flex flex-col">
             <span className="truncate font-semibold">{share?.title}</span>
             <div className="flex justify-between">
@@ -47,19 +53,19 @@ export const Shares = (): React.ReactElement => {
                   </span>
                 </div>
                 <div className="flex flex-row space-x-1">
-                  <ClockIcon className="h-4 w-4 self-center" />
+                  <EditIcon className="h-4 w-4 self-center" />
                   <span className="text-gray-500">
-                    {share?.expires_at
-                      ? new Date(share?.expires_at).toLocaleDateString()
+                    {share?.modified_at
+                      ? new Date(share?.modified_at).toLocaleDateString()
                       : 'Never'}
                   </span>
                 </div>
               </div>
               <button
-                onClick={() => revoke_share(share?.token)}
+                onClick={() => unpublish(share?.token)}
                 className="text-yellow-400"
               >
-                Delete
+                Unpublish
               </button>
             </div>
           </li>
@@ -69,4 +75,4 @@ export const Shares = (): React.ReactElement => {
   );
 };
 
-export default Shares;
+export default Publications;
