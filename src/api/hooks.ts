@@ -86,7 +86,8 @@ export const useSaveNote = (): ((workspace: {
     const encrypted_note = await encrypt_note(
       workspace?.key,
       content,
-      metadata
+      metadata,
+      currentNote?.key?.wrapped_key
     );
 
     const request = {

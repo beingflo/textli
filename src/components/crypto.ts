@@ -120,11 +120,20 @@ export const exportKey = async (key: CryptoKey): Promise<string> => {
 export const encrypt_note = async (
   mainKey: CryptoKey,
   content: string,
-  metadata: string
+  metadata: string,
+  wrapped_note_key?: string
 ): Promise<EncryptionResult> => {
   const enc = new TextEncoder();
 
-  const noteKey = await generate_note_key();
+  let noteKey;
+  if (wrapped_note_key) {
+    const unwrapped_keymaterial = await unwrap_note_key(
+      string2arrayBuffer(wrapped_note_key)
+    );
+    noteKey = unwrapped_keymaterial?.key;
+  } else {
+    noteKey = await generate_note_key();
+  }
 
   const encoded_content = enc.encode(content);
   const encoded_metadata = enc.encode(metadata);
