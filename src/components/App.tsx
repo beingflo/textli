@@ -12,7 +12,10 @@ const App = (): React.ReactElement => {
       <div className="w-12">
         <Sidebar query={query} setQuery={setQuery} />
       </div>
-      <div className="max-w-xxs sm:max-w-md md:min-w-sm lg:max-w-6xl">
+      <div
+        spellCheck="false"
+        className="max-w-xxs sm:max-w-md md:min-w-sm lg:max-w-6xl"
+      >
         <Editor />
       </div>
       <div className="pr-6 pt-6 h-auto">
