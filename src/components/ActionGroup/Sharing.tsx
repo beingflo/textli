@@ -4,7 +4,13 @@ import { create_share, delete_share, list_shares } from '../../api/share_api';
 import { useAppDispatch } from '../../context';
 import { useCurrentNote } from '../../context/currentNoteReducer';
 import { useShares } from '../../context/sharesReducer';
-import { CheckIcon, CloseIcon, CopyIcon, SelectorIcon } from '../../icons';
+import {
+  CheckIcon,
+  CloseIcon,
+  CopyIcon,
+  ExternalLinkIcon,
+  SelectorIcon,
+} from '../../icons';
 import { Share } from '../../types';
 import config from '../../config.json';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
@@ -153,6 +159,12 @@ export const Sharing = ({
                         >
                           <CopyIcon className="h-6 w-6" />
                         </button>
+                        <button
+                          onClick={() => window.open(shareLink)}
+                          className="pl-2 hover:scale-105 active:scale-100"
+                        >
+                          <ExternalLinkIcon className="h-6 w-6" />
+                        </button>
                         <Transition
                           show={showClipboardConfirm}
                           enter="transition-opacity ease-linear duration-75"
@@ -161,7 +173,7 @@ export const Sharing = ({
                           leave="transition-opacity ease-linear duration-300"
                           leaveFrom="opacity-100"
                           leaveTo="opacity-0"
-                          className="absolute top-1 right-6"
+                          className="absolute top-1 right-16"
                         >
                           <CheckIcon className="h-4 w-4 text-green-600" />
                         </Transition>
