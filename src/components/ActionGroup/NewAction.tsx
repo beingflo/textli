@@ -22,7 +22,7 @@ export const NewAction = (): React.ReactElement => {
   }, [dispatch, editor]);
 
   useHotkeys(
-    'command+c,ctrl+c',
+    'command+e,ctrl+e',
     (event: KeyboardEvent) => {
       handleNew();
       event.preventDefault();
