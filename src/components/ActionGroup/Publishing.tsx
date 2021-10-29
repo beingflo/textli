@@ -1,9 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react';
+import { useAtom } from 'jotai';
 import React from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { useAppDispatch } from '../../context';
+import { sharesState, useAppDispatch } from '../../context';
 import { useCurrentNote } from '../../context/currentNoteReducer';
-import { useShares } from '../../context/sharesReducer';
 import { CloseIcon } from '../../icons';
 import { Share } from '../../types';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
@@ -18,7 +18,7 @@ export const Publishing = ({
   setShowPublishing,
 }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const shares = useShares();
+  const [shares, setShares] = useAtom(sharesState);
   const currentNote = useCurrentNote();
 
   const isShared = React.useMemo(
@@ -43,7 +43,7 @@ export const Publishing = ({
         const key = await exportKey(rawKey?.key);
 
         create_share({ note: currentNote?.id, public: key }).then(() =>
-          list_shares(dispatch)
+          list_shares(setShares)
         );
       }
     };
@@ -63,7 +63,7 @@ export const Publishing = ({
   const handleUnpublish = React.useCallback(() => {
     const share = shares.find((share: Share) => share.note === currentNote?.id);
     if (share) {
-      delete_share(share?.token).then(() => list_shares(dispatch));
+      delete_share(share?.token).then(() => list_shares(setShares));
     }
   }, [isShared, shares, currentNote, dispatch]);
 

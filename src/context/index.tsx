@@ -23,7 +23,6 @@ import {
 import { EditorReducer, EDITOR_SET_EDITOR } from './editorReducer';
 import { Editor } from '@tiptap/react';
 import { NoteStatusReducer, NOTE_STATUS_SET } from './noteStatusReducer';
-import { SharesReducer, SHARES_SET_SHARES } from './sharesReducer';
 import {
   KEYPROMPT_SET_SHOW_KEYPROMPT,
   ShowKeypromptReducer,
@@ -33,6 +32,9 @@ import { atom } from 'jotai';
 export const userInfo = atom<UserInfo | undefined>(undefined);
 export const getUserInfo = atom((get) => get(userInfo))
 
+export const sharesState = atom<Array<Share>>([]);
+export const getSharesState = atom((get) => get(sharesState))
+
 export type State = {
   waiting: number;
   noteList: Array<NoteListItem>;
@@ -40,7 +42,6 @@ export type State = {
   status: Status;
   editor: Editor | null;
   noteStatus: NoteStatus;
-  shares: Array<Share>;
   showKeyprompt: boolean;
 };
 
@@ -58,7 +59,6 @@ const initialState: State = {
   status: Status.OK,
   editor: null,
   noteStatus: NoteStatus.SYNCED,
-  shares: [],
   showKeyprompt: false,
 };
 
@@ -86,7 +86,6 @@ export const ContextProvider = ({
       [STATUS_SET_STATUS]: StatusReducer,
       [EDITOR_SET_EDITOR]: EditorReducer,
       [NOTE_STATUS_SET]: NoteStatusReducer,
-      [SHARES_SET_SHARES]: SharesReducer,
       [KEYPROMPT_SET_SHOW_KEYPROMPT]: ShowKeypromptReducer,
     }),
     []

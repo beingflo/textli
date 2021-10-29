@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { useAppDispatch, userInfo } from '../context';
+import { sharesState, useAppDispatch, userInfo } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
@@ -21,6 +21,7 @@ import { useAtom } from 'jotai';
 const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
+  const [, setShares] = useAtom(sharesState);
   const status = useStatus();
   const showKeyprompt = useShowKeypromt();
   const [, setUserInfo] = useAtom(userInfo);
@@ -38,7 +39,7 @@ const Bootstrapper = (): React.ReactElement => {
   React.useEffect(() => {
     getNoteList();
     user_info(setUserInfo, true);
-    list_shares(dispatch, true);
+    list_shares(setShares, true);
     setWaiting(false);
   }, [dispatch]);
 

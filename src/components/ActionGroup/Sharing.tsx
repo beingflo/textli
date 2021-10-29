@@ -1,9 +1,8 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { useAppDispatch } from '../../context';
+import { sharesState, useAppDispatch } from '../../context';
 import { useCurrentNote } from '../../context/currentNoteReducer';
-import { useShares } from '../../context/sharesReducer';
 import {
   CheckIcon,
   CloseIcon,
@@ -14,6 +13,7 @@ import {
 import { Share } from '../../types';
 import config from '../../config.json';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
+import { useAtom } from 'jotai';
 
 export type Props = {
   showSharing: boolean;
@@ -35,7 +35,7 @@ export const Sharing = ({
 }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const currentNote = useCurrentNote();
-  const shares = useShares();
+  const [shares, setShares] = useAtom(sharesState);
   const [share, setShare] = React.useState<Share>();
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
   const [expiration, setExpiration] = React.useState(expirationOptions[3]);
@@ -75,7 +75,7 @@ export const Sharing = ({
           note: currentNote?.id,
           expires_in: expiration?.expires_in,
         });
-        list_shares(dispatch);
+        list_shares(setShares);
       }
     };
     func();
@@ -86,7 +86,7 @@ export const Sharing = ({
       if (share) {
         delete_share(share?.token).then(() => {
           setShare(undefined);
-          list_shares(dispatch);
+          list_shares(setShares);
         });
       }
     };

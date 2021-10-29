@@ -16,13 +16,14 @@ import Settings from './Settings/Settings';
 import { useGetNoteList } from '../../api/hooks';
 import { Sharing } from './Sharing';
 import { useCurrentNote } from '../../context/currentNoteReducer';
-import { useShares } from '../../context/sharesReducer';
 import { Share } from '../../types';
 import Publishing from './Publishing';
+import { useAtom } from 'jotai';
+import { getSharesState } from '../../context';
 
 export const ActionGroup = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
-  const shares = useShares();
+  const [shares] = useAtom(getSharesState);
   const currentNote = useCurrentNote();
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);

@@ -1,14 +1,14 @@
+import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
-import { useAppDispatch } from '../../../context';
+import { sharesState, useAppDispatch } from '../../../context';
 import { useNoteList } from '../../../context/noteListReducer';
-import { useShares } from '../../../context/sharesReducer';
 import { AddIcon, EditIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Publications = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const shares = useShares();
+  const [shares, setShares] = useAtom(sharesState);
   const noteList = useNoteList();
 
   const getPublicationsInfo = React.useMemo(() => {
@@ -32,7 +32,7 @@ export const Publications = (): React.ReactElement => {
   const unpublish = React.useCallback(
     (token: string) => {
       delete_share(token).then(() => {
-        list_shares(dispatch);
+        list_shares(setShares);
       });
     },
     [dispatch]
