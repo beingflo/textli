@@ -1,8 +1,9 @@
 import { update, get } from 'idb-keyval';
+import { useAtom } from 'jotai';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { user_salt } from '../api/user_api';
-import { useUserInfo } from '../context/userInfoReducer';
+import { userInfoAtom } from '../context';
 import '../style.css';
 import { generate_main_key } from './crypto';
 
@@ -11,7 +12,7 @@ export type Props = {
 };
 
 const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
-  const user_info = useUserInfo();
+  const [userInfo,] = useAtom(userInfoAtom);
   const [name, setName] = React.useState('personal');
 
   const [password, setPassword] = React.useState('');
@@ -19,8 +20,8 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
 
   const submit = React.useCallback(async () => {
     let salt;
-    if (user_info?.salt) {
-      salt = new TextEncoder().encode(user_info?.salt);
+    if (userInfo?.salt) {
+      salt = new TextEncoder().encode(userInfo?.salt);
     } else {
       salt = window.crypto.getRandomValues(new Uint8Array(16));
     }
@@ -38,7 +39,7 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
       return;
     }
 
-    if (!user_info?.salt) {
+    if (!userInfo?.salt) {
       await user_salt(saltString);
     }
 
@@ -54,7 +55,7 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
     });
 
     setDone();
-  }, [password, name, setDone, user_info]);
+  }, [password, name, setDone, userInfo]);
 
   const passwordMatch: boolean =
     password === confirmPassword && password !== '';
