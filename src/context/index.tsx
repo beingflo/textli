@@ -30,7 +30,8 @@ import {
 } from './showKeypromtReducer';
 import { atom } from 'jotai';
 
-export const userInfoAtom = atom<UserInfo | undefined>(undefined);
+export const userInfo = atom<UserInfo | undefined>(undefined);
+export const getUserInfo = atom((get) => get(userInfo))
 
 export type State = {
   waiting: number;

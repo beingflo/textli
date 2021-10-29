@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { useAppDispatch, userInfoAtom } from '../context';
+import { useAppDispatch, userInfo } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
@@ -23,7 +23,7 @@ const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const status = useStatus();
   const showKeyprompt = useShowKeypromt();
-  const [, setUserInfo] = useAtom(userInfoAtom);
+  const [, setUserInfo] = useAtom(userInfo);
 
   const [waiting, setWaiting] = React.useState(true);
 
