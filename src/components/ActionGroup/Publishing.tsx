@@ -2,8 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
 import React from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { sharesState, useAppDispatch } from '../../context';
-import { useCurrentNote } from '../../context/currentNoteReducer';
+import { getCurrentNoteState, sharesState, useAppDispatch } from '../../context';
 import { CloseIcon } from '../../icons';
 import { Share } from '../../types';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
@@ -19,7 +18,7 @@ export const Publishing = ({
 }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const [shares, setShares] = useAtom(sharesState);
-  const currentNote = useCurrentNote();
+  const [currentNote] = useAtom(getCurrentNoteState);
 
   const isShared = React.useMemo(
     () => shares.some((share: Share) => share.note === currentNote?.id),

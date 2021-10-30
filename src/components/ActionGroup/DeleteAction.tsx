@@ -5,17 +5,13 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
 import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
-import { getEditorState, noteStatusState, useAppDispatch } from '../../context';
-import {
-  setCurrentNote,
-  useCurrentNote,
-} from '../../context/currentNoteReducer';
+import { currentNoteState, getEditorState, noteStatusState, useAppDispatch } from '../../context';
 import { deleteFromNoteList } from '../../context/noteListReducer';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
 export const DeleteAction = (): React.ReactElement => {
-  const currentNote = useCurrentNote();
+  const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
@@ -32,14 +28,14 @@ export const DeleteAction = (): React.ReactElement => {
 
       editor?.commands.setContent('');
 
-      setCurrentNote(undefined, dispatch);
+      setCurrentNote(undefined);
       return;
     }
 
     setNoteStatus(NoteStatus.INPROGRESS);
     delete_note(currentNote?.id)
       .then(() => {
-        setCurrentNote(undefined, dispatch);
+        setCurrentNote(undefined);
 
         setDeletedNote(currentNote?.id);
 

@@ -2,8 +2,7 @@ import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { getEditorState, noteStatusState, statusState, useAppDispatch } from '../context';
-import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
+import { currentNoteState, getEditorState, noteStatusState, statusState, useAppDispatch } from '../context';
 import { addToNoteList, setNoteList } from '../context/noteListReducer';
 import {
   DeletedNoteListItem,
@@ -25,6 +24,7 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const [,setNoteStatus] = useAtom(noteStatusState);
+  const [,setCurrentNote] = useAtom(currentNoteState);
 
   return async (id: string) => {
     setNoteStatus(NoteStatus.INPROGRESS);
@@ -55,7 +55,7 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
       workspace: decrypted_note?.workspace ?? '',
     };
 
-    setCurrentNote(note, dispatch);
+    setCurrentNote(note);
     addToNoteList(note, dispatch);
 
     editor?.commands.focus();
@@ -69,7 +69,7 @@ export const useSaveNote = (): ((workspace: {
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
-  const currentNote = useCurrentNote();
+  const [currentNote, setCurrentNote] = useAtom(currentNoteState);
 
   return async (workspace: { key: CryptoKey; name: string }) => {
     editor?.commands?.focus();
@@ -112,7 +112,7 @@ export const useSaveNote = (): ((workspace: {
           workspace: workspace?.name,
           ...result,
         };
-        setCurrentNote(note, dispatch);
+        setCurrentNote(note);
         addToNoteList(note, dispatch);
       }
     } else {
@@ -133,7 +133,7 @@ export const useSaveNote = (): ((workspace: {
           workspace: workspace?.name,
           ...result,
         };
-        setCurrentNote(note, dispatch);
+        setCurrentNote(note);
         addToNoteList(note, dispatch);
       }
     }

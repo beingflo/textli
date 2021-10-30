@@ -1,14 +1,15 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { get } from 'idb-keyval';
+import { useAtom } from 'jotai';
 import React, { Fragment } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSaveNote } from '../../api/hooks';
-import { useCurrentNote } from '../../context/currentNoteReducer';
+import { getCurrentNoteState } from '../../context';
 import { CheckIcon, ChevronLeftIcon, SaveIcon } from '../../icons';
 
 export const SaveAction = (): React.ReactElement => {
   const saveNote = useSaveNote();
-  const currentNote = useCurrentNote();
+  const [currentNote] = useAtom(getCurrentNoteState);
 
   const [showSaveConfirm, setShowSaveConfirm] = React.useState(false);
 

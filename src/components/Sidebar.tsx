@@ -1,8 +1,7 @@
 import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
 import '../style.css';
-import { getEditorState, useAppDispatch } from '../context';
-import { useCurrentNote } from '../context/currentNoteReducer';
+import { getCurrentNoteState, getEditorState, useAppDispatch } from '../context';
 import { ArrowLeftIcon, ArrowRightIcon, ClearIcon, SearchIcon } from '../icons';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
@@ -18,7 +17,7 @@ export type Props = {
 
 export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const notes = useNoteList();
-  const currentNote = useCurrentNote();
+  const [currentNote] = useAtom(getCurrentNoteState);
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();

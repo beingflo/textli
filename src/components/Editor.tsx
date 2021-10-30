@@ -11,14 +11,13 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
-import { useCurrentNote } from '../context/currentNoteReducer';
 import './editorStyles.css';
-import { editorState, noteStatusState } from '../context';
+import { editorState, getCurrentNoteState, noteStatusState } from '../context';
 import { NoteStatus } from '../types';
 import { useAtom } from 'jotai';
 
 export const Editor = (): React.ReactElement => {
-  const note = useCurrentNote();
+  const [note] = useAtom(getCurrentNoteState);
   const [,setEditor] = useAtom(editorState);
   const [,setNoteStatus] = useAtom(noteStatusState);
 

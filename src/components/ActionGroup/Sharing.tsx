@@ -1,8 +1,7 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { sharesState, useAppDispatch } from '../../context';
-import { useCurrentNote } from '../../context/currentNoteReducer';
+import { getCurrentNoteState, sharesState, useAppDispatch } from '../../context';
 import {
   CheckIcon,
   CloseIcon,
@@ -34,7 +33,7 @@ export const Sharing = ({
   setShowSharing,
 }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const currentNote = useCurrentNote();
+  const [currentNote] = useAtom(getCurrentNoteState);
   const [shares, setShares] = useAtom(sharesState);
   const [share, setShare] = React.useState<Share>();
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
