@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNoteList } from '../context/noteListReducer';
 import '../style.css';
-import { useAppDispatch } from '../context';
+import { getEditorState, useAppDispatch } from '../context';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import { ArrowLeftIcon, ArrowRightIcon, ClearIcon, SearchIcon } from '../icons';
-import { useAppEditor } from '../context/editorReducer';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
 import { NoteListItem } from '../types';
+import { useAtom } from 'jotai';
 
 export type Props = {
   query: string;
@@ -20,7 +20,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const notes = useNoteList();
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
-  const editor = useAppEditor();
+  const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
 
   const [inputRef, setInputFocus] = useFocus();

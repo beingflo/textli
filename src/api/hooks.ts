@@ -1,9 +1,9 @@
+import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { useAppDispatch } from '../context';
+import { getEditorState, useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
-import { useAppEditor } from '../context/editorReducer';
 import { addToNoteList, setNoteList } from '../context/noteListReducer';
 import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
 import { setStatus } from '../context/statusReducer';
@@ -25,7 +25,7 @@ import {
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
   const dispatch = useAppDispatch();
-  const editor = useAppEditor();
+  const [editor] = useAtom(getEditorState);
 
   return async (id: string) => {
     setNoteStatus(NoteStatus.INPROGRESS, dispatch);
@@ -68,7 +68,7 @@ export const useSaveNote = (): ((workspace: {
   name: string;
 }) => Promise<void>) => {
   const dispatch = useAppDispatch();
-  const editor = useAppEditor();
+  const [editor] = useAtom(getEditorState);
   const noteStatus = useNoteStatus();
   const currentNote = useCurrentNote();
 

@@ -1,15 +1,15 @@
 import { Transition } from '@headlessui/react';
+import { useAtom } from 'jotai';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
 import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
-import { useAppDispatch } from '../../context';
+import { getEditorState, useAppDispatch } from '../../context';
 import {
   setCurrentNote,
   useCurrentNote,
 } from '../../context/currentNoteReducer';
-import { useAppEditor } from '../../context/editorReducer';
 import { deleteFromNoteList } from '../../context/noteListReducer';
 import { setNoteStatus } from '../../context/noteStatusReducer';
 import { BinIcon } from '../../icons';
@@ -18,7 +18,7 @@ import { NoteStatus } from '../../types';
 export const DeleteAction = (): React.ReactElement => {
   const currentNote = useCurrentNote();
   const dispatch = useAppDispatch();
-  const editor = useAppEditor();
+  const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
 
   const [showUndelete, setShowUndelete] = React.useState(false);

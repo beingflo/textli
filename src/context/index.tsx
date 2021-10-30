@@ -20,7 +20,6 @@ import {
   Status,
   UserInfo,
 } from '../types';
-import { EditorReducer, EDITOR_SET_EDITOR } from './editorReducer';
 import { Editor } from '@tiptap/react';
 import { NoteStatusReducer, NOTE_STATUS_SET } from './noteStatusReducer';
 import {
@@ -35,12 +34,14 @@ export const getUserInfo = atom((get) => get(userInfo))
 export const sharesState = atom<Array<Share>>([]);
 export const getSharesState = atom((get) => get(sharesState))
 
+export const editorState = atom<Editor | null>(null);
+export const getEditorState = atom((get) => get(editorState));
+
 export type State = {
   waiting: number;
   noteList: Array<NoteListItem>;
   currentNote: Note | undefined;
   status: Status;
-  editor: Editor | null;
   noteStatus: NoteStatus;
   showKeyprompt: boolean;
 };
@@ -57,7 +58,6 @@ const initialState: State = {
   noteList: [],
   currentNote: undefined,
   status: Status.OK,
-  editor: null,
   noteStatus: NoteStatus.SYNCED,
   showKeyprompt: false,
 };
@@ -84,7 +84,6 @@ export const ContextProvider = ({
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
       [STATUS_SET_STATUS]: StatusReducer,
-      [EDITOR_SET_EDITOR]: EditorReducer,
       [NOTE_STATUS_SET]: NoteStatusReducer,
       [KEYPROMPT_SET_SHOW_KEYPROMPT]: ShowKeypromptReducer,
     }),

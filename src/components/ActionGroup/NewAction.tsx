@@ -1,15 +1,15 @@
+import { useAtom } from 'jotai';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useAppDispatch } from '../../context';
+import { getEditorState, useAppDispatch } from '../../context';
 import { setCurrentNote } from '../../context/currentNoteReducer';
-import { useAppEditor } from '../../context/editorReducer';
 import { setNoteStatus } from '../../context/noteStatusReducer';
 import { NewIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
 export const NewAction = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const editor = useAppEditor();
+  const [editor] = useAtom(getEditorState);
 
   const handleNew = React.useCallback(() => {
     // If unsaved, handle gracefully
