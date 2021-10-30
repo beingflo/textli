@@ -1,12 +1,14 @@
+import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetNoteList } from '../api/hooks';
-import { user_login, user_signup } from '../api/user_api';
-import { useAppDispatch } from '../context';
+import { user_info, user_login, user_signup } from '../api/user_api';
+import { useAppDispatch, userInfoState } from '../context';
 import { Spinner } from './Spinner';
 
 const Signup = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
+  const [,setUserInfo] = useAtom(userInfoState);
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -21,6 +23,7 @@ const Signup = (): React.ReactElement => {
       const success = () => {
         const loginSucces = () => {
           getNoteList();
+          user_info(setUserInfo);
           setWaiting(false);
         };
         user_login({ name: username, password: password }, loginSucces);
