@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { user_salt } from '../api/user_api';
-import { getUserInfo } from '../context';
+import { getUserInfoState } from '../context';
 import '../style.css';
 import { generate_main_key } from './crypto';
 
@@ -12,7 +12,7 @@ export type Props = {
 };
 
 const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
-  const [userInfo] = useAtom(getUserInfo);
+  const [userInfo] = useAtom(getUserInfoState);
   const [name, setName] = React.useState('personal');
 
   const [password, setPassword] = React.useState('');

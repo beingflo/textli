@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { getUserInfo } from '../../../context';
+import { getUserInfoState } from '../../../context';
 
 export const Balance = (): React.ReactElement => {
-  const [userInfo] = useAtom(getUserInfo);
+  const [userInfo] = useAtom(getUserInfoState);
 
   const balance = parseFloat(userInfo?.balance ?? '0').toFixed(2);
   const balance_days = parseFloat(userInfo?.remaining_days ?? '0');

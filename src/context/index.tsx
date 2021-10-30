@@ -27,8 +27,8 @@ import {
 } from './showKeypromtReducer';
 import { atom } from 'jotai';
 
-export const userInfo = atom<UserInfo | undefined>(undefined);
-export const getUserInfo = atom((get) => get(userInfo))
+export const userInfoState = atom<UserInfo | undefined>(undefined);
+export const getUserInfoState = atom((get) => get(userInfoState))
 
 export const sharesState = atom<Array<Share>>([]);
 export const getSharesState = atom((get) => get(sharesState))
