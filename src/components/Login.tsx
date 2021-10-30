@@ -2,15 +2,14 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetNoteList } from '../api/hooks';
 import { user_info, user_login } from '../api/user_api';
-import { useAppDispatch, userInfoState } from '../context';
-import { setStatus } from '../context/statusReducer';
+import { statusState, userInfoState } from '../context';
 import { Status } from '../types';
 import { Spinner } from './Spinner';
 
 const Login = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
   const [,setUserInfo] = useAtom(userInfoState);
+  const [,setStatus] = useAtom(statusState);
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -23,7 +22,7 @@ const Login = (): React.ReactElement => {
         getNoteList();
         user_info(setUserInfo);
         setWaiting(false);
-        setStatus(Status.OK, dispatch);
+        setStatus(Status.OK);
       };
 
       setWaiting(true);
@@ -31,7 +30,7 @@ const Login = (): React.ReactElement => {
 
       event.preventDefault();
     },
-    [dispatch, username, password, waiting]
+    [username, password, waiting, setWaiting, setStatus, setUserInfo]
   );
 
   const submitDisabled = !username || !password;

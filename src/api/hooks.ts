@@ -2,10 +2,9 @@ import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { getEditorState, noteStatusState, useAppDispatch } from '../context';
+import { getEditorState, noteStatusState, statusState, useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { addToNoteList, setNoteList } from '../context/noteListReducer';
-import { setStatus } from '../context/statusReducer';
 import {
   DeletedNoteListItem,
   DeletedNoteListItemDto,
@@ -144,11 +143,12 @@ export const useSaveNote = (): ((workspace: {
 
 export const useGetNoteList = (): (() => Promise<void>) => {
   const dispatch = useAppDispatch();
+  const [,setStatus] = useAtom(statusState);
 
   return async () => {
     const encrypted_notes = await get_notes().catch((error) => {
       handleException(error);
-      setStatus(Status.REDIRECT, dispatch);
+      setStatus(Status.REDIRECT);
     });
 
     if (!encrypted_notes) {
@@ -184,7 +184,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
 
     const sortedNotes = sortNotes(filteredNotes);
 
-    setStatus(Status.OK, dispatch);
+    setStatus(Status.OK);
     setNoteList(sortedNotes, dispatch);
   };
 };

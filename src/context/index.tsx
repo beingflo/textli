@@ -10,7 +10,6 @@ import {
   CURRENT_NOTE_SET,
   CURRENT_NOTE_UPDATE,
 } from './currentNoteReducer';
-import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
 import {
   Note,
   NoteListItem,
@@ -42,10 +41,12 @@ export const getSpinnerState = atom((get) => get(spinnerState))
 export const setSpinnerState = atom(null, (get, set, waiting) => 
   set(spinnerState, Math.max(get(spinnerState) + (waiting ? 1 : -1), 0) ));
 
+export const statusState = atom<Status>(Status.OK);
+export const getStatusState = atom((get) => get(statusState))
+
 export type State = {
   noteList: Array<NoteListItem>;
   currentNote: Note | undefined;
-  status: Status;
 };
 
 export type Action = {
@@ -58,7 +59,6 @@ export type AppDispatch = Dispatch<Action>;
 const initialState: State = {
   noteList: [],
   currentNote: undefined,
-  status: Status.OK,
 };
 
 export const AppContext = React.createContext<{
@@ -81,7 +81,6 @@ export const ContextProvider = ({
       [NOTE_LIST_DELETE_NOTE]: NoteListReducer,
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
-      [STATUS_SET_STATUS]: StatusReducer,
     }),
     []
   );

@@ -1,8 +1,7 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { sharesState, showKeypromptState, useAppDispatch, userInfoState } from '../context';
+import { getStatusState, sharesState, showKeypromptState, useAppDispatch, userInfoState } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
-import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
 import App from './App';
 import { SpinnerPage } from './Spinner';
@@ -18,7 +17,7 @@ const Bootstrapper = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
   const [, setShares] = useAtom(sharesState);
-  const status = useStatus();
+  const [status] = useAtom(getStatusState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [, setUserInfo] = useAtom(userInfoState);
 
