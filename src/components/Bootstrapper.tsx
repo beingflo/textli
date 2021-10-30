@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { sharesState, useAppDispatch, userInfoState } from '../context';
+import { sharesState, showKeypromptState, useAppDispatch, userInfoState } from '../context';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStatus } from '../context/statusReducer';
 import { Status } from '../types';
@@ -12,10 +12,6 @@ import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
 import { get } from 'idb-keyval';
 import { useGetNoteList } from '../api/hooks';
-import {
-  setShowKeyprompt,
-  useShowKeypromt,
-} from '../context/showKeypromtReducer';
 import { useAtom } from 'jotai';
 
 const Bootstrapper = (): React.ReactElement => {
@@ -23,7 +19,7 @@ const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const [, setShares] = useAtom(sharesState);
   const status = useStatus();
-  const showKeyprompt = useShowKeypromt();
+  const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [, setUserInfo] = useAtom(userInfoState);
 
   const [waiting, setWaiting] = React.useState(true);
@@ -31,7 +27,7 @@ const Bootstrapper = (): React.ReactElement => {
   React.useEffect(() => {
     get('workspaces').then((workspaces) => {
       if (!workspaces || workspaces?.length === 0) {
-        setShowKeyprompt(true, dispatch);
+        setShowKeyprompt(true);
       }
     });
   }, [dispatch]);
@@ -62,7 +58,7 @@ const Bootstrapper = (): React.ReactElement => {
           {status === Status.OK && !showKeyprompt ? (
             <App />
           ) : status === Status.OK ? (
-            <KeyPrompt setDone={() => setShowKeyprompt(false, dispatch)} />
+            <KeyPrompt setDone={() => setShowKeyprompt(false)} />
           ) : (
             <Start />
           )}

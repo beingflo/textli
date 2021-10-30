@@ -21,10 +21,6 @@ import {
   UserInfo,
 } from '../types';
 import { Editor } from '@tiptap/react';
-import {
-  KEYPROMPT_SET_SHOW_KEYPROMPT,
-  ShowKeypromptReducer,
-} from './showKeypromtReducer';
 import { atom } from 'jotai';
 
 export const userInfoState = atom<UserInfo | undefined>(undefined);
@@ -39,12 +35,14 @@ export const getEditorState = atom((get) => get(editorState));
 export const noteStatusState = atom<NoteStatus>(NoteStatus.SYNCED);
 export const getNoteStatusState = atom((get) => get(noteStatusState))
 
+export const showKeypromptState = atom<boolean>(false);
+export const getShowKeypromptState = atom((get) => get(showKeypromptState))
+
 export type State = {
   waiting: number;
   noteList: Array<NoteListItem>;
   currentNote: Note | undefined;
   status: Status;
-  showKeyprompt: boolean;
 };
 
 export type Action = {
@@ -59,7 +57,6 @@ const initialState: State = {
   noteList: [],
   currentNote: undefined,
   status: Status.OK,
-  showKeyprompt: false,
 };
 
 export const AppContext = React.createContext<{
@@ -84,7 +81,6 @@ export const ContextProvider = ({
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
       [STATUS_SET_STATUS]: StatusReducer,
-      [KEYPROMPT_SET_SHOW_KEYPROMPT]: ShowKeypromptReducer,
     }),
     []
   );

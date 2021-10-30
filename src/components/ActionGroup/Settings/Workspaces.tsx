@@ -1,13 +1,14 @@
 import { get, update } from 'idb-keyval';
+import { useAtom } from 'jotai';
 import React from 'react';
-import { useAppDispatch } from '../../../context';
-import { setShowKeyprompt } from '../../../context/showKeypromtReducer';
+import { showKeypromptState, useAppDispatch } from '../../../context';
 import { AddIcon, FilledStarIcon, StarIcon } from '../../../icons';
 
 export const Workspaces = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const [workspaces, setWorkspaces] = React.useState<[any]>();
   const [defaultWS, setDefaultWS] = React.useState();
+  const [,setShowKeyprompt] = useAtom(showKeypromptState);
 
   const getWorkspaces = () => {
     get('workspaces').then((workspaces) => setWorkspaces(workspaces));
@@ -45,7 +46,7 @@ export const Workspaces = (): React.ReactElement => {
   }, [workspaces]);
 
   const handleAddNew = React.useCallback(() => {
-    setShowKeyprompt(true, dispatch);
+    setShowKeyprompt(true);
   }, [dispatch, setShowKeyprompt]);
 
   return (
