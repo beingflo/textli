@@ -13,15 +13,14 @@ import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
 import { useCurrentNote } from '../context/currentNoteReducer';
 import './editorStyles.css';
-import { editorState, useAppDispatch } from '../context';
-import { setNoteStatus } from '../context/noteStatusReducer';
+import { editorState, noteStatusState } from '../context';
 import { NoteStatus } from '../types';
 import { useAtom } from 'jotai';
 
 export const Editor = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const note = useCurrentNote();
   const [,setEditor] = useAtom(editorState);
+  const [,setNoteStatus] = useAtom(noteStatusState);
 
   const editor = useEditor({
     extensions: [
@@ -49,7 +48,7 @@ export const Editor = (): React.ReactElement => {
       },
     },
     onUpdate() {
-      setNoteStatus(NoteStatus.CHANGED, dispatch);
+      setNoteStatus(NoteStatus.CHANGED);
     },
   });
 

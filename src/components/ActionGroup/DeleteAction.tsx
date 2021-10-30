@@ -5,13 +5,12 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
 import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
-import { getEditorState, useAppDispatch } from '../../context';
+import { getEditorState, noteStatusState, useAppDispatch } from '../../context';
 import {
   setCurrentNote,
   useCurrentNote,
 } from '../../context/currentNoteReducer';
 import { deleteFromNoteList } from '../../context/noteListReducer';
-import { setNoteStatus } from '../../context/noteStatusReducer';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
@@ -20,6 +19,7 @@ export const DeleteAction = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
+  const [,setNoteStatus] = useAtom(noteStatusState);
 
   const [showUndelete, setShowUndelete] = React.useState(false);
   const [deletedNote, setDeletedNote] = React.useState('');
@@ -28,7 +28,7 @@ export const DeleteAction = (): React.ReactElement => {
     editor?.commands?.focus();
 
     if (!currentNote) {
-      setNoteStatus(NoteStatus.SYNCED, dispatch);
+      setNoteStatus(NoteStatus.SYNCED);
 
       editor?.commands.setContent('');
 
@@ -36,7 +36,7 @@ export const DeleteAction = (): React.ReactElement => {
       return;
     }
 
-    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+    setNoteStatus(NoteStatus.INPROGRESS);
     delete_note(currentNote?.id)
       .then(() => {
         setCurrentNote(undefined, dispatch);
@@ -52,7 +52,7 @@ export const DeleteAction = (): React.ReactElement => {
         handleException(error);
       })
       .finally(() => {
-        setNoteStatus(NoteStatus.SYNCED, dispatch);
+        setNoteStatus(NoteStatus.SYNCED);
       });
   }, [currentNote, dispatch, showUndelete, editor]);
 
@@ -67,7 +67,7 @@ export const DeleteAction = (): React.ReactElement => {
   );
 
   const handleUndelete = React.useCallback(() => {
-    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+    setNoteStatus(NoteStatus.INPROGRESS);
 
     undelete_note(deletedNote)
       .then(() => {
@@ -77,7 +77,7 @@ export const DeleteAction = (): React.ReactElement => {
       })
       .catch((error) => handleException(error))
       .finally(() => {
-        setNoteStatus(NoteStatus.SYNCED, dispatch);
+        setNoteStatus(NoteStatus.SYNCED);
       });
   }, [dispatch, deletedNote]);
 

@@ -1,11 +1,12 @@
+import { useAtom } from 'jotai';
 import React from 'react';
-import { useNoteStatus } from '../context/noteStatusReducer';
+import { getNoteStatusState } from '../context';
 import { CheckIcon, EditIcon } from '../icons';
 import { NoteStatus as Status } from '../types';
 import { NoteStatusSpinner } from './Spinner';
 
 export const NoteStatus = (): React.ReactElement => {
-  const status = useNoteStatus();
+  const [status] = useAtom(getNoteStatusState);
 
   if (status === Status.INPROGRESS) {
     return (

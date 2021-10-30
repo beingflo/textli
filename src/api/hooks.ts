@@ -2,10 +2,9 @@ import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { getEditorState, useAppDispatch } from '../context';
+import { getEditorState, noteStatusState, useAppDispatch } from '../context';
 import { setCurrentNote, useCurrentNote } from '../context/currentNoteReducer';
 import { addToNoteList, setNoteList } from '../context/noteListReducer';
-import { setNoteStatus, useNoteStatus } from '../context/noteStatusReducer';
 import { setStatus } from '../context/statusReducer';
 import {
   DeletedNoteListItem,
@@ -26,11 +25,12 @@ import {
 export const useGetNote = (): ((id: string) => Promise<void>) => {
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
+  const [,setNoteStatus] = useAtom(noteStatusState);
 
   return async (id: string) => {
-    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+    setNoteStatus(NoteStatus.INPROGRESS);
     const noteDto = await get_note(id).catch(handleException);
-    setNoteStatus(NoteStatus.SYNCED, dispatch);
+    setNoteStatus(NoteStatus.SYNCED);
 
     if (!noteDto) {
       return;
@@ -69,7 +69,7 @@ export const useSaveNote = (): ((workspace: {
 }) => Promise<void>) => {
   const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
-  const noteStatus = useNoteStatus();
+  const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
   const currentNote = useCurrentNote();
 
   return async (workspace: { key: CryptoKey; name: string }) => {
@@ -96,12 +96,12 @@ export const useSaveNote = (): ((workspace: {
       content: encrypted_note?.encrypted_content,
     };
 
-    setNoteStatus(NoteStatus.INPROGRESS, dispatch);
+    setNoteStatus(NoteStatus.INPROGRESS);
 
     if (!currentNote) {
       // New note
       const result = await save_note(request).catch((error) => {
-        setNoteStatus(NoteStatus.SYNCED, dispatch);
+        setNoteStatus(NoteStatus.SYNCED);
         handleException(error);
       });
       if (result) {
@@ -120,7 +120,7 @@ export const useSaveNote = (): ((workspace: {
       // Existing note
       const result = await update_note(currentNote?.id ?? '', request).catch(
         (error) => {
-          setNoteStatus(NoteStatus.SYNCED, dispatch);
+          setNoteStatus(NoteStatus.SYNCED);
           handleException(error);
         }
       );
@@ -138,7 +138,7 @@ export const useSaveNote = (): ((workspace: {
         addToNoteList(note, dispatch);
       }
     }
-    setNoteStatus(NoteStatus.SYNCED, dispatch);
+    setNoteStatus(NoteStatus.SYNCED);
   };
 };
 

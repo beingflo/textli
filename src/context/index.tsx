@@ -21,7 +21,6 @@ import {
   UserInfo,
 } from '../types';
 import { Editor } from '@tiptap/react';
-import { NoteStatusReducer, NOTE_STATUS_SET } from './noteStatusReducer';
 import {
   KEYPROMPT_SET_SHOW_KEYPROMPT,
   ShowKeypromptReducer,
@@ -37,12 +36,14 @@ export const getSharesState = atom((get) => get(sharesState))
 export const editorState = atom<Editor | null>(null);
 export const getEditorState = atom((get) => get(editorState));
 
+export const noteStatusState = atom<NoteStatus>(NoteStatus.SYNCED);
+export const getNoteStatusState = atom((get) => get(noteStatusState))
+
 export type State = {
   waiting: number;
   noteList: Array<NoteListItem>;
   currentNote: Note | undefined;
   status: Status;
-  noteStatus: NoteStatus;
   showKeyprompt: boolean;
 };
 
@@ -58,7 +59,6 @@ const initialState: State = {
   noteList: [],
   currentNote: undefined,
   status: Status.OK,
-  noteStatus: NoteStatus.SYNCED,
   showKeyprompt: false,
 };
 
@@ -84,7 +84,6 @@ export const ContextProvider = ({
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
       [STATUS_SET_STATUS]: StatusReducer,
-      [NOTE_STATUS_SET]: NoteStatusReducer,
       [KEYPROMPT_SET_SHOW_KEYPROMPT]: ShowKeypromptReducer,
     }),
     []
