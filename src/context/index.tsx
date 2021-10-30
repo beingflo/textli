@@ -10,7 +10,6 @@ import {
   CURRENT_NOTE_SET,
   CURRENT_NOTE_UPDATE,
 } from './currentNoteReducer';
-import { SpinnerReducer, SPINNER_SET_WAITING } from './spinnerReducer';
 import { StatusReducer, STATUS_SET_STATUS } from './statusReducer';
 import {
   Note,
@@ -38,8 +37,12 @@ export const getNoteStatusState = atom((get) => get(noteStatusState))
 export const showKeypromptState = atom<boolean>(false);
 export const getShowKeypromptState = atom((get) => get(showKeypromptState))
 
+const spinnerState = atom<number>(0);
+export const getSpinnerState = atom((get) => get(spinnerState))
+export const setSpinnerState = atom(null, (get, set, waiting) => 
+  set(spinnerState, Math.max(get(spinnerState) + (waiting ? 1 : -1), 0) ));
+
 export type State = {
-  waiting: number;
   noteList: Array<NoteListItem>;
   currentNote: Note | undefined;
   status: Status;
@@ -53,7 +56,6 @@ export type Action = {
 export type AppDispatch = Dispatch<Action>;
 
 const initialState: State = {
-  waiting: 0,
   noteList: [],
   currentNote: undefined,
   status: Status.OK,
@@ -77,7 +79,6 @@ export const ContextProvider = ({
       [NOTE_LIST_SET_NOTES]: NoteListReducer,
       [NOTE_LIST_ADD_NOTE]: NoteListReducer,
       [NOTE_LIST_DELETE_NOTE]: NoteListReducer,
-      [SPINNER_SET_WAITING]: SpinnerReducer,
       [CURRENT_NOTE_SET]: CurrentNoteReducer,
       [CURRENT_NOTE_UPDATE]: CurrentNoteReducer,
       [STATUS_SET_STATUS]: StatusReducer,
