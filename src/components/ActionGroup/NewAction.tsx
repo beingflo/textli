@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { currentNoteState, getEditorState, noteStatusState } from '../../context';
+import { currentNoteState, getEditorState, noteStatusState } from '../context';
 import { NewIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 

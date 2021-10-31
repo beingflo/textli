@@ -1,7 +1,7 @@
 import { get, update } from 'idb-keyval';
 import { useAtom } from 'jotai';
 import React from 'react';
-import { showKeypromptState } from '../../../context';
+import { showKeypromptState } from '../../context';
 import { AddIcon, FilledStarIcon, StarIcon } from '../../../icons';
 
 export const Workspaces = (): React.ReactElement => {

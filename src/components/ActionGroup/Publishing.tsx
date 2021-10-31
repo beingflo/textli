@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
 import React from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { getCurrentNoteState, sharesState } from '../../context';
+import { getCurrentNoteState, sharesState } from '../context';
 import { CloseIcon } from '../../icons';
 import { Share } from '../../types';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';

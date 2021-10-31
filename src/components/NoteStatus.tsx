@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { getNoteStatusState } from '../context';
+import { getNoteStatusState } from './context';
 import { CheckIcon, EditIcon } from '../icons';
 import { NoteStatus as Status } from '../types';
 import { NoteStatusSpinner } from './Spinner';

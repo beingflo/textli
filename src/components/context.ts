@@ -8,7 +8,7 @@ import {
 } from '../types';
 import { Editor } from '@tiptap/react';
 import { atom } from 'jotai';
-import { sortNotes } from '../components/util';
+import { sortNotes } from './util';
 
 export const userInfoState = atom<UserInfo | undefined>(undefined);
 export const getUserInfoState = atom((get) => get(userInfoState))

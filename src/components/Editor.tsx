@@ -12,7 +12,7 @@ import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
 import './editorStyles.css';
-import { editorState, getCurrentNoteState, noteStatusState } from '../context';
+import { editorState, getCurrentNoteState, noteStatusState } from './context';
 import { NoteStatus } from '../types';
 import { useAtom } from 'jotai';
 
