@@ -2,11 +2,10 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetNoteList } from '../api/hooks';
 import { user_info, user_login, user_signup } from '../api/user_api';
-import { useAppDispatch, userInfoState } from '../context';
+import { userInfoState } from '../context';
 import { Spinner } from './Spinner';
 
 const Signup = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const getNoteList = useGetNoteList();
   const [,setUserInfo] = useAtom(userInfoState);
 
@@ -36,7 +35,7 @@ const Signup = (): React.ReactElement => {
 
       event.preventDefault();
     },
-    [dispatch, username, password, email, waiting]
+    [username, password, email, waiting]
   );
 
   const passwordMatch: boolean =

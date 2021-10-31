@@ -2,8 +2,7 @@ import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { currentNoteState, getEditorState, noteStatusState, statusState, useAppDispatch } from '../context';
-import { addToNoteList, setNoteList } from '../context/noteListReducer';
+import { addToNoteListState, currentNoteState, getEditorState, noteListState, noteStatusState, statusState } from '../context';
 import {
   DeletedNoteListItem,
   DeletedNoteListItemDto,
@@ -21,10 +20,10 @@ import {
 } from './note_api';
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
-  const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const [,setNoteStatus] = useAtom(noteStatusState);
   const [,setCurrentNote] = useAtom(currentNoteState);
+  const [,addToNoteList] = useAtom(addToNoteListState);
 
   return async (id: string) => {
     setNoteStatus(NoteStatus.INPROGRESS);
@@ -56,7 +55,7 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
     };
 
     setCurrentNote(note);
-    addToNoteList(note, dispatch);
+    addToNoteList(note);
 
     editor?.commands.focus();
   };
@@ -66,10 +65,10 @@ export const useSaveNote = (): ((workspace: {
   key: CryptoKey;
   name: string;
 }) => Promise<void>) => {
-  const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
+  const [,addToNoteList] = useAtom(addToNoteListState);
 
   return async (workspace: { key: CryptoKey; name: string }) => {
     editor?.commands?.focus();
@@ -113,7 +112,7 @@ export const useSaveNote = (): ((workspace: {
           ...result,
         };
         setCurrentNote(note);
-        addToNoteList(note, dispatch);
+        addToNoteList(note);
       }
     } else {
       // Existing note
@@ -134,7 +133,7 @@ export const useSaveNote = (): ((workspace: {
           ...result,
         };
         setCurrentNote(note);
-        addToNoteList(note, dispatch);
+        addToNoteList(note);
       }
     }
     setNoteStatus(NoteStatus.SYNCED);
@@ -142,8 +141,8 @@ export const useSaveNote = (): ((workspace: {
 };
 
 export const useGetNoteList = (): (() => Promise<void>) => {
-  const dispatch = useAppDispatch();
   const [,setStatus] = useAtom(statusState);
+  const [,setNoteList] = useAtom(noteListState);
 
   return async () => {
     const encrypted_notes = await get_notes().catch((error) => {
@@ -185,7 +184,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
     const sortedNotes = sortNotes(filteredNotes);
 
     setStatus(Status.OK);
-    setNoteList(sortedNotes, dispatch);
+    setNoteList(sortedNotes);
   };
 };
 

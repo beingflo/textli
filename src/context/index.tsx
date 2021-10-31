@@ -1,10 +1,3 @@
-import React, { Dispatch } from 'react';
-import {
-  NoteListReducer,
-  NOTE_LIST_ADD_NOTE,
-  NOTE_LIST_DELETE_NOTE,
-  NOTE_LIST_SET_NOTES,
-} from './noteListReducer';
 import {
   Note,
   NoteListItem,
@@ -15,6 +8,7 @@ import {
 } from '../types';
 import { Editor } from '@tiptap/react';
 import { atom } from 'jotai';
+import { sortNotes } from '../components/util';
 
 export const userInfoState = atom<UserInfo | undefined>(undefined);
 export const getUserInfoState = atom((get) => get(userInfoState))
@@ -42,67 +36,33 @@ export const getStatusState = atom((get) => get(statusState))
 export const currentNoteState = atom<Note | undefined>(undefined);
 export const getCurrentNoteState = atom((get) => get(currentNoteState))
 
-export type State = {
-  noteList: Array<NoteListItem>;
-};
+export const noteListState = atom<Array<NoteListItem>>([]);
+export const getNoteListState = atom((get) => get(noteListState))
+export const addToNoteListState = atom(null, (get, set, note: NoteListItem) => {
+  const noteList = get(noteListState);
 
-export type Action = {
-  type: string;
-  [x: string]: any;
-};
+  const index = noteList.findIndex(
+    (item: NoteListItem) => item?.id === note?.id
+  );
 
-export type AppDispatch = Dispatch<Action>;
+  if (index > -1) {
+    noteList.splice(index, 1);
+  }
 
-const initialState: State = {
-  noteList: [],
-};
+  noteList.push(note);
 
-export const AppContext = React.createContext<{
-  state: State;
-  dispatch: AppDispatch;
-}>({
-  state: initialState,
-  dispatch: () => undefined,
+  set(noteListState, sortNotes(noteList));
 });
+export const deleteFromNoteListState = atom(null, (get, set, id: string) => {
+  const noteList = get(noteListState);
 
-export const ContextProvider = ({
-  children,
-}: {
-  children: React.ReactElement;
-}): React.ReactElement => {
-  const actionReducerMapping = React.useMemo(
-    () => ({
-      [NOTE_LIST_SET_NOTES]: NoteListReducer,
-      [NOTE_LIST_ADD_NOTE]: NoteListReducer,
-      [NOTE_LIST_DELETE_NOTE]: NoteListReducer,
-    }),
-    []
+  const index = noteList.findIndex(
+    (item: NoteListItem) => item?.id === id
   );
 
-  const [state, dispatch] = React.useReducer((state: State, action: Action) => {
-    if (action.type in actionReducerMapping) {
-      // @ts-ignore
-      const reducer = actionReducerMapping[action.type];
+  if (index > -1) {
+    noteList.splice(index, 1);
+  }
 
-      return reducer(state, action);
-    }
-
-    return state;
-  }, initialState);
-
-  return (
-    <AppContext.Provider value={{ state, dispatch }}>
-      {children}
-    </AppContext.Provider>
-  );
-};
-
-export const useAppState = (): State => {
-  const { state } = React.useContext(AppContext);
-  return state;
-};
-
-export const useAppDispatch = (): AppDispatch => {
-  const { dispatch } = React.useContext(AppContext);
-  return dispatch;
-};
+  set(noteListState, sortNotes(noteList));
+});

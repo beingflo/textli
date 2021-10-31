@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
 import React from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { getCurrentNoteState, sharesState, useAppDispatch } from '../../context';
+import { getCurrentNoteState, sharesState } from '../../context';
 import { CloseIcon } from '../../icons';
 import { Share } from '../../types';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
@@ -16,7 +16,6 @@ export const Publishing = ({
   showPublishing,
   setShowPublishing,
 }: Props): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const [shares, setShares] = useAtom(sharesState);
   const [currentNote] = useAtom(getCurrentNoteState);
 
@@ -57,14 +56,14 @@ export const Publishing = ({
       }
     }
     publicShare();
-  }, [isShared, shares, currentNote, dispatch]);
+  }, [isShared, shares, currentNote]);
 
   const handleUnpublish = React.useCallback(() => {
     const share = shares.find((share: Share) => share.note === currentNote?.id);
     if (share) {
       delete_share(share?.token).then(() => list_shares(setShares));
     }
-  }, [isShared, shares, currentNote, dispatch]);
+  }, [isShared, shares, currentNote]);
 
   return (
     <Transition show={showPublishing} as={React.Fragment} appear>

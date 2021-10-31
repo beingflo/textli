@@ -1,15 +1,13 @@
 import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
-import { sharesState, useAppDispatch } from '../../../context';
-import { useNoteList } from '../../../context/noteListReducer';
+import { getNoteListState, sharesState } from '../../../context';
 import { AddIcon, ClockIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Shares = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const [shares, setShares] = useAtom(sharesState);
-  const noteList = useNoteList();
+  const [noteList] = useAtom(getNoteListState);
 
   const getSharesInfo = React.useMemo(() => {
     const matchedShares = shares.map((share: Share) => {
@@ -29,7 +27,7 @@ export const Shares = (): React.ReactElement => {
         list_shares(setShares);
       });
     },
-    [dispatch]
+    []
   );
 
   return (

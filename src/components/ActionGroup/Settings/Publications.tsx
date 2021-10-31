@@ -1,15 +1,13 @@
 import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
-import { sharesState, useAppDispatch } from '../../../context';
-import { useNoteList } from '../../../context/noteListReducer';
+import { getNoteListState, sharesState } from '../../../context';
 import { AddIcon, EditIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Publications = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const [shares, setShares] = useAtom(sharesState);
-  const noteList = useNoteList();
+  const [noteList] = useAtom(getNoteListState);
 
   const getPublicationsInfo = React.useMemo(() => {
     const matchedPubs = shares
@@ -35,7 +33,7 @@ export const Publications = (): React.ReactElement => {
         list_shares(setShares);
       });
     },
-    [dispatch]
+    [list_shares, delete_share, setShares]
   );
 
   return (

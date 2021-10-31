@@ -1,7 +1,7 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { getCurrentNoteState, sharesState, useAppDispatch } from '../../context';
+import { getCurrentNoteState, sharesState } from '../../context';
 import {
   CheckIcon,
   CloseIcon,
@@ -32,7 +32,6 @@ export const Sharing = ({
   showSharing,
   setShowSharing,
 }: Props): React.ReactElement => {
-  const dispatch = useAppDispatch();
   const [currentNote] = useAtom(getCurrentNoteState);
   const [shares, setShares] = useAtom(sharesState);
   const [share, setShare] = React.useState<Share>();
@@ -78,7 +77,7 @@ export const Sharing = ({
       }
     };
     func();
-  }, [currentNote, showSharing, expiration, dispatch]);
+  }, [currentNote, showSharing, expiration]);
 
   const handleDeleteShare = React.useCallback(() => {
     const func = async () => {
@@ -90,7 +89,7 @@ export const Sharing = ({
       }
     };
     func();
-  }, [share, dispatch]);
+  }, [share]);
 
   const copyToClipboard = React.useCallback(() => {
     navigator.clipboard.writeText(shareLink).then(() => {

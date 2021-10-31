@@ -5,17 +5,16 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
 import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
-import { currentNoteState, getEditorState, noteStatusState, useAppDispatch } from '../../context';
-import { deleteFromNoteList } from '../../context/noteListReducer';
+import { currentNoteState, deleteFromNoteListState, getEditorState, noteStatusState } from '../../context';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
 export const DeleteAction = (): React.ReactElement => {
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
-  const dispatch = useAppDispatch();
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
   const [,setNoteStatus] = useAtom(noteStatusState);
+  const [,deleteFromNoteList] = useAtom(deleteFromNoteListState);
 
   const [showUndelete, setShowUndelete] = React.useState(false);
   const [deletedNote, setDeletedNote] = React.useState('');
@@ -42,7 +41,7 @@ export const DeleteAction = (): React.ReactElement => {
         setShowUndelete(true);
         setTimeout(() => setShowUndelete(false), 5000);
 
-        deleteFromNoteList(currentNote?.id, dispatch);
+        deleteFromNoteList(currentNote?.id);
       })
       .catch((error) => {
         handleException(error);
@@ -50,7 +49,7 @@ export const DeleteAction = (): React.ReactElement => {
       .finally(() => {
         setNoteStatus(NoteStatus.SYNCED);
       });
-  }, [currentNote, dispatch, showUndelete, editor]);
+  }, [currentNote, showUndelete, editor]);
 
   useHotkeys(
     'command+d,ctrl+d',
@@ -75,7 +74,7 @@ export const DeleteAction = (): React.ReactElement => {
       .finally(() => {
         setNoteStatus(NoteStatus.SYNCED);
       });
-  }, [dispatch, deletedNote]);
+  }, [deletedNote]);
 
   return (
     <div className="relative">
