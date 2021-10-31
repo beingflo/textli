@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
-import { getNoteListState, sharesState } from '../../context';
+import { getNoteListState, sharesState } from '../../state';
 import { AddIcon, ClockIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 

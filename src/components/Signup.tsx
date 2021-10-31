@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetNoteList } from '../api/hooks';
 import { user_info, user_login, user_signup } from '../api/user_api';
-import { userInfoState } from './context';
+import { userInfoState } from './state';
 import { Spinner } from './Spinner';
 
 const Signup = (): React.ReactElement => {

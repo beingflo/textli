@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { user_salt } from '../api/user_api';
-import { getUserInfoState } from './context';
+import { getUserInfoState } from './state';
 import '../style.css';
 import { generate_main_key } from './crypto';
 

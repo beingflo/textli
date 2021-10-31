@@ -1,7 +1,7 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { getCurrentNoteState, sharesState } from '../context';
+import { getCurrentNoteState, sharesState } from '../state';
 import {
   CheckIcon,
   CloseIcon,

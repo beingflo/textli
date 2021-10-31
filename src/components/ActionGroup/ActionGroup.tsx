@@ -18,7 +18,7 @@ import { Sharing } from './Sharing';
 import { Share } from '../../types';
 import Publishing from './Publishing';
 import { useAtom } from 'jotai';
-import { getCurrentNoteState, getSharesState } from '../context';
+import { getCurrentNoteState, getSharesState } from '../state';
 
 export const ActionGroup = (): React.ReactElement => {
   const getNoteList = useGetNoteList();

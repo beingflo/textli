@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetNoteList } from '../api/hooks';
 import { user_info, user_login } from '../api/user_api';
-import { statusState, userInfoState } from './context';
+import { statusState, userInfoState } from './state';
 import { Status } from '../types';
 import { Spinner } from './Spinner';
 

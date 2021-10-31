@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import React, { Fragment } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSaveNote } from '../../api/hooks';
-import { getCurrentNoteState } from '../context';
+import { getCurrentNoteState } from '../state';
 import { CheckIcon, ChevronLeftIcon, SaveIcon } from '../../icons';
 
 export const SaveAction = (): React.ReactElement => {

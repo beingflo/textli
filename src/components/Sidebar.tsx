@@ -1,6 +1,6 @@
 import React from 'react';
 import '../style.css';
-import { getCurrentNoteState, getEditorState, getNoteListState } from './context';
+import { getCurrentNoteState, getEditorState, getNoteListState } from './state';
 import { ArrowLeftIcon, ArrowRightIcon, ClearIcon, SearchIcon } from '../icons';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';

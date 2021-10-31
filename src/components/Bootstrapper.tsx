@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { getStatusState, sharesState, showKeypromptState, userInfoState } from './context';
+import { getStatusState, sharesState, showKeypromptState, userInfoState } from './state';
 import 'react-toastify/dist/ReactToastify.css';
 import { Status } from '../types';
 import App from './App';

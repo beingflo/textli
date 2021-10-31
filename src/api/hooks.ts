@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { addToNoteListState, currentNoteState, getEditorState, noteListState, noteStatusState, statusState } from '../components/context';
+import { addToNoteListState, currentNoteState, getEditorState, noteListState, noteStatusState, statusState } from '../components/state';
 import {
   DeletedNoteListItem,
   DeletedNoteListItemDto,

@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { getUserInfoState } from '../../context';
+import { getUserInfoState } from '../../state';
 
 export const Balance = (): React.ReactElement => {
   const [userInfo] = useAtom(getUserInfoState);

@@ -5,7 +5,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
 import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
-import { currentNoteState, deleteFromNoteListState, getEditorState, noteStatusState } from '../context';
+import { currentNoteState, deleteFromNoteListState, getEditorState, noteStatusState } from '../state';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
