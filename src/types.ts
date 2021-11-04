@@ -104,6 +104,7 @@ export type UserInfo = {
 
 export enum AuthStatus {
   SIGNED_IN = 'SIGNED_IN',
+  REATTEMPT = 'REATTEMPT',
   SIGNED_OUT = 'SIGNED_OUT',
 }
 

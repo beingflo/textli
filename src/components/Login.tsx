@@ -17,7 +17,7 @@ const Login = (): React.ReactElement => {
   const submit = React.useCallback(
     (event: any) => {
       setWaiting(true);
-      user_login({ name: username, password }, () => setAuthStatus(AuthStatus.SIGNED_IN));
+      user_login({ name: username, password }, () => setAuthStatus(AuthStatus.REATTEMPT));
 
       event.preventDefault();
     },

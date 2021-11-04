@@ -30,7 +30,7 @@ export const getSpinnerState = atom((get) => get(spinnerState))
 export const setSpinnerState = atom(null, (get, set, waiting) => 
   set(spinnerState, Math.max(get(spinnerState) + (waiting ? 1 : -1), 0) ));
 
-export const authState = atom<AuthStatus>(AuthStatus.SIGNED_IN);
+export const authState = atom<AuthStatus>(AuthStatus.REATTEMPT);
 export const getAuthState = atom((get) => get(authState))
 
 export const currentNoteState = atom<Note | undefined>(undefined);

@@ -19,7 +19,7 @@ const Signup = (): React.ReactElement => {
     (event: any) => {
       // TODO use email
       const success = () => {
-        user_login({ name: username, password: password }, () => setAuthState(AuthStatus.SIGNED_IN));
+        user_login({ name: username, password: password }, () => setAuthState(AuthStatus.REATTEMPT));
       };
       setWaiting(true);
       user_signup(
