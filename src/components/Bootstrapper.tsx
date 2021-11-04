@@ -44,10 +44,14 @@ const Bootstrapper = (): React.ReactElement => {
     }
   }, [authStatus]);
 
+  const refetchAllData = () => {
+    getNoteList();
+    list_shares(setShares, true);
+  }
+
   React.useEffect(() => {
     if (authStatus === AuthStatus.SIGNED_IN) {
-      getNoteList();
-      list_shares(setShares, true);
+      refetchAllData();
       setWaiting(false);
     }
   }, [authStatus]);
@@ -71,7 +75,11 @@ const Bootstrapper = (): React.ReactElement => {
           {authStatus === AuthStatus.SIGNED_IN && !showKeyprompt ? (
             <App />
           ) : authStatus === AuthStatus.SIGNED_IN ? (
-            <KeyPrompt setDone={() => setShowKeyprompt(false)} />
+            <KeyPrompt setDone={() => { 
+                refetchAllData()
+                setShowKeyprompt(false);
+              }
+            } />
           ) : (
             <Start />
           )}

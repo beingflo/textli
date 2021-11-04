@@ -3,7 +3,7 @@ import React from 'react';
 import { user_salt } from '../api/user_api';
 import { getUserInfoState } from './state';
 import '../style.css';
-import { generate_main_key, persistMainKey } from './crypto';
+import { arrayBuffer2string, generate_main_key, persistMainKey, string2arrayBuffer } from './crypto';
 
 export type Props = {
   setDone: () => void;
@@ -18,16 +18,15 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
   const submit = React.useCallback(async () => {
     let salt;
     if (userInfo?.salt) {
-      salt = new TextEncoder().encode(userInfo?.salt);
+      salt = string2arrayBuffer(userInfo?.salt);
     } else {
       salt = window.crypto.getRandomValues(new Uint8Array(16));
     }
-    const saltString = new TextDecoder().decode(salt);
 
     const key = await generate_main_key(password, salt);
 
     if (!userInfo?.salt) {
-      await user_salt(saltString);
+      await user_salt(arrayBuffer2string(salt));
     }
 
     if (!userInfo) {

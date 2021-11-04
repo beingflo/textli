@@ -81,7 +81,7 @@ export const arrayBuffer2string = (
   return btoa(String.fromCharCode(...new Uint8Array(buffer)));
 };
 
-export const string2arrayBuffer = (str: string): ArrayBuffer => {
+export const string2arrayBuffer = (str: string): Uint8Array => {
   return Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
 };
 
