@@ -1,9 +1,9 @@
 import {
+  AuthStatus,
   Note,
   NoteListItem,
   NoteStatus,
   Share,
-  Status,
   UserInfo,
 } from '../types';
 import { Editor } from '@tiptap/react';
@@ -30,8 +30,8 @@ export const getSpinnerState = atom((get) => get(spinnerState))
 export const setSpinnerState = atom(null, (get, set, waiting) => 
   set(spinnerState, Math.max(get(spinnerState) + (waiting ? 1 : -1), 0) ));
 
-export const statusState = atom<Status>(Status.OK);
-export const getStatusState = atom((get) => get(statusState))
+export const authState = atom<AuthStatus>(AuthStatus.SIGNED_IN);
+export const getAuthState = atom((get) => get(authState))
 
 export const currentNoteState = atom<Note | undefined>(undefined);
 export const getCurrentNoteState = atom((get) => get(currentNoteState))

@@ -90,8 +90,8 @@ export const user_password_change = (
     .catch(handleException);
 };
 
-export const user_info = (setUserInfo: (info: UserInfo) => void, silent = false): void => {
-  fetch(`${USER_URL}/info`, {
+export const user_info = (): Promise<UserInfo> => {
+  return fetch(`${USER_URL}/info`, {
     credentials: 'include',
     method: 'GET',
     headers: {
@@ -100,10 +100,6 @@ export const user_info = (setUserInfo: (info: UserInfo) => void, silent = false)
   })
     .then(mapError)
     .then((response) => response.json())
-    .then((data) => {
-      setUserInfo(data);
-    })
-    .catch((error) => handleException(error, silent));
 };
 
 export const user_salt = (

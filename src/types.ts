@@ -102,9 +102,9 @@ export type UserInfo = {
   username: string;
 };
 
-export enum Status {
-  OK = 'OK',
-  REDIRECT = 'REDIRECT',
+export enum AuthStatus {
+  SIGNED_IN = 'SIGNED_IN',
+  SIGNED_OUT = 'SIGNED_OUT',
 }
 
 export enum NoteStatus {

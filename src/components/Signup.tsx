@@ -1,13 +1,12 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { useGetNoteList } from '../api/hooks';
-import { user_info, user_login, user_signup } from '../api/user_api';
-import { userInfoState } from './state';
+import { user_login, user_signup } from '../api/user_api';
+import { AuthStatus } from '../types';
 import { Spinner } from './Spinner';
+import { authState } from './state';
 
 const Signup = (): React.ReactElement => {
-  const getNoteList = useGetNoteList();
-  const [,setUserInfo] = useAtom(userInfoState);
+  const [,setAuthState] = useAtom(authState);
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -20,12 +19,7 @@ const Signup = (): React.ReactElement => {
     (event: any) => {
       // TODO use email
       const success = () => {
-        const loginSucces = () => {
-          getNoteList();
-          user_info(setUserInfo);
-          setWaiting(false);
-        };
-        user_login({ name: username, password: password }, loginSucces);
+        user_login({ name: username, password: password }, () => setAuthState(AuthStatus.SIGNED_IN));
       };
       setWaiting(true);
       user_signup(

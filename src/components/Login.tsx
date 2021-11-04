@@ -1,15 +1,13 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { useGetNoteList } from '../api/hooks';
-import { user_info, user_login } from '../api/user_api';
-import { statusState, userInfoState } from './state';
-import { Status } from '../types';
+import { user_login } from '../api/user_api';
+import { authState, userInfoState } from './state';
 import { Spinner } from './Spinner';
+import { AuthStatus } from '../types';
 
 const Login = (): React.ReactElement => {
-  const getNoteList = useGetNoteList();
   const [,setUserInfo] = useAtom(userInfoState);
-  const [,setStatus] = useAtom(statusState);
+  const [,setAuthStatus] = useAtom(authState);
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -18,19 +16,12 @@ const Login = (): React.ReactElement => {
 
   const submit = React.useCallback(
     (event: any) => {
-      const success = () => {
-        getNoteList();
-        user_info(setUserInfo);
-        setWaiting(false);
-        setStatus(Status.OK);
-      };
-
       setWaiting(true);
-      user_login({ name: username, password }, success);
+      user_login({ name: username, password }, () => setAuthStatus(AuthStatus.SIGNED_IN));
 
       event.preventDefault();
     },
-    [username, password, waiting, setWaiting, setStatus, setUserInfo]
+    [username, password, waiting, setWaiting, setAuthStatus, setUserInfo]
   );
 
   const submitDisabled = !username || !password;

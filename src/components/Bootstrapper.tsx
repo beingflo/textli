@@ -1,8 +1,8 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { getStatusState, sharesState, showKeypromptState, userInfoState } from './state';
+import { getAuthState, sharesState, showKeypromptState, userInfoState } from './state';
 import 'react-toastify/dist/ReactToastify.css';
-import { Status } from '../types';
+import { AuthStatus, UserInfo } from '../types';
 import App from './App';
 import { SpinnerPage } from './Spinner';
 import Start from './Start';
@@ -12,15 +12,17 @@ import { list_shares } from '../api/share_api';
 import { useGetNoteList } from '../api/hooks';
 import { useAtom } from 'jotai';
 import { retrieveMainKey } from './crypto';
+import { handleException } from '../api';
 
 const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const [, setShares] = useAtom(sharesState);
-  const [status] = useAtom(getStatusState);
+  const [authStatus] = useAtom(getAuthState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [userInfo, setUserInfo] = useAtom(userInfoState);
 
   const [waiting, setWaiting] = React.useState(true);
+  console.log(document.cookie.indexOf('token'));
 
   React.useEffect(() => {
     if(userInfo) {
@@ -33,11 +35,13 @@ const Bootstrapper = (): React.ReactElement => {
   }, [userInfo]);
 
   React.useEffect(() => {
-    getNoteList();
-    user_info(setUserInfo, true);
-    list_shares(setShares, true);
-    setWaiting(false);
-  }, []);
+    user_info().then((data: UserInfo) => {
+      setUserInfo(data);
+      getNoteList();
+      list_shares(setShares, true);
+      setWaiting(false);
+    }).catch(handleException);
+  }, [status]);
 
   return (
     <>
@@ -55,9 +59,9 @@ const Bootstrapper = (): React.ReactElement => {
         <SpinnerPage />
       ) : (
         <>
-          {status === Status.OK && !showKeyprompt ? (
+          {authStatus === AuthStatus.SIGNED_IN && !showKeyprompt ? (
             <App />
-          ) : status === Status.OK ? (
+          ) : authStatus === AuthStatus.SIGNED_OUT ? (
             <KeyPrompt setDone={() => setShowKeyprompt(false)} />
           ) : (
             <Start />

@@ -2,14 +2,14 @@ import { useAtom } from 'jotai';
 import { handleException } from '.';
 import { decrypt_note, encrypt_note, KeyMaterial, retrieveMainKey } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { addToNoteListState, currentNoteState, getEditorState, getUserInfoState, noteListState, noteStatusState, statusState } from '../components/state';
+import { addToNoteListState, authState, currentNoteState, getEditorState, getUserInfoState, noteListState, noteStatusState } from '../components/state';
 import {
+  AuthStatus,
   DeletedNoteListItem,
   DeletedNoteListItemDto,
   NoteListItem,
   NoteListItemDto,
   NoteStatus,
-  Status,
 } from '../types';
 import {
   get_deleted_notes,
@@ -150,14 +150,14 @@ export const useSaveNote = (): (() => Promise<void>) => {
 };
 
 export const useGetNoteList = (): (() => Promise<void>) => {
-  const [,setStatus] = useAtom(statusState);
+  const [,setAuthStatus] = useAtom(authState);
   const [,setNoteList] = useAtom(noteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
   return async () => {
     const encrypted_notes = await get_notes().catch((error) => {
       handleException(error);
-      setStatus(Status.REDIRECT);
+      setAuthStatus(AuthStatus.SIGNED_OUT);
     });
 
     if (!encrypted_notes || !userInfo) {
@@ -192,7 +192,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
 
     const sortedNotes = sortNotes(filteredNotes);
 
-    setStatus(Status.OK);
+    setAuthStatus(AuthStatus.SIGNED_IN);
     setNoteList(sortedNotes);
   };
 };
