@@ -1,11 +1,9 @@
-import { update, get } from 'idb-keyval';
 import { useAtom } from 'jotai';
 import React from 'react';
-import { toast } from 'react-toastify';
 import { user_salt } from '../api/user_api';
 import { getUserInfoState } from './state';
 import '../style.css';
-import { generate_main_key } from './crypto';
+import { generate_main_key, persistMainKey } from './crypto';
 
 export type Props = {
   setDone: () => void;
@@ -13,7 +11,6 @@ export type Props = {
 
 const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
   const [userInfo] = useAtom(getUserInfoState);
-  const [name, setName] = React.useState('personal');
 
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
@@ -29,33 +26,18 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
 
     const key = await generate_main_key(password, salt);
 
-    const workspaces = await get('workspaces');
-
-    if (
-      workspaces &&
-      workspaces.find((workspace: any) => workspace?.name === name)
-    ) {
-      toast.error('Workspace with this name already exists');
-      return;
-    }
-
     if (!userInfo?.salt) {
       await user_salt(saltString);
     }
 
-    update('workspaces', (workspaces) => {
-      if (!workspaces) {
-        const newKey = { name, key, default: true };
-        return [newKey];
-      }
-      const newKey = { name, key, default: false };
-      workspaces.push(newKey);
+    if (!userInfo) {
+      return;
+    }
 
-      return workspaces;
-    });
+    await persistMainKey(key, userInfo?.username);
 
     setDone();
-  }, [password, name, setDone, userInfo]);
+  }, [password, setDone, userInfo]);
 
   const passwordMatch: boolean =
     password === confirmPassword && password !== '';
@@ -70,18 +52,12 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
         </span>
         <div className="mt-6">
           <p>
-            This password is used to derive your encryption & decryption key.
+            This password is used to derive your encryption key.
             Keep it save!
           </p>
           <div className="mt-1">
-            <span className="text-white bg-red-500">
+            <span className="text-white bg-red-400 p-1">
               If you lose this, your data will be unrecoverable.
-            </span>
-          </div>
-          <div className="mt-1">
-            <span>
-              You can add additional passwords in the settings to have multiple
-              separate workspaces.
             </span>
           </div>
         </div>
@@ -93,16 +69,6 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
               submit();
             }}
           >
-            <label className="block">
-              <span className="text-gray-700 text-sm">Name this workspace</span>
-              <input
-                type="text"
-                className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
-                placeholder="Name"
-                value={name}
-                onChange={(event) => setName(event?.target?.value)}
-              />
-            </label>
             <label className="block">
               <span className="text-gray-700 text-sm">Password</span>
               <input

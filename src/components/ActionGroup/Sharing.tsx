@@ -1,7 +1,7 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { create_share, delete_share, list_shares } from '../../api/share_api';
-import { getCurrentNoteState, sharesState } from '../state';
+import { getCurrentNoteState, getUserInfoState, sharesState } from '../state';
 import {
   CheckIcon,
   CloseIcon,
@@ -37,6 +37,7 @@ export const Sharing = ({
   const [share, setShare] = React.useState<Share>();
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
   const [expiration, setExpiration] = React.useState(expirationOptions[3]);
+  const [userInfo] = useAtom(getUserInfoState);
 
   const [shareLink, setShareLink] = React.useState('');
 
@@ -51,14 +52,15 @@ export const Sharing = ({
 
   React.useEffect(() => {
     const func = async () => {
-      if (!currentNote?.key?.wrapped_key) {
+      if (!currentNote?.key?.wrapped_key || !userInfo) {
         return '';
       }
       const url = config.share_url;
       const rawKey = await unwrap_note_key(
-        string2arrayBuffer(currentNote?.key?.wrapped_key)
+        string2arrayBuffer(currentNote?.key?.wrapped_key),
+        userInfo?.username,
       );
-      const key = await exportKey(rawKey?.key);
+      const key = await exportKey(rawKey);
 
       setShareLink(`${url}/${share?.token}#${key}`);
     };

@@ -9,26 +9,28 @@ import Start from './Start';
 import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
-import { get } from 'idb-keyval';
 import { useGetNoteList } from '../api/hooks';
 import { useAtom } from 'jotai';
+import { retrieveMainKey } from './crypto';
 
 const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const [, setShares] = useAtom(sharesState);
   const [status] = useAtom(getStatusState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
-  const [, setUserInfo] = useAtom(userInfoState);
+  const [userInfo, setUserInfo] = useAtom(userInfoState);
 
   const [waiting, setWaiting] = React.useState(true);
 
   React.useEffect(() => {
-    get('workspaces').then((workspaces) => {
-      if (!workspaces || workspaces?.length === 0) {
-        setShowKeyprompt(true);
-      }
-    });
-  }, []);
+    if(userInfo) {
+      retrieveMainKey(userInfo?.username).then((key: CryptoKey | undefined) => {
+        if(!key) {
+          setShowKeyprompt(true);
+        }
+      })
+    }
+  }, [userInfo]);
 
   React.useEffect(() => {
     getNoteList();

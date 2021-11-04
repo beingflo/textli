@@ -6,7 +6,6 @@ import {
   CloseIcon,
   DataIcon,
   EyeIcon,
-  KeyIcon,
   LinkIcon,
   UsersIcon,
 } from '../../../icons';
@@ -14,7 +13,6 @@ import { Balance } from './Balance';
 import Bin from './Bin';
 import Publications from './Publications';
 import Shares from './Shares';
-import Workspaces from './Workspaces';
 
 export type Props = {
   showSettings: boolean;
@@ -107,16 +105,6 @@ export const Settings = ({
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex">
-                          <KeyIcon className="h-5 w-5 mr-2 self-center" />
-                          <span className={selected ? 'highlight' : ''}>
-                            Workspaces
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className="flex">
                           <UsersIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             User settings
@@ -147,9 +135,6 @@ export const Settings = ({
                     </Tab.Panel>
                     <Tab.Panel>
                       <Bin />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <Workspaces />
                     </Tab.Panel>
                     <Tab.Panel>
                       <div className="flex flex-col">

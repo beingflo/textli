@@ -1,4 +1,4 @@
-import { get } from 'idb-keyval';
+import { get, set } from 'idb-keyval';
 
 export type KeyMaterial = {
   wrapped_key: string;
@@ -13,10 +13,17 @@ export type EncryptionResult = {
 };
 
 export type DecryptionResult = {
-  workspace: string;
   content: string;
   metadata: string;
 };
+
+export const persistMainKey = async (key: CryptoKey, username: string): Promise<void> => {
+  return await set(`${username}-mainKey`, key);
+}
+
+export const retrieveMainKey = async (username: string): Promise<CryptoKey | undefined> => {
+  return await get(`${username}-mainKey`);
+}
 
 export const generate_main_key = async (
   password: string,
@@ -79,36 +86,30 @@ export const string2arrayBuffer = (str: string): ArrayBuffer => {
 };
 
 export const unwrap_note_key = async (
-  wrapped_key: ArrayBuffer
-): Promise<{ key: CryptoKey; workspace: string }> => {
-  const mainKeys:
-    | [{ name: string; key: CryptoKey; default: boolean }]
-    | undefined = await get('workspaces');
+  wrapped_key: ArrayBuffer,
+  username: string
+): Promise<CryptoKey> => {
+  const mainKey: CryptoKey | undefined = await retrieveMainKey(username);
 
-  if (!mainKeys) {
+  if (!mainKey) {
     return Promise.reject();
   }
 
-  for (const mainKey of mainKeys) {
-    if (!mainKey) {
-      return Promise.reject();
-    }
+  try {
+    const unwrapped_key = await window.crypto.subtle.unwrapKey(
+      'raw',
+      wrapped_key,
+      mainKey,
+      'AES-KW',
+      'AES-GCM',
+      true,
+      ['encrypt', 'decrypt']
+    );
 
-    try {
-      const unwrapped_key = await window.crypto.subtle.unwrapKey(
-        'raw',
-        wrapped_key,
-        mainKey?.key,
-        'AES-KW',
-        'AES-GCM',
-        true,
-        ['encrypt', 'decrypt']
-      );
-
-      return { key: unwrapped_key, workspace: mainKey?.name };
-    } catch (error) {}
+    return unwrapped_key ;
+  } catch (error) {
+    return Promise.reject();
   }
-  return Promise.reject();
 };
 
 export const exportKey = async (key: CryptoKey): Promise<string> => {
@@ -119,6 +120,7 @@ export const exportKey = async (key: CryptoKey): Promise<string> => {
 
 export const encrypt_note = async (
   mainKey: CryptoKey,
+  username: string,
   content: string,
   metadata: string,
   wrapped_note_key?: string
@@ -127,10 +129,11 @@ export const encrypt_note = async (
 
   let noteKey;
   if (wrapped_note_key) {
-    const unwrapped_keymaterial = await unwrap_note_key(
-      string2arrayBuffer(wrapped_note_key)
+    const unwrapped_key = await unwrap_note_key(
+      string2arrayBuffer(wrapped_note_key),
+      username
     );
-    noteKey = unwrapped_keymaterial?.key;
+    noteKey = unwrapped_key;
   } else {
     noteKey = await generate_note_key();
   }
@@ -174,12 +177,13 @@ export const encrypt_note = async (
 
 export const decrypt_note = async (
   key: KeyMaterial,
+  username: string,
   encrypted_metadata?: string,
-  encrypted_content?: string
+  encrypted_content?: string,
 ): Promise<DecryptionResult | null> => {
   const dec = new TextDecoder();
 
-  const note_key = await unwrap_note_key(string2arrayBuffer(key.wrapped_key));
+  const note_key = await unwrap_note_key(string2arrayBuffer(key.wrapped_key), username);
 
   let metadata = null;
   if (encrypted_metadata) {
@@ -190,7 +194,7 @@ export const decrypt_note = async (
         name: 'AES-GCM',
         iv: iv_metadata,
       },
-      note_key?.key,
+      note_key,
       string2arrayBuffer(encrypted_metadata)
     );
   }
@@ -204,13 +208,12 @@ export const decrypt_note = async (
         name: 'AES-GCM',
         iv: iv_content,
       },
-      note_key?.key,
+      note_key,
       string2arrayBuffer(encrypted_content)
     );
   }
 
   return {
-    workspace: note_key?.workspace,
     content: content ? dec.decode(content) : '',
     metadata: metadata ? dec.decode(metadata) : '',
   };

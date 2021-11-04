@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai';
 import { handleException } from '.';
-import { decrypt_note, encrypt_note, KeyMaterial } from '../components/crypto';
+import { decrypt_note, encrypt_note, KeyMaterial, retrieveMainKey } from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { addToNoteListState, currentNoteState, getEditorState, noteListState, noteStatusState, statusState } from '../components/state';
+import { addToNoteListState, currentNoteState, getEditorState, getUserInfoState, noteListState, noteStatusState, statusState } from '../components/state';
 import {
   DeletedNoteListItem,
   DeletedNoteListItemDto,
@@ -24,13 +24,14 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   const [,setNoteStatus] = useAtom(noteStatusState);
   const [,setCurrentNote] = useAtom(currentNoteState);
   const [,addToNoteList] = useAtom(addToNoteListState);
+  const [userInfo] = useAtom(getUserInfoState);
 
   return async (id: string) => {
     setNoteStatus(NoteStatus.INPROGRESS);
     const noteDto = await get_note(id).catch(handleException);
     setNoteStatus(NoteStatus.SYNCED);
 
-    if (!noteDto) {
+    if (!noteDto || !userInfo) {
       return;
     }
 
@@ -38,6 +39,7 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
 
     const decrypted_note = await decrypt_note(
       key,
+      userInfo?.username,
       noteDto?.metadata,
       noteDto?.content
     );
@@ -51,7 +53,6 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
       modified_at: noteDto?.modified_at,
       metadata: parsedMetadata,
       content: decrypted_note?.content ?? '',
-      workspace: decrypted_note?.workspace ?? '',
     };
 
     setCurrentNote(note);
@@ -61,20 +62,29 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   };
 };
 
-export const useSaveNote = (): ((workspace: {
-  key: CryptoKey;
-  name: string;
-}) => Promise<void>) => {
+export const useSaveNote = (): (() => Promise<void>) => {
   const [editor] = useAtom(getEditorState);
   const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const [,addToNoteList] = useAtom(addToNoteListState);
+  const [userInfo] = useAtom(getUserInfoState);
 
-  return async (workspace: { key: CryptoKey; name: string }) => {
+  return async () => {
+    if (!userInfo) {
+      return;
+    }
+
     editor?.commands?.focus();
 
     const content = editor?.getHTML() ?? '';
     const metadata = getMetadata(content);
+
+    const mainKey = await retrieveMainKey(userInfo?.username);
+
+    if (!mainKey) {
+      console.error('No main key in indexeddb');
+      return
+    }
 
     // No changes to be saved
     if (noteStatus === NoteStatus.SYNCED) {
@@ -82,7 +92,8 @@ export const useSaveNote = (): ((workspace: {
     }
 
     const encrypted_note = await encrypt_note(
-      workspace?.key,
+      mainKey,
+      userInfo?.username,
       content,
       metadata,
       currentNote?.key?.wrapped_key
@@ -108,7 +119,6 @@ export const useSaveNote = (): ((workspace: {
           metadata: JSON.parse(metadata),
           key: encrypted_note?.key,
           public: false,
-          workspace: workspace?.name,
           ...result,
         };
         setCurrentNote(note);
@@ -129,7 +139,6 @@ export const useSaveNote = (): ((workspace: {
           content,
           metadata: JSON.parse(metadata),
           key: encrypted_note?.key,
-          workspace: workspace?.name,
           ...result,
         };
         setCurrentNote(note);
@@ -143,6 +152,7 @@ export const useSaveNote = (): ((workspace: {
 export const useGetNoteList = (): (() => Promise<void>) => {
   const [,setStatus] = useAtom(statusState);
   const [,setNoteList] = useAtom(noteListState);
+  const [userInfo] = useAtom(getUserInfoState);
 
   return async () => {
     const encrypted_notes = await get_notes().catch((error) => {
@@ -150,7 +160,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
       setStatus(Status.REDIRECT);
     });
 
-    if (!encrypted_notes) {
+    if (!encrypted_notes || !userInfo) {
       return;
     }
 
@@ -158,7 +168,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
       encrypted_notes.map(
         async (note: NoteListItemDto): Promise<NoteListItem> => {
           const key = JSON.parse(note?.key);
-          const decrypted_note = await decrypt_note(key, note?.metadata);
+          const decrypted_note = await decrypt_note(key, userInfo?.username, note?.metadata);
 
           const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
 
@@ -168,7 +178,6 @@ export const useGetNoteList = (): (() => Promise<void>) => {
             created_at: note?.created_at,
             modified_at: note?.modified_at,
             metadata: parsedMetadata,
-            workspace: decrypted_note?.workspace ?? '',
           };
         }
       )
@@ -191,12 +200,14 @@ export const useGetNoteList = (): (() => Promise<void>) => {
 export const useGetDeletedNoteList = (): ((
   setDeletedNotes: (notes: Array<DeletedNoteListItem>) => void
 ) => Promise<void>) => {
+  const [userInfo] = useAtom(getUserInfoState);
+
   return async (
     setDeletedNotes: (notes: Array<DeletedNoteListItem>) => void
   ) => {
     const encrypted_notes = await get_deleted_notes().catch(handleException);
 
-    if (!encrypted_notes) {
+    if (!encrypted_notes || !userInfo) {
       return;
     }
 
@@ -204,7 +215,7 @@ export const useGetDeletedNoteList = (): ((
       encrypted_notes.map(
         async (note: DeletedNoteListItemDto): Promise<DeletedNoteListItem> => {
           const key = JSON.parse(note?.key);
-          const decrypted_note = await decrypt_note(key, note?.metadata);
+          const decrypted_note = await decrypt_note(key, userInfo?.username, note?.metadata);
 
           const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
 
@@ -215,7 +226,6 @@ export const useGetDeletedNoteList = (): ((
             modified_at: note?.modified_at,
             deleted_at: note?.deleted_at,
             metadata: parsedMetadata,
-            workspace: decrypted_note?.workspace ?? '',
           };
         }
       )

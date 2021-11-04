@@ -27,7 +27,6 @@ export type NoteListItem = {
   modified_at: string;
   metadata: Metadata;
   key: KeyMaterial;
-  workspace: string;
 };
 
 export type DeletedNoteListItem = NoteListItem & {
@@ -100,6 +99,7 @@ export type UserInfo = {
   balance: string;
   salt: string;
   remaining_days: string;
+  username: string;
 };
 
 export enum Status {
