@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
+    "@heroicons/react": "^1.0.5",
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/typography": "^0.4.1",
     "@tiptap/extension-highlight": "^2.0.0-beta.15",

@@ -168,28 +168,35 @@ export const useGetNoteList = (): (() => Promise<void>) => {
       encrypted_notes.map(
         async (note: NoteListItemDto): Promise<NoteListItem> => {
           const key = JSON.parse(note?.key);
-          const decrypted_note = await decrypt_note(key, userInfo?.username, note?.metadata);
 
-          const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
+          try {
+            const decrypted_note = await decrypt_note(key, userInfo?.username, note?.metadata);
 
-          return {
-            key,
-            id: note?.id,
-            created_at: note?.created_at,
-            modified_at: note?.modified_at,
-            metadata: parsedMetadata,
-          };
+            const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
+
+            return {
+              key,
+              id: note?.id,
+              created_at: note?.created_at,
+              modified_at: note?.modified_at,
+              metadata: parsedMetadata,
+            };
+          } catch (error) {
+            console.error(`Note decryption failure ${note?.id}`);
+            return {
+              key,
+              id: note?.id,
+              created_at: note?.created_at,
+              modified_at: note?.modified_at,
+              metadata: undefined,
+            }
+          }
         }
       )
     );
 
-    const filteredNotes = notes
-      .filter(
-        (result: PromiseSettledResult<NoteListItem>) =>
-          result.status === 'fulfilled'
-      )
-      .map((result: any) => result?.value);
-
+    const filteredNotes = notes.map((result: any) => result?.value);
+        
     const sortedNotes = sortNotes(filteredNotes);
 
     setAuthStatus(AuthStatus.SIGNED_IN);

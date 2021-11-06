@@ -1,13 +1,16 @@
 import React from 'react';
 import '../style.css';
-import { getCurrentNoteState, getEditorState, getNoteListState } from './state';
-import { ArrowLeftIcon, ArrowRightIcon, ClearIcon, SearchIcon } from '../icons';
+import { deleteFromNoteListState, getCurrentNoteState, getEditorState, getNoteListState } from './state';
+import { ArrowLeftIcon, ArrowRightIcon, BinIcon, ClearIcon, SearchIcon } from '../icons';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
 import { NoteListItem } from '../types';
 import { useAtom } from 'jotai';
+import { ExclamationCircleIcon } from '@heroicons/react/outline'
+import { delete_note } from '../api/note_api';
+import { handleException } from '../api';
 
 export type Props = {
   query: string;
@@ -19,10 +22,13 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const [currentNote] = useAtom(getCurrentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
+  const [,deleteFromNoteList] = useAtom(deleteFromNoteListState);
 
   const [inputRef, setInputFocus] = useFocus();
 
   const openButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  console.log(notes);
 
   useHotkeys(
     'command+/,ctrl+/',
@@ -36,7 +42,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
 
   const filteredNotes = notes.filter((note: NoteListItem) => {
     if (!note?.metadata) {
-      return false;
+      return query === '';
     }
 
     // TODO more sophisticated searching (fuzzy, multiword, etc)
@@ -60,6 +66,14 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
     },
     [editor]
   );
+
+  const handleDelete = React.useCallback((id: string) => {
+    delete_note(id).then(() => {
+      deleteFromNoteList(id);
+    }).catch((error) => {
+      handleException(error);
+    })
+  }, [deleteFromNoteList]);
 
   return (
     <>
@@ -111,18 +125,37 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
               </div>
               <ul className="space-y-1 pl-9 pt-4">
                 {filteredNotes.map((note: NoteListItem) => (
-                  <li
-                    onClick={() => handleSelection(note?.id)}
-                    key={note?.id}
-                    id={note?.id}
-                    className="cursor-pointer truncate"
-                  >
-                    <span
-                      className={`${isSelected(note?.id) ? 'highlight' : ''}`}
-                    >
-                      {note?.metadata?.title}
-                    </span>
-                  </li>
+                  <>
+                    {note?.metadata?.title ? (
+                      <li
+                        onClick={() => handleSelection(note?.id)}
+                        key={note?.id}
+                        id={note?.id}
+                        className="cursor-pointer truncate"
+                      >
+                        <span
+                          className={`${isSelected(note?.id) ? 'highlight' : ''}`}
+                        >
+                          {note?.metadata?.title}
+                        </span>
+                      </li>
+                    ) : (
+                      <li
+                        key={note?.id}
+                        id={note?.id}
+                        className="cursor-default truncate flex flex-row bg-red-500 p-1 rounded-md"
+                        aria-disabled
+                      >
+                        <ExclamationCircleIcon className='h-4 w-4 self-center' />
+                        <span className="pl-1">
+                          Decryption failure
+                        </span>
+                        <button onClick={() => handleDelete(note?.id)} className='ml-auto'>
+                          <BinIcon className='h-4 w-4 self-center' />
+                        </button>
+                      </li>
+                    )}
+                  </>
                 ))}
               </ul>
             </div>
