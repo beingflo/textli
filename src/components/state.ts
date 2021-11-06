@@ -51,7 +51,9 @@ export const addToNoteListState = atom(null, (get, set, note: NoteListItem) => {
 
   noteList.push(note);
 
-  set(noteListState, sortNotes(noteList));
+  const newList = sortNotes([...noteList]);
+
+  set(noteListState, newList);
 });
 export const deleteFromNoteListState = atom(null, (get, set, id: string) => {
   const noteList = get(noteListState);
@@ -64,5 +66,7 @@ export const deleteFromNoteListState = atom(null, (get, set, id: string) => {
     noteList.splice(index, 1);
   }
 
-  set(noteListState, sortNotes(noteList));
+  const newList = sortNotes([...noteList]);
+
+  set(noteListState, newList);
 });

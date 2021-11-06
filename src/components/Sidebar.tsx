@@ -28,8 +28,6 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
 
   const openButtonRef = React.useRef<HTMLButtonElement>(null);
 
-  console.log(notes);
-
   useHotkeys(
     'command+/,ctrl+/',
     (event: KeyboardEvent) => {
@@ -125,7 +123,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
               </div>
               <ul className="space-y-1 pl-9 pt-4">
                 {filteredNotes.map((note: NoteListItem) => (
-                  <>
+                  <React.Fragment key={note?.id}>
                     {note?.metadata?.title ? (
                       <li
                         onClick={() => handleSelection(note?.id)}
@@ -155,7 +153,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
                         </button>
                       </li>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
               </ul>
             </div>
