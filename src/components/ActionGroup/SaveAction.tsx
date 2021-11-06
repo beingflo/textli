@@ -12,7 +12,7 @@ export const SaveAction = (): React.ReactElement => {
   const handleSave = () => {
     saveNote();
     setShowSaveConfirm(true);
-    setTimeout(() => setShowSaveConfirm(false), 1000);
+    setTimeout(() => setShowSaveConfirm(false), 2000);
   };
 
   useHotkeys(
@@ -38,9 +38,9 @@ export const SaveAction = (): React.ReactElement => {
         leave="transition-opacity ease-linear duration-300"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="absolute top-1 right-10"
+        className="absolute top-0.5 right-8"
       >
-        <CheckIcon className="h-4 w-4 text-green-600" />
+        <CheckIcon className="h-5 w-5 text-green-600" />
       </Transition>
     </div>
   );
