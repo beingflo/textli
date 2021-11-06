@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { authState, sharesState, showKeypromptState, userInfoState } from './state';
+import { authState, currentNoteState, sharesState, showKeypromptState, userInfoState } from './state';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthStatus, UserInfo } from '../types';
 import App from './App';
@@ -19,6 +19,7 @@ const Bootstrapper = (): React.ReactElement => {
   const [authStatus, setAuthStatus] = useAtom(authState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [userInfo, setUserInfo] = useAtom(userInfoState);
+  const [,setCurrentNote] = useAtom(currentNoteState);
 
   const [waiting, setWaiting] = React.useState(true);
 
@@ -34,6 +35,8 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.REATTEMPT) {
+      setCurrentNote(undefined);
+
       user_info().then((data: UserInfo) => {
         setUserInfo(data);
         setAuthStatus(AuthStatus.SIGNED_IN);
