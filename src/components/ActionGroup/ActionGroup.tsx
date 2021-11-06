@@ -13,17 +13,16 @@ import { DeleteAction } from './DeleteAction';
 import { NewAction } from './NewAction';
 import '../../style.css';
 import Settings from './Settings/Settings';
-import { useGetNoteList } from '../../api/hooks';
 import { Sharing } from './Sharing';
-import { Share } from '../../types';
+import { AuthStatus, Share } from '../../types';
 import Publishing from './Publishing';
 import { useAtom } from 'jotai';
-import { getCurrentNoteState, getSharesState } from '../state';
+import { authState, getCurrentNoteState, getSharesState } from '../state';
 
 export const ActionGroup = (): React.ReactElement => {
-  const getNoteList = useGetNoteList();
   const [shares] = useAtom(getSharesState);
   const [currentNote] = useAtom(getCurrentNoteState);
+  const [,setAuthStatus] = useAtom(authState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
   const [showPublishing, setShowPublishing] = React.useState(false);
@@ -31,7 +30,7 @@ export const ActionGroup = (): React.ReactElement => {
   const [isPublic, setIsPublic] = React.useState(false);
 
   const handleLogout = React.useCallback(() => {
-    user_logout(() => getNoteList());
+    user_logout(() => setAuthStatus(AuthStatus.SIGNED_OUT));
   }, []);
 
   React.useEffect(() => {
