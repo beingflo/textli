@@ -2,7 +2,6 @@ import React from 'react';
 import Editor from './Editor';
 import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup/ActionGroup';
-import { NoteStatus } from './NoteStatus';
 
 const App = (): React.ReactElement => {
   const [query, setQuery] = React.useState('');
@@ -21,7 +20,6 @@ const App = (): React.ReactElement => {
       <div className="pr-6 pt-6 h-auto">
         <ActionGroup />
       </div>
-      <NoteStatus />
     </div>
   );
 };
