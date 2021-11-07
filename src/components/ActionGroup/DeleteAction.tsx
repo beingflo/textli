@@ -5,7 +5,12 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
 import { useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
-import { currentNoteState, deleteFromNoteListState, getEditorState, noteStatusState } from '../state';
+import {
+  currentNoteState,
+  deleteFromNoteListState,
+  getEditorState,
+  noteStatusState,
+} from '../state';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
@@ -13,8 +18,8 @@ export const DeleteAction = (): React.ReactElement => {
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
-  const [,setNoteStatus] = useAtom(noteStatusState);
-  const [,deleteFromNoteList] = useAtom(deleteFromNoteListState);
+  const [, setNoteStatus] = useAtom(noteStatusState);
+  const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
 
   const [showUndelete, setShowUndelete] = React.useState(false);
   const [deletedNote, setDeletedNote] = React.useState('');

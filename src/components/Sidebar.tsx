@@ -1,14 +1,25 @@
 import React from 'react';
 import '../style.css';
-import { deleteFromNoteListState, getCurrentNoteState, getEditorState, getNoteListState } from './state';
-import { ArrowLeftIcon, ArrowRightIcon, BinIcon, ClearIcon, SearchIcon } from '../icons';
+import {
+  deleteFromNoteListState,
+  getCurrentNoteState,
+  getEditorState,
+  getNoteListState,
+} from './state';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  BinIcon,
+  ClearIcon,
+  SearchIcon,
+} from '../icons';
 import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
 import { NoteListItem } from '../types';
 import { useAtom } from 'jotai';
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { delete_note } from '../api/note_api';
 import { handleException } from '../api';
 
@@ -22,7 +33,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const [currentNote] = useAtom(getCurrentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
-  const [,deleteFromNoteList] = useAtom(deleteFromNoteListState);
+  const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
 
   const [inputRef, setInputFocus] = useFocus();
 
@@ -65,13 +76,18 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
     [editor]
   );
 
-  const handleDelete = React.useCallback((id: string) => {
-    delete_note(id).then(() => {
-      deleteFromNoteList(id);
-    }).catch((error) => {
-      handleException(error);
-    })
-  }, [deleteFromNoteList]);
+  const handleDelete = React.useCallback(
+    (id: string) => {
+      delete_note(id)
+        .then(() => {
+          deleteFromNoteList(id);
+        })
+        .catch((error) => {
+          handleException(error);
+        });
+    },
+    [deleteFromNoteList]
+  );
 
   return (
     <>
@@ -132,7 +148,9 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
                         className="cursor-pointer truncate"
                       >
                         <span
-                          className={`${isSelected(note?.id) ? 'highlight' : ''}`}
+                          className={`${
+                            isSelected(note?.id) ? 'highlight' : ''
+                          }`}
                         >
                           {note?.metadata?.title}
                         </span>
@@ -144,12 +162,13 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
                         className="cursor-default truncate flex flex-row bg-red-500 p-1 rounded-md"
                         aria-disabled
                       >
-                        <ExclamationCircleIcon className='h-4 w-4 self-center' />
-                        <span className="pl-1">
-                          Decryption failure
-                        </span>
-                        <button onClick={() => handleDelete(note?.id)} className='ml-auto'>
-                          <BinIcon className='h-4 w-4 self-center' />
+                        <ExclamationCircleIcon className="h-4 w-4 self-center" />
+                        <span className="pl-1">Decryption failure</span>
+                        <button
+                          onClick={() => handleDelete(note?.id)}
+                          className="ml-auto"
+                        >
+                          <BinIcon className="h-4 w-4 self-center" />
                         </button>
                       </li>
                     )}

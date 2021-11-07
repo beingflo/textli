@@ -17,13 +17,18 @@ export type DecryptionResult = {
   metadata: string;
 };
 
-export const persistMainKey = async (key: CryptoKey, username: string): Promise<void> => {
+export const persistMainKey = async (
+  key: CryptoKey,
+  username: string
+): Promise<void> => {
   return await set(`${username}-mainKey`, key);
-}
+};
 
-export const retrieveMainKey = async (username: string): Promise<CryptoKey | undefined> => {
+export const retrieveMainKey = async (
+  username: string
+): Promise<CryptoKey | undefined> => {
   return await get(`${username}-mainKey`);
-}
+};
 
 export const generate_main_key = async (
   password: string,
@@ -106,7 +111,7 @@ export const unwrap_note_key = async (
       ['encrypt', 'decrypt']
     );
 
-    return unwrapped_key ;
+    return unwrapped_key;
   } catch (error) {
     return Promise.reject();
   }
@@ -179,11 +184,14 @@ export const decrypt_note = async (
   key: KeyMaterial,
   username: string,
   encrypted_metadata?: string,
-  encrypted_content?: string,
+  encrypted_content?: string
 ): Promise<DecryptionResult | null> => {
   const dec = new TextDecoder();
 
-  const note_key = await unwrap_note_key(string2arrayBuffer(key.wrapped_key), username);
+  const note_key = await unwrap_note_key(
+    string2arrayBuffer(key.wrapped_key),
+    username
+  );
 
   let metadata = null;
   if (encrypted_metadata) {

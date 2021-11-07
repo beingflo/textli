@@ -1,6 +1,12 @@
 import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { authState, currentNoteState, sharesState, showKeypromptState, userInfoState } from './state';
+import {
+  authState,
+  currentNoteState,
+  sharesState,
+  showKeypromptState,
+  userInfoState,
+} from './state';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthStatus, UserInfo } from '../types';
 import App from './App';
@@ -19,17 +25,17 @@ const Bootstrapper = (): React.ReactElement => {
   const [authStatus, setAuthStatus] = useAtom(authState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [userInfo, setUserInfo] = useAtom(userInfoState);
-  const [,setCurrentNote] = useAtom(currentNoteState);
+  const [, setCurrentNote] = useAtom(currentNoteState);
 
   const [waiting, setWaiting] = React.useState(true);
 
   React.useEffect(() => {
-    if(userInfo) {
+    if (userInfo) {
       retrieveMainKey(userInfo?.username).then((key: CryptoKey | undefined) => {
-        if(!key) {
+        if (!key) {
           setShowKeyprompt(true);
         }
-      })
+      });
     }
   }, [userInfo]);
 
@@ -37,20 +43,22 @@ const Bootstrapper = (): React.ReactElement => {
     if (authStatus === AuthStatus.REATTEMPT) {
       setCurrentNote(undefined);
 
-      user_info().then((data: UserInfo) => {
-        setUserInfo(data);
-        setAuthStatus(AuthStatus.SIGNED_IN);
-      }).catch(() => {
-        setAuthStatus(AuthStatus.SIGNED_OUT);
-        setWaiting(false);
-      });
+      user_info()
+        .then((data: UserInfo) => {
+          setUserInfo(data);
+          setAuthStatus(AuthStatus.SIGNED_IN);
+        })
+        .catch(() => {
+          setAuthStatus(AuthStatus.SIGNED_OUT);
+          setWaiting(false);
+        });
     }
   }, [authStatus]);
 
   const refetchAllData = () => {
     getNoteList();
     list_shares(setShares, true);
-  }
+  };
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.SIGNED_IN) {
@@ -78,11 +86,12 @@ const Bootstrapper = (): React.ReactElement => {
           {authStatus === AuthStatus.SIGNED_IN && !showKeyprompt ? (
             <App />
           ) : authStatus === AuthStatus.SIGNED_IN ? (
-            <KeyPrompt setDone={() => { 
-                refetchAllData()
+            <KeyPrompt
+              setDone={() => {
+                refetchAllData();
                 setShowKeyprompt(false);
-              }
-            } />
+              }}
+            />
           ) : (
             <Start />
           )}

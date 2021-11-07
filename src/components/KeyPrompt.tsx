@@ -3,7 +3,12 @@ import React from 'react';
 import { user_salt } from '../api/user_api';
 import { getUserInfoState } from './state';
 import '../style.css';
-import { arrayBuffer2string, generate_main_key, persistMainKey, string2arrayBuffer } from './crypto';
+import {
+  arrayBuffer2string,
+  generate_main_key,
+  persistMainKey,
+  string2arrayBuffer,
+} from './crypto';
 
 export type Props = {
   setDone: () => void;
@@ -51,8 +56,7 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
         </span>
         <div className="mt-6">
           <p>
-            This password is used to derive your encryption key.
-            Keep it save!
+            This password is used to derive your encryption key. Keep it save!
           </p>
           <div className="mt-1">
             <span className="text-white bg-red-400 p-1">

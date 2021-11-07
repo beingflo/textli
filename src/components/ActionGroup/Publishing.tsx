@@ -38,7 +38,7 @@ export const Publishing = ({
       if (currentNote && userInfo) {
         const rawKey = await unwrap_note_key(
           string2arrayBuffer(currentNote?.key?.wrapped_key),
-          userInfo?.username 
+          userInfo?.username
         );
         const key = await exportKey(rawKey);
 

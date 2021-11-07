@@ -4,7 +4,10 @@ import { CreateShareRequest, Share } from '../types';
 
 const SHARE_URL = `${config.api_url}/shares`;
 
-export const list_shares = (setShares: (shares: Array<Share>) => void, silent = false): void => {
+export const list_shares = (
+  setShares: (shares: Array<Share>) => void,
+  silent = false
+): void => {
   fetch(SHARE_URL, {
     credentials: 'include',
     method: 'GET',

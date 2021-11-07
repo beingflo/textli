@@ -6,8 +6,8 @@ import { Spinner } from './Spinner';
 import { AuthStatus } from '../types';
 
 const Login = (): React.ReactElement => {
-  const [,setUserInfo] = useAtom(userInfoState);
-  const [,setAuthStatus] = useAtom(authState);
+  const [, setUserInfo] = useAtom(userInfoState);
+  const [, setAuthStatus] = useAtom(authState);
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -17,7 +17,9 @@ const Login = (): React.ReactElement => {
   const submit = React.useCallback(
     (event: any) => {
       setWaiting(true);
-      user_login({ name: username, password }, () => setAuthStatus(AuthStatus.REATTEMPT));
+      user_login({ name: username, password }, () =>
+        setAuthStatus(AuthStatus.REATTEMPT)
+      );
 
       event.preventDefault();
     },

@@ -99,7 +99,7 @@ export const user_info = (): Promise<UserInfo> => {
     },
   })
     .then(mapError)
-    .then((response) => response.json())
+    .then((response) => response.json());
 };
 
 export const user_salt = (

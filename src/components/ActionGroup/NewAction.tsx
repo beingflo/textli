@@ -7,8 +7,8 @@ import { NoteStatus } from '../../types';
 
 export const NewAction = (): React.ReactElement => {
   const [editor] = useAtom(getEditorState);
-  const [,setNoteStatus] = useAtom(noteStatusState);
-  const [,setCurrentNote] = useAtom(currentNoteState);
+  const [, setNoteStatus] = useAtom(noteStatusState);
+  const [, setCurrentNote] = useAtom(currentNoteState);
 
   const handleNew = React.useCallback(() => {
     // If unsaved, handle gracefully

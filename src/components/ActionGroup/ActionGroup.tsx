@@ -22,7 +22,7 @@ import { authState, getCurrentNoteState, getSharesState } from '../state';
 export const ActionGroup = (): React.ReactElement => {
   const [shares] = useAtom(getSharesState);
   const [currentNote] = useAtom(getCurrentNoteState);
-  const [,setAuthStatus] = useAtom(authState);
+  const [, setAuthStatus] = useAtom(authState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
   const [showPublishing, setShowPublishing] = React.useState(false);

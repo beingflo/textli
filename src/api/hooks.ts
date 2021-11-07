@@ -1,8 +1,21 @@
 import { useAtom } from 'jotai';
 import { handleException } from '.';
-import { decrypt_note, encrypt_note, KeyMaterial, retrieveMainKey } from '../components/crypto';
+import {
+  decrypt_note,
+  encrypt_note,
+  KeyMaterial,
+  retrieveMainKey,
+} from '../components/crypto';
 import { getMetadata, sortDeletedNotes, sortNotes } from '../components/util';
-import { addToNoteListState, authState, currentNoteState, getEditorState, getUserInfoState, noteListState, noteStatusState } from '../components/state';
+import {
+  addToNoteListState,
+  authState,
+  currentNoteState,
+  getEditorState,
+  getUserInfoState,
+  noteListState,
+  noteStatusState,
+} from '../components/state';
 import {
   AuthStatus,
   DeletedNoteListItem,
@@ -21,9 +34,9 @@ import {
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
   const [editor] = useAtom(getEditorState);
-  const [,setNoteStatus] = useAtom(noteStatusState);
-  const [,setCurrentNote] = useAtom(currentNoteState);
-  const [,addToNoteList] = useAtom(addToNoteListState);
+  const [, setNoteStatus] = useAtom(noteStatusState);
+  const [, setCurrentNote] = useAtom(currentNoteState);
+  const [, addToNoteList] = useAtom(addToNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
   return async (id: string) => {
@@ -66,7 +79,7 @@ export const useSaveNote = (): (() => Promise<void>) => {
   const [editor] = useAtom(getEditorState);
   const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
-  const [,addToNoteList] = useAtom(addToNoteListState);
+  const [, addToNoteList] = useAtom(addToNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
   return async () => {
@@ -83,7 +96,7 @@ export const useSaveNote = (): (() => Promise<void>) => {
 
     if (!mainKey) {
       console.error('No main key in indexeddb');
-      return
+      return;
     }
 
     // No changes to be saved
@@ -150,8 +163,8 @@ export const useSaveNote = (): (() => Promise<void>) => {
 };
 
 export const useGetNoteList = (): (() => Promise<void>) => {
-  const [,setAuthStatus] = useAtom(authState);
-  const [,setNoteList] = useAtom(noteListState);
+  const [, setAuthStatus] = useAtom(authState);
+  const [, setNoteList] = useAtom(noteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
   return async () => {
@@ -170,7 +183,11 @@ export const useGetNoteList = (): (() => Promise<void>) => {
           const key = JSON.parse(note?.key);
 
           try {
-            const decrypted_note = await decrypt_note(key, userInfo?.username, note?.metadata);
+            const decrypted_note = await decrypt_note(
+              key,
+              userInfo?.username,
+              note?.metadata
+            );
 
             const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
 
@@ -189,14 +206,14 @@ export const useGetNoteList = (): (() => Promise<void>) => {
               created_at: note?.created_at,
               modified_at: note?.modified_at,
               metadata: undefined,
-            }
+            };
           }
         }
       )
     );
 
     const filteredNotes = notes.map((result: any) => result?.value);
-        
+
     const sortedNotes = sortNotes(filteredNotes);
 
     setAuthStatus(AuthStatus.SIGNED_IN);
@@ -222,7 +239,11 @@ export const useGetDeletedNoteList = (): ((
       encrypted_notes.map(
         async (note: DeletedNoteListItemDto): Promise<DeletedNoteListItem> => {
           const key = JSON.parse(note?.key);
-          const decrypted_note = await decrypt_note(key, userInfo?.username, note?.metadata);
+          const decrypted_note = await decrypt_note(
+            key,
+            userInfo?.username,
+            note?.metadata
+          );
 
           const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
 

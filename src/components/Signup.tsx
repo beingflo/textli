@@ -6,7 +6,7 @@ import { Spinner } from './Spinner';
 import { authState } from './state';
 
 const Signup = (): React.ReactElement => {
-  const [,setAuthState] = useAtom(authState);
+  const [, setAuthState] = useAtom(authState);
 
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -19,7 +19,9 @@ const Signup = (): React.ReactElement => {
     (event: any) => {
       // TODO use email
       const success = () => {
-        user_login({ name: username, password: password }, () => setAuthState(AuthStatus.REATTEMPT));
+        user_login({ name: username, password: password }, () =>
+          setAuthState(AuthStatus.REATTEMPT)
+        );
       };
       setWaiting(true);
       user_signup(

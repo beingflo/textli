@@ -58,7 +58,7 @@ export const Sharing = ({
       const url = config.share_url;
       const rawKey = await unwrap_note_key(
         string2arrayBuffer(currentNote?.key?.wrapped_key),
-        userInfo?.username,
+        userInfo?.username
       );
       const key = await exportKey(rawKey);
 

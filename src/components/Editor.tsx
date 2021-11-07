@@ -18,8 +18,8 @@ import { useAtom } from 'jotai';
 
 export const Editor = (): React.ReactElement => {
   const [note] = useAtom(getCurrentNoteState);
-  const [,setEditor] = useAtom(editorState);
-  const [,setNoteStatus] = useAtom(noteStatusState);
+  const [, setEditor] = useAtom(editorState);
+  const [, setNoteStatus] = useAtom(noteStatusState);
 
   const editor = useEditor({
     extensions: [

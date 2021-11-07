@@ -21,14 +21,11 @@ export const Shares = (): React.ReactElement => {
     return matchedShares;
   }, [shares, noteList]);
 
-  const revoke_share = React.useCallback(
-    (token: string) => {
-      delete_share(token).then(() => {
-        list_shares(setShares);
-      });
-    },
-    []
-  );
+  const revoke_share = React.useCallback((token: string) => {
+    delete_share(token).then(() => {
+      list_shares(setShares);
+    });
+  }, []);
 
   return (
     <>
