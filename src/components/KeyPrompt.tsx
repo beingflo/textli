@@ -130,6 +130,7 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
             </label>
             <button
               type="submit"
+              disabled={passwordNoMatch}
               className="w-full py-3 mt-14 bg-gray-800 rounded-md disabled:bg-gray-400
                     font-medium text-white uppercase
                     focus:outline-none hover:bg-gray-700 hover:shadow-none"

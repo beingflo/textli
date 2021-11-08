@@ -75,7 +75,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
         <div className="flex flex-row">
           <div>Some notes failed to decrypt with the provided password</div>
           <div className="self-center">
-            <div className="whitespace-nowrap bg-white text-red-500 rounded-md p-1">
+            <div className="whitespace-nowrap bg-white text-red-500 rounded-md p-2">
               Try again
             </div>
           </div>
