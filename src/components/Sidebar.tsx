@@ -35,7 +35,7 @@ export type Props = {
 export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
-  const [, setKeyStatus] = useAtom(keyState);
+  const [keyStatus, setKeyStatus] = useAtom(keyState);
   const [currentNote] = useAtom(getCurrentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
@@ -55,11 +55,12 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
     [openButtonRef]
   );
 
-  React.useEffect(() => {
-    const hasDecryptionFailure = notes.find(
-      (note: NoteListItem) => !note?.metadata?.title
-    );
+  const hasDecryptionFailure = React.useMemo(
+    () => notes.find((note: NoteListItem) => !note?.metadata?.title),
+    [notes]
+  );
 
+  React.useEffect(() => {
     if (!userInfo) {
       return;
     }
@@ -69,7 +70,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
       setKeyStatus(KeyStatus.MISSING);
     };
 
-    if (hasDecryptionFailure) {
+    if (hasDecryptionFailure && keyStatus === KeyStatus.PRESENT) {
       toast.error(
         <div className="flex flex-row">
           <div>Some notes failed to decrypt with the provided password</div>
@@ -82,7 +83,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
         { autoClose: false, onClick: retryKeyEntry }
       );
     }
-  }, [notes, userInfo]);
+  }, [hasDecryptionFailure, userInfo]);
 
   const filteredNotes = notes.filter((note: NoteListItem) => {
     if (!note?.metadata) {
