@@ -1,5 +1,6 @@
 import {
   AuthStatus,
+  KeyStatus,
   Note,
   NoteListItem,
   NoteStatus,
@@ -33,6 +34,9 @@ export const setSpinnerState = atom(null, (get, set, waiting) =>
 
 export const authState = atom<AuthStatus>(AuthStatus.REATTEMPT);
 export const getAuthState = atom((get) => get(authState));
+
+export const keyState = atom<KeyStatus>(KeyStatus.MISSING);
+export const getKeyState = atom((get) => get(keyState));
 
 export const currentNoteState = atom<Note | undefined>(undefined);
 export const getCurrentNoteState = atom((get) => get(currentNoteState));

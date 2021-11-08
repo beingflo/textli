@@ -108,6 +108,11 @@ export enum AuthStatus {
   SIGNED_OUT = 'SIGNED_OUT',
 }
 
+export enum KeyStatus {
+  PRESENT = 'PRESENT',
+  MISSING = 'MISSING',
+}
+
 export enum NoteStatus {
   CHANGED = 'CHANGED',
   INPROGRESS = 'INPROGRESS',

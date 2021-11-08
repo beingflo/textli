@@ -5,6 +5,8 @@ import {
   getCurrentNoteState,
   getEditorState,
   getNoteListState,
+  getUserInfoState,
+  keyState,
 } from './state';
 import {
   ArrowLeftIcon,
@@ -17,11 +19,13 @@ import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
-import { NoteListItem } from '../types';
+import { KeyStatus, NoteListItem } from '../types';
 import { useAtom } from 'jotai';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { delete_note } from '../api/note_api';
 import { handleException } from '../api';
+import { toast } from 'react-toastify';
+import { removeMainKey } from './crypto';
 
 export type Props = {
   query: string;
@@ -30,6 +34,8 @@ export type Props = {
 
 export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
+  const [userInfo] = useAtom(getUserInfoState);
+  const [, setKeyStatus] = useAtom(keyState);
   const [currentNote] = useAtom(getCurrentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
@@ -48,6 +54,35 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
     { enableOnContentEditable: true },
     [openButtonRef]
   );
+
+  React.useEffect(() => {
+    const hasDecryptionFailure = notes.find(
+      (note: NoteListItem) => !note?.metadata?.title
+    );
+
+    if (!userInfo) {
+      return;
+    }
+
+    const retryKeyEntry = () => {
+      removeMainKey(userInfo?.username);
+      setKeyStatus(KeyStatus.MISSING);
+    };
+
+    if (hasDecryptionFailure) {
+      toast.error(
+        <div className="flex flex-row">
+          <div>Some notes failed to decrypt with the provided password</div>
+          <div className="self-center">
+            <div className="whitespace-nowrap bg-white text-red-500 rounded-md p-1">
+              Try again
+            </div>
+          </div>
+        </div>,
+        { autoClose: false, onClick: retryKeyEntry }
+      );
+    }
+  }, [notes, userInfo]);
 
   const filteredNotes = notes.filter((note: NoteListItem) => {
     if (!note?.metadata) {

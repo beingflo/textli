@@ -3,12 +3,13 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import {
   authState,
   currentNoteState,
+  keyState,
   sharesState,
   showKeypromptState,
   userInfoState,
 } from './state';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthStatus, UserInfo } from '../types';
+import { AuthStatus, KeyStatus, UserInfo } from '../types';
 import App from './App';
 import { SpinnerPage } from './Spinner';
 import Start from './Start';
@@ -23,6 +24,7 @@ const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const [, setShares] = useAtom(sharesState);
   const [authStatus, setAuthStatus] = useAtom(authState);
+  const [keyStatus, setKeyStatus] = useAtom(keyState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [userInfo, setUserInfo] = useAtom(userInfoState);
   const [, setCurrentNote] = useAtom(currentNoteState);
@@ -30,14 +32,16 @@ const Bootstrapper = (): React.ReactElement => {
   const [waiting, setWaiting] = React.useState(true);
 
   React.useEffect(() => {
-    if (userInfo) {
+    if (userInfo && keyStatus === KeyStatus.MISSING) {
       retrieveMainKey(userInfo?.username).then((key: CryptoKey | undefined) => {
         if (!key) {
           setShowKeyprompt(true);
+        } else {
+          setKeyStatus(KeyStatus.PRESENT);
         }
       });
     }
-  }, [userInfo]);
+  }, [userInfo, keyStatus]);
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.REATTEMPT) {
@@ -89,6 +93,7 @@ const Bootstrapper = (): React.ReactElement => {
             <KeyPrompt
               setDone={() => {
                 refetchAllData();
+                setKeyStatus(KeyStatus.PRESENT);
                 setShowKeyprompt(false);
               }}
             />

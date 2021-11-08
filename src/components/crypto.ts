@@ -1,4 +1,4 @@
-import { get, set } from 'idb-keyval';
+import { del, get, set } from 'idb-keyval';
 
 export type KeyMaterial = {
   wrapped_key: string;
@@ -22,6 +22,10 @@ export const persistMainKey = async (
   username: string
 ): Promise<void> => {
   return await set(`${username}-mainKey`, key);
+};
+
+export const removeMainKey = async (username: string): Promise<void> => {
+  return await del(`${username}-mainKey`);
 };
 
 export const retrieveMainKey = async (
