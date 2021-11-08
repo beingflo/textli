@@ -9,6 +9,7 @@ import { mapError, handleException } from './index';
 
 const USER_URL = `${config.api_url}/user`;
 const SESSION_URL = `${config.api_url}/session`;
+const INVALIDATE_SESSIONS_URL = `${config.api_url}/allsessions`;
 
 export const user_login = (
   credentials: UserCredentials,
@@ -118,4 +119,14 @@ export const user_salt = (
     .then(mapError)
     .then(onSuccess)
     .catch(onFailure);
+};
+
+export const invalidate_sessions = (): Promise<void> => {
+  return fetch(INVALIDATE_SESSIONS_URL, {
+    credentials: 'include',
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(mapError);
 };

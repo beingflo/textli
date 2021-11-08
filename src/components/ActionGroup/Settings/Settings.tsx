@@ -13,6 +13,7 @@ import { Balance } from './Balance';
 import Bin from './Bin';
 import Publications from './Publications';
 import Shares from './Shares';
+import UserSettings from './UserSettings';
 
 export type Props = {
   showSettings: boolean;
@@ -137,12 +138,7 @@ export const Settings = ({
                       <Bin />
                     </Tab.Panel>
                     <Tab.Panel>
-                      <div className="flex flex-col">
-                        <span className="font-semibold">Change password</span>
-                        <span className="font-semibold text-red-500 mt-4">
-                          Delete account
-                        </span>
-                      </div>
+                      <UserSettings />
                     </Tab.Panel>
                     <Tab.Panel>Coming soon :)</Tab.Panel>
                   </Tab.Panels>
