@@ -27,12 +27,7 @@ import { handleException } from '../api';
 import { toast } from 'react-toastify';
 import { removeMainKey } from './crypto';
 
-export type Props = {
-  query: string;
-  setQuery: (query: string) => void;
-};
-
-export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
+export const Sidebar = (): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
   const [keyStatus, setKeyStatus] = useAtom(keyState);
@@ -40,6 +35,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
   const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
+  const [query, setQuery] = React.useState('');
 
   const [inputRef, setInputFocus] = useFocus();
 
@@ -107,7 +103,7 @@ export const Sidebar = ({ query, setQuery }: Props): React.ReactElement => {
       // Scroll to top incase we are further down the sidebar
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      getNote(id);
+      getNote(id).then(() => setTimeout(() => setQuery(''), 300));
     },
     [editor]
   );

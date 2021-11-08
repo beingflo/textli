@@ -4,12 +4,10 @@ import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup/ActionGroup';
 
 const App = (): React.ReactElement => {
-  const [query, setQuery] = React.useState('');
-
   return (
     <div className="h-auto flex justify-between w-full relative">
       <div className="w-12">
-        <Sidebar query={query} setQuery={setQuery} />
+        <Sidebar />
       </div>
       <div
         spellCheck="false"
