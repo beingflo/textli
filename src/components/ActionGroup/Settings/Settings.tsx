@@ -66,6 +66,30 @@ export const Settings = ({
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex">
+                          <UsersIcon className="h-5 w-5 mr-2 self-center" />
+                          <span
+                            className={`${
+                              selected ? 'highlight' : ''
+                            } whitespace-nowrap`}
+                          >
+                            User settings
+                          </span>
+                        </button>
+                      )}
+                    </Tab>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
+                          <CashIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Payment
+                          </span>
+                        </button>
+                      )}
+                    </Tab>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex">
                           <LinkIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Shares
@@ -86,33 +110,9 @@ export const Settings = ({
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex">
-                          <CashIcon className="h-5 w-5 mr-2 self-center" />
-                          <span className={selected ? 'highlight' : ''}>
-                            Payment
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className="flex">
                           <BinIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Bin
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className="flex">
-                          <UsersIcon className="h-5 w-5 mr-2 self-center" />
-                          <span
-                            className={`${
-                              selected ? 'highlight' : ''
-                            } whitespace-nowrap`}
-                          >
-                            User settings
                           </span>
                         </button>
                       )}
@@ -130,19 +130,19 @@ export const Settings = ({
                   </Tab.List>
                   <Tab.Panels className="flex-grow ml-8 min-w-0">
                     <Tab.Panel>
+                      <UserSettings />
+                    </Tab.Panel>
+                    <Tab.Panel className="flex flex-col h-full">
+                      <Payment />
+                    </Tab.Panel>
+                    <Tab.Panel>
                       <Shares />
                     </Tab.Panel>
                     <Tab.Panel>
                       <Publications />
                     </Tab.Panel>
                     <Tab.Panel>
-                      <Payment />
-                    </Tab.Panel>
-                    <Tab.Panel>
                       <Bin />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <UserSettings />
                     </Tab.Panel>
                     <Tab.Panel>Coming soon :)</Tab.Panel>
                   </Tab.Panels>
