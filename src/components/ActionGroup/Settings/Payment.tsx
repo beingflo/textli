@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { getUserInfoState } from '../../state';
 
-export const Balance = (): React.ReactElement => {
+export const Payment = (): React.ReactElement => {
   const [userInfo] = useAtom(getUserInfoState);
 
   const balance = parseFloat(userInfo?.balance ?? '0').toFixed(2);
@@ -32,4 +32,4 @@ export const Balance = (): React.ReactElement => {
   );
 };
 
-export default Balance;
+export default Payment;
