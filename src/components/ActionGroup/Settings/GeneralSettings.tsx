@@ -45,10 +45,16 @@ export const GeneralSettings = (): React.ReactElement => {
                 <span>Remaining weeks</span>
                 <span className="font-bold">{remaining_weeks}</span>
               </div>
-              {balance < 0 && (
+              {balance < 0 && balance > -1 && (
                 <div className="mt-6 p-1 text-red-500">
                   If you are more than one month overdraft, your account will
                   become read only.
+                </div>
+              )}
+              {balance < -1 && (
+                <div className="mt-6 p-1 text-red-600 font-bold">
+                  You are more than one month overdraft, this account is read
+                  only until you add funds.
                 </div>
               )}
             </div>
