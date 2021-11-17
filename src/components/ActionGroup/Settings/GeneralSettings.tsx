@@ -102,12 +102,14 @@ const SessionConfirm = (): React.ReactElement => {
   const [password, setPassword] = React.useState('');
   const [, setAuthStatus] = useAtom(authState);
 
-  const invalidateAllSessions = React.useCallback(() => {
+  const invalidateAllSessions = React.useCallback((event) => {
     invalidate_sessions()
       .then(() => {
         setAuthStatus(AuthStatus.SIGNED_OUT);
       })
       .catch(handleException);
+
+    event.preventDefault();
   }, []);
 
   return (
@@ -116,32 +118,34 @@ const SessionConfirm = (): React.ReactElement => {
       <div className="pb-4">
         This will log you out of any device and sesion you may have.
       </div>
-      <label className="block pb-2 lg:w-1/2">
-        <span className="text-gray-700 text-sm">Username</span>
-        <input
-          type="text"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your username"
-          value={username}
-          onChange={(event) => setUsername(event?.target?.value)}
-        />
-      </label>
-      <label className="block pb-4 lg:w-1/2">
-        <span className="text-gray-700 text-sm">Password</span>
-        <input
-          type="password"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(event) => setPassword(event?.target?.value)}
-        />
-      </label>
-      <button
-        className="mt-2 rounded-md p-2 bg-gray-200 text-black"
-        onClick={invalidateAllSessions}
-      >
-        Confirm
-      </button>
+      <form className="grid grid-cols-1 gap-2" onSubmit={invalidateAllSessions}>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Username</span>
+          <input
+            type="text"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(event) => setUsername(event?.target?.value)}
+          />
+        </label>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Password</span>
+          <input
+            type="password"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(event) => setPassword(event?.target?.value)}
+          />
+        </label>
+        <button
+          type="submit"
+          className="w-max mt-2 p-1.5 border border-gray-500 rounded-md hover:bg-gray-100"
+        >
+          Confirm
+        </button>
+      </form>
     </>
   );
 };
@@ -152,73 +156,80 @@ const PasswordConfirm = (): React.ReactElement => {
   const [newPassword, setNewPassword] = React.useState('');
   const [repeatNewPassword, setRepeatNewPassword] = React.useState('');
 
-  const changePassword = React.useCallback(() => {
-    if (newPassword !== repeatNewPassword) {
-      return;
-    }
+  const changePassword = React.useCallback(
+    (event) => {
+      if (newPassword !== repeatNewPassword) {
+        return;
+      }
 
-    user_password_change({
-      name: username,
-      password,
-      password_new: newPassword,
-    })
-      .then(() => toast.success('Password changed successfully'))
-      .catch(handleException);
-  }, [password, newPassword, repeatNewPassword]);
+      user_password_change({
+        name: username,
+        password,
+        password_new: newPassword,
+      })
+        .then(() => toast.success('Password changed successfully'))
+        .catch(handleException);
+
+      event.preventDefault();
+    },
+    [password, newPassword, repeatNewPassword]
+  );
 
   return (
     <div>
       <div className="font-bold pb-2">Change password</div>
-      <label className="block pb-2 lg:w-1/2">
-        <span className="text-gray-700 text-sm">Username</span>
-        <input
-          type="text"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your username"
-          value={username}
-          onChange={(event) => setUsername(event?.target?.value)}
-        />
-      </label>
-      <label className="block pb-2 lg:w-1/2">
-        <span className="text-gray-700 text-sm">Old password</span>
-        <input
-          type="password"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(event) => setPassword(event?.target?.value)}
-        />
-      </label>
-      <label className="block pb-2 lg:w-1/2">
-        <span className="text-gray-700 text-sm">New password</span>
-        <input
-          type="password"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your password"
-          value={newPassword}
-          onChange={(event) => setNewPassword(event?.target?.value)}
-        />
-      </label>
-      <label className="block lg:w-1/2">
-        <span className="text-gray-700 text-sm">Repeat new password</span>
-        <input
-          type="password"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your password"
-          value={repeatNewPassword}
-          onChange={(event) => setRepeatNewPassword(event?.target?.value)}
-        />
-      </label>
-      {newPassword !== repeatNewPassword && (
-        <div className="text-red-600">Password mismatch!</div>
-      )}
-      <button
-        className="mt-6 rounded-md p-2 bg-gray-200 text-black disabled:bg-gray-100"
-        onClick={changePassword}
-        disabled={newPassword !== repeatNewPassword}
-      >
-        Confirm
-      </button>
+      <form className="grid grid-cols-1 gap-2" onSubmit={changePassword}>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Username</span>
+          <input
+            type="text"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(event) => setUsername(event?.target?.value)}
+          />
+        </label>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Old password</span>
+          <input
+            type="password"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(event) => setPassword(event?.target?.value)}
+          />
+        </label>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">New password</span>
+          <input
+            type="password"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your password"
+            value={newPassword}
+            onChange={(event) => setNewPassword(event?.target?.value)}
+          />
+        </label>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Repeat new password</span>
+          <input
+            type="password"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your password"
+            value={repeatNewPassword}
+            onChange={(event) => setRepeatNewPassword(event?.target?.value)}
+          />
+        </label>
+        {newPassword !== repeatNewPassword && (
+          <div className="text-red-600">Password mismatch!</div>
+        )}
+        <button
+          type="submit"
+          className="w-max mt-6 p-1.5 border border-gray-500 rounded-md hover:bg-gray-100"
+          disabled={newPassword !== repeatNewPassword}
+        >
+          Confirm
+        </button>
+      </form>
     </div>
   );
 };
