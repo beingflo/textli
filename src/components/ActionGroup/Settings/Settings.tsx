@@ -2,18 +2,16 @@ import { Dialog, Tab, Transition } from '@headlessui/react';
 import React from 'react';
 import {
   BinIcon,
-  CashIcon,
   CloseIcon,
   DataIcon,
   EyeIcon,
   LinkIcon,
   UsersIcon,
 } from '../../../icons';
-import { Payment } from './Payment';
 import Bin from './Bin';
 import Publications from './Publications';
 import Shares from './Shares';
-import UserSettings from './UserSettings';
+import GeneralSettings from './GeneralSettings';
 
 export type Props = {
   showSettings: boolean;
@@ -72,17 +70,7 @@ export const Settings = ({
                               selected ? 'highlight' : ''
                             } whitespace-nowrap`}
                           >
-                            User settings
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className="flex">
-                          <CashIcon className="h-5 w-5 mr-2 self-center" />
-                          <span className={selected ? 'highlight' : ''}>
-                            Payment
+                            General
                           </span>
                         </button>
                       )}
@@ -130,10 +118,7 @@ export const Settings = ({
                   </Tab.List>
                   <Tab.Panels className="flex-grow ml-8 min-w-0">
                     <Tab.Panel>
-                      <UserSettings />
-                    </Tab.Panel>
-                    <Tab.Panel className="flex flex-col h-full">
-                      <Payment />
+                      <GeneralSettings />
                     </Tab.Panel>
                     <Tab.Panel>
                       <Shares />

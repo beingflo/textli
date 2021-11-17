@@ -63,32 +63,28 @@ export const user_signup = (
     .catch(onFailure);
 };
 
-export const user_delete = (credentials: UserCredentials): void => {
-  fetch(USER_URL, {
+export const user_delete = (credentials: UserCredentials): Promise<void> => {
+  return fetch(USER_URL, {
     credentials: 'include',
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(credentials),
-  })
-    .then(mapError)
-    .catch(handleException);
+  }).then(mapError);
 };
 
 export const user_password_change = (
   credentials: UserCredentialsPasswordChange
-): void => {
-  fetch(USER_URL, {
+): Promise<void> => {
+  return fetch(USER_URL, {
     credentials: 'include',
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(credentials),
-  })
-    .then(mapError)
-    .catch(handleException);
+  }).then(mapError);
 };
 
 export const user_info = (): Promise<UserInfo> => {
