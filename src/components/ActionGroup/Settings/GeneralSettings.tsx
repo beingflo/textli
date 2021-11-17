@@ -66,7 +66,7 @@ export const GeneralSettings = (): React.ReactElement => {
             <div className="flex flex-col">
               <span className="font-bold pb-1">Sessions</span>
               <button
-                className="w-max mt-auto text-black p-1.5 border border-gray-500 rounded-md"
+                className="w-max p-1.5 border border-gray-500 rounded-md hover:bg-gray-100"
                 onClick={() => setSessionConfirm(true)}
               >
                 Invalidate all sessions
@@ -75,7 +75,7 @@ export const GeneralSettings = (): React.ReactElement => {
             <div className="flex flex-col">
               <span className="font-bold pb-1">Password</span>
               <button
-                className="w-max text-black p-1.5 border border-gray-500 rounded-md"
+                className="w-max p-1.5 border border-gray-500 rounded-md hover:bg-gray-100"
                 onClick={() => setPasswordConfirm(true)}
               >
                 Change password
@@ -84,7 +84,7 @@ export const GeneralSettings = (): React.ReactElement => {
             <div className="flex flex-col">
               <span className="font-bold pb-1">Delete account</span>
               <button
-                className="w-max text-white p-1.5 bg-red-500 rounded-md"
+                className="w-max p-1.5 text-red-500 border border-red-500 rounded-md hover:bg-red-100"
                 onClick={() => setDeleteConfirm(true)}
               >
                 Delete account
@@ -168,7 +168,7 @@ const PasswordConfirm = (): React.ReactElement => {
 
   return (
     <div>
-      <div className="font-bold pb-2">Confirm action</div>
+      <div className="font-bold pb-2">Change password</div>
       <label className="block pb-2 lg:w-1/2">
         <span className="text-gray-700 text-sm">Username</span>
         <input
@@ -228,43 +228,54 @@ const DeleteConfirm = (): React.ReactElement => {
   const [password, setPassword] = React.useState('');
   const [, setAuthStatus] = useAtom(authState);
 
-  const deleteAccount = React.useCallback(() => {
-    user_delete({ name: username, password })
-      .then(() => {
-        setAuthStatus(AuthStatus.SIGNED_OUT);
-      })
-      .catch(handleException);
-  }, []);
+  const deleteAccount = React.useCallback(
+    (event) => {
+      user_delete({ name: username, password })
+        .then(() => {
+          toast.success('User successfully deleted');
+          setAuthStatus(AuthStatus.SIGNED_OUT);
+        })
+        .catch(handleException);
+
+      event.preventDefault();
+    },
+    [password, username]
+  );
 
   return (
     <>
-      <div className="font-bold pb-2">Confirm action</div>
-      <label className="block">
-        <span className="text-gray-700 text-sm">Username</span>
-        <input
-          type="text"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your username"
-          value={username}
-          onChange={(event) => setUsername(event?.target?.value)}
-        />
-      </label>
-      <label className="block">
-        <span className="text-gray-700 text-sm">Password</span>
-        <input
-          type="password"
-          className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(event) => setPassword(event?.target?.value)}
-        />
-      </label>
-      <button
-        className="mt-2 rounded-md p-2 bg-gray-200 text-black"
-        onClick={deleteAccount}
-      >
-        Confirm
-      </button>
+      <div className="font-bold pb-1">Delete account</div>
+      <div className="font-bold text-red-500 pb-2">
+        This action is irreversible!
+      </div>
+      <form className="grid grid-cols-1 gap-2" onSubmit={deleteAccount}>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Username</span>
+          <input
+            type="text"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(event) => setUsername(event?.target?.value)}
+          />
+        </label>
+        <label className="block lg:w-1/2">
+          <span className="text-gray-700 text-sm">Password</span>
+          <input
+            type="password"
+            className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(event) => setPassword(event?.target?.value)}
+          />
+        </label>
+        <button
+          type="submit"
+          className="w-max p-1.5 mt-6 text-red-500 border border-red-500 rounded-md hover:bg-red-100"
+        >
+          Confirm
+        </button>
+      </form>
     </>
   );
 };
