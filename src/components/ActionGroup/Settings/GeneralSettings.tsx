@@ -63,7 +63,7 @@ export const GeneralSettings = (): React.ReactElement => {
               Add funds
             </button>
           </div>
-          <div className="flex flex-col lg:flex-row justify-between gap-8 border-t border-gray-400 border-dashed pt-8">
+          <div className="flex flex-col lg:flex-row justify-between gap-8 pt-4">
             <div className="flex flex-col">
               <span className="font-bold pb-1">Sessions</span>
               <button

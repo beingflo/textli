@@ -59,8 +59,8 @@ export const Settings = ({
               </div>
 
               <Tab.Group vertical>
-                <div className="flex flex-row mt-8">
-                  <Tab.List className="flex flex-col w-max md:whitespace-nowrap space-y-4">
+                <div className="flex flex-col sm:flex-row mt-8">
+                  <Tab.List className="flex flex-row flex-wrap gap-y-2 justify-center border-b border-gray-400 pb-4 mb-4 border-dashed sm:border-none sm:flex-col sm:justify-start sm:gap-y-0 sm:w-max md:whitespace-nowrap space-x-4 sm:space-x-0 sm:space-y-4 sm:mb-0 sm:mr-8">
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex">
@@ -116,7 +116,7 @@ export const Settings = ({
                       )}
                     </Tab>
                   </Tab.List>
-                  <Tab.Panels className="flex-grow ml-8 min-w-0">
+                  <Tab.Panels className="flex-grow min-w-0">
                     <Tab.Panel>
                       <GeneralSettings />
                     </Tab.Panel>
