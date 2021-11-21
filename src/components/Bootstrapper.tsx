@@ -32,7 +32,7 @@ const Bootstrapper = (): React.ReactElement => {
   const [waiting, setWaiting] = React.useState(true);
 
   React.useEffect(() => {
-    if (userInfo && keyStatus === KeyStatus.MISSING) {
+    if (userInfo) {
       retrieveMainKey(userInfo?.username).then((key: CryptoKey | undefined) => {
         if (!key) {
           setShowKeyprompt(true);
@@ -46,6 +46,7 @@ const Bootstrapper = (): React.ReactElement => {
   React.useEffect(() => {
     if (authStatus === AuthStatus.REATTEMPT) {
       setCurrentNote(undefined);
+      setKeyStatus(KeyStatus.MISSING);
 
       user_info()
         .then((data: UserInfo) => {
