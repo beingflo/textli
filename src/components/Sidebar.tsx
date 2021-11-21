@@ -27,6 +27,7 @@ import { delete_note } from '../api/note_api';
 import { handleException } from '../api';
 import { toast } from 'react-toastify';
 import { removeMainKey } from './crypto';
+import fuzzysort from 'fuzzysort';
 
 export const Sidebar = (): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
@@ -37,6 +38,7 @@ export const Sidebar = (): React.ReactElement => {
   const getNote = useGetNote();
   const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
   const [query, setQuery] = React.useState('');
+  const [filteredNotes, setFilteredNotes] = React.useState(notes);
 
   const [inputRef, setInputFocus] = useFocus();
 
@@ -82,17 +84,21 @@ export const Sidebar = (): React.ReactElement => {
     }
   }, [hasDecryptionFailure, userInfo]);
 
-  const filteredNotes = notes.filter((note: NoteListItem) => {
-    if (!note?.metadata) {
-      return query === '';
-    }
+  React.useEffect(() => {
+    fuzzysort
+      .goAsync(query, notes, {
+        keys: ['metadata.title', 'metadata.tags'],
+      })
+      .then((results) => {
+        const mappedResults = results.map((result) => result.obj);
 
-    // TODO more sophisticated searching (fuzzy, multiword, etc)
-    return (
-      note?.metadata?.title?.toLowerCase().includes(query.toLowerCase()) ||
-      note?.metadata?.tags?.toLocaleLowerCase().includes(query.toLowerCase())
-    );
-  });
+        if (query === '') {
+          setFilteredNotes(notes);
+        } else {
+          setFilteredNotes(mappedResults);
+        }
+      });
+  }, [notes, query]);
 
   const isSelected = React.useCallback(
     (id: string) => currentNote?.id === id,
