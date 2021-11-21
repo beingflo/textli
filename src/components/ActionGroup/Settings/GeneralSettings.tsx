@@ -7,6 +7,7 @@ import {
   user_delete,
   user_password_change,
 } from '../../../api/user_api';
+import { ArrowLeftIcon } from '../../../icons';
 import { AuthStatus } from '../../../types';
 import { authState, getUserInfoState } from '../../state';
 
@@ -25,11 +26,11 @@ export const GeneralSettings = (): React.ReactElement => {
   return (
     <>
       {sessionConfirm ? (
-        <SessionConfirm />
+        <SessionConfirm setSessionConfirm={setSessionConfirm} />
       ) : passwordConfirm ? (
-        <PasswordConfirm />
+        <PasswordConfirm setPasswordConfirm={setPasswordConfirm} />
       ) : deleteConfirm ? (
-        <DeleteConfirm />
+        <DeleteConfirm setDeleteConfirm={setDeleteConfirm} />
       ) : (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 pb-8">
@@ -97,7 +98,7 @@ export const GeneralSettings = (): React.ReactElement => {
   );
 };
 
-const SessionConfirm = (): React.ReactElement => {
+const SessionConfirm = ({ setSessionConfirm }: any): React.ReactElement => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [, setAuthStatus] = useAtom(authState);
@@ -114,6 +115,15 @@ const SessionConfirm = (): React.ReactElement => {
 
   return (
     <>
+      <button
+        onClick={() => setSessionConfirm(false)}
+        className="mb-4 text-gray-600"
+      >
+        <div className="flex flex-row gap-1">
+          <ArrowLeftIcon className="w-6 h-6" />
+          Back to general settings
+        </div>
+      </button>
       <div className="font-bold pb-2">Confirm deletion of sessions</div>
       <div className="pb-4">
         This will log you out of any device and sesion you may have.
@@ -150,7 +160,7 @@ const SessionConfirm = (): React.ReactElement => {
   );
 };
 
-const PasswordConfirm = (): React.ReactElement => {
+const PasswordConfirm = ({ setPasswordConfirm }: any): React.ReactElement => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
@@ -177,6 +187,15 @@ const PasswordConfirm = (): React.ReactElement => {
 
   return (
     <div>
+      <button
+        onClick={() => setPasswordConfirm(false)}
+        className="mb-4 text-gray-600"
+      >
+        <div className="flex flex-row gap-1">
+          <ArrowLeftIcon className="w-6 h-6" />
+          Back to general settings
+        </div>
+      </button>
       <div className="font-bold pb-2">Change password</div>
       <form className="grid grid-cols-1 gap-2" onSubmit={changePassword}>
         <label className="block lg:w-1/2">
@@ -234,7 +253,7 @@ const PasswordConfirm = (): React.ReactElement => {
   );
 };
 
-const DeleteConfirm = (): React.ReactElement => {
+const DeleteConfirm = ({ setDeleteConfirm }: any): React.ReactElement => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [, setAuthStatus] = useAtom(authState);
@@ -255,6 +274,15 @@ const DeleteConfirm = (): React.ReactElement => {
 
   return (
     <>
+      <button
+        onClick={() => setDeleteConfirm(false)}
+        className="mb-4 text-gray-600"
+      >
+        <div className="flex flex-row gap-1">
+          <ArrowLeftIcon className="w-6 h-6" />
+          Back to general settings
+        </div>
+      </button>
       <div className="font-bold pb-1">Delete account</div>
       <div className="font-bold text-red-500 pb-2">
         This action is irreversible!
