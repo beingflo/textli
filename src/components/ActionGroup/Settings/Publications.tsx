@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
 import { getNoteListState, sharesState } from '../../state';
-import { AddIcon, EditIcon } from '../../../icons';
+import { AddIcon, EditIcon, FrownIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Publications = (): React.ReactElement => {
@@ -39,35 +39,42 @@ export const Publications = (): React.ReactElement => {
   return (
     <>
       <ul className="space-y-4">
-        {getPublicationsInfo?.map((share: any) => (
-          <li key={share?.token} className="flex flex-col">
-            <span className="truncate font-semibold">{share?.title}</span>
-            <div className="flex justify-between">
-              <div className="flex flex-col md:flex-row md:space-x-4">
-                <div className="flex flex-row space-x-0.5">
-                  <AddIcon className="h-4 w-4 self-center" />
-                  <span className="text-gray-500">
-                    {new Date(share?.created_at).toLocaleDateString()}
-                  </span>
+        {getPublicationsInfo?.length === 0 ? (
+          <div className="flex flex-col items-center text-gray-600">
+            <FrownIcon className="w-10 h-10" />
+            <div>Nothing here</div>
+          </div>
+        ) : (
+          getPublicationsInfo?.map((share: any) => (
+            <li key={share?.token} className="flex flex-col">
+              <span className="truncate font-semibold">{share?.title}</span>
+              <div className="flex justify-between">
+                <div className="flex flex-col md:flex-row md:space-x-4">
+                  <div className="flex flex-row space-x-0.5">
+                    <AddIcon className="h-4 w-4 self-center" />
+                    <span className="text-gray-500">
+                      {new Date(share?.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex flex-row space-x-1">
+                    <EditIcon className="h-4 w-4 self-center" />
+                    <span className="text-gray-500">
+                      {share?.modified_at
+                        ? new Date(share?.modified_at).toLocaleDateString()
+                        : 'Never'}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex flex-row space-x-1">
-                  <EditIcon className="h-4 w-4 self-center" />
-                  <span className="text-gray-500">
-                    {share?.modified_at
-                      ? new Date(share?.modified_at).toLocaleDateString()
-                      : 'Never'}
-                  </span>
-                </div>
+                <button
+                  onClick={() => unpublish(share?.token)}
+                  className="text-yellow-400"
+                >
+                  Unpublish
+                </button>
               </div>
-              <button
-                onClick={() => unpublish(share?.token)}
-                className="text-yellow-400"
-              >
-                Unpublish
-              </button>
-            </div>
-          </li>
-        ))}
+            </li>
+          ))
+        )}
       </ul>
     </>
   );

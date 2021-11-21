@@ -13,6 +13,7 @@ import {
   ArrowRightIcon,
   BinIcon,
   ClearIcon,
+  FrownIcon,
   SearchIcon,
 } from '../icons';
 import { useFocus } from './util';
@@ -170,42 +171,49 @@ export const Sidebar = (): React.ReactElement => {
                 </div>
               </div>
               <ul className="space-y-1 pl-9 pt-4">
-                {filteredNotes.map((note: NoteListItem) => (
-                  <React.Fragment key={note?.id}>
-                    {note?.metadata?.title ? (
-                      <li
-                        onClick={() => handleSelection(note?.id)}
-                        key={note?.id}
-                        id={note?.id}
-                        className="cursor-pointer truncate"
-                      >
-                        <span
-                          className={`${
-                            isSelected(note?.id) ? 'highlight' : ''
-                          }`}
+                {filteredNotes?.length === 0 ? (
+                  <div className="flex flex-col items-center text-gray-600 pt-4">
+                    <FrownIcon className="w-10 h-10" />
+                    <div>Nothing here</div>
+                  </div>
+                ) : (
+                  filteredNotes.map((note: NoteListItem) => (
+                    <React.Fragment key={note?.id}>
+                      {note?.metadata?.title ? (
+                        <li
+                          onClick={() => handleSelection(note?.id)}
+                          key={note?.id}
+                          id={note?.id}
+                          className="cursor-pointer truncate"
                         >
-                          {note?.metadata?.title}
-                        </span>
-                      </li>
-                    ) : (
-                      <li
-                        key={note?.id}
-                        id={note?.id}
-                        className="cursor-default truncate flex flex-row bg-red-500 p-1 rounded-md"
-                        aria-disabled
-                      >
-                        <ExclamationCircleIcon className="h-4 w-4 self-center" />
-                        <span className="pl-1">Decryption failure</span>
-                        <button
-                          onClick={() => handleDelete(note?.id)}
-                          className="ml-auto"
+                          <span
+                            className={`${
+                              isSelected(note?.id) ? 'highlight' : ''
+                            }`}
+                          >
+                            {note?.metadata?.title}
+                          </span>
+                        </li>
+                      ) : (
+                        <li
+                          key={note?.id}
+                          id={note?.id}
+                          className="cursor-default truncate flex flex-row bg-red-500 p-1 rounded-md"
+                          aria-disabled
                         >
-                          <BinIcon className="h-4 w-4 self-center" />
-                        </button>
-                      </li>
-                    )}
-                  </React.Fragment>
-                ))}
+                          <ExclamationCircleIcon className="h-4 w-4 self-center" />
+                          <span className="pl-1">Decryption failure</span>
+                          <button
+                            onClick={() => handleDelete(note?.id)}
+                            className="ml-auto"
+                          >
+                            <BinIcon className="h-4 w-4 self-center" />
+                          </button>
+                        </li>
+                      )}
+                    </React.Fragment>
+                  ))
+                )}
               </ul>
             </div>
           </Popover.Panel>
