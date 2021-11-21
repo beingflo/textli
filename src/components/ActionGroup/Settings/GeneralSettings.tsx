@@ -124,9 +124,9 @@ const SessionConfirm = ({ setSessionConfirm }: any): React.ReactElement => {
           Back to general settings
         </div>
       </button>
-      <div className="font-bold pb-2">Confirm deletion of sessions</div>
+      <div className="font-bold pb-2">Delete all sessions</div>
       <div className="pb-4">
-        This will log you out of any device and sesion you may have.
+        This will log you out of any device and sessions you may have.
       </div>
       <form className="grid grid-cols-1 gap-2" onSubmit={invalidateAllSessions}>
         <label className="block lg:w-1/2">
