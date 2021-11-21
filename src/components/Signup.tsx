@@ -26,10 +26,12 @@ const Signup = (): React.ReactElement => {
           .finally(() => setWaiting(false));
       };
       setWaiting(true);
-      user_signup(
-        { name: username, password: password, email: email },
-        success
-      );
+      user_signup({ name: username, password: password, email: email })
+        .then(success)
+        .catch((error) => {
+          handleException(error);
+          setWaiting(false);
+        });
 
       event.preventDefault();
     },

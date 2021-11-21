@@ -38,22 +38,15 @@ export const user_logout = (
     .catch(onFailure);
 };
 
-export const user_signup = (
-  credentials: SignupCredentials,
-  onSuccess: (res: Response) => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(USER_URL, {
+export const user_signup = (credentials: SignupCredentials): Promise<void> => {
+  return fetch(USER_URL, {
     credentials: 'include',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(credentials),
-  })
-    .then(mapError)
-    .then(onSuccess)
-    .catch(onFailure);
+  }).then(mapError);
 };
 
 export const user_delete = (credentials: UserCredentials): Promise<void> => {
