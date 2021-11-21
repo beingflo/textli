@@ -6,6 +6,7 @@ import {
   DataIcon,
   EyeIcon,
   LinkIcon,
+  SmileIcon,
   UsersIcon,
 } from '../../../icons';
 import Bin from './Bin';
@@ -129,7 +130,10 @@ export const Settings = ({
                     <Tab.Panel>
                       <Bin />
                     </Tab.Panel>
-                    <Tab.Panel>Coming soon :)</Tab.Panel>
+                    <Tab.Panel className="flex flex-row gap-1">
+                      <div>Coming soon</div>
+                      <SmileIcon className="w-6 h-6" />
+                    </Tab.Panel>
                   </Tab.Panels>
                 </div>
               </Tab.Group>
