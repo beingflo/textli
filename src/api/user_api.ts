@@ -11,22 +11,15 @@ const USER_URL = `${config.api_url}/user`;
 const SESSION_URL = `${config.api_url}/session`;
 const INVALIDATE_SESSIONS_URL = `${config.api_url}/allsessions`;
 
-export const user_login = (
-  credentials: UserCredentials,
-  onSuccess: (res: Response) => void = () => {},
-  onFailure: any = handleException
-): void => {
-  fetch(SESSION_URL, {
+export const user_login = (credentials: UserCredentials): Promise<void> => {
+  return fetch(SESSION_URL, {
     credentials: 'include',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(credentials),
-  })
-    .then(mapError)
-    .then(onSuccess)
-    .catch(onFailure);
+  }).then(mapError);
 };
 
 export const user_logout = (
