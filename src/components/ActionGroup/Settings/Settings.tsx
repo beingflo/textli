@@ -4,13 +4,11 @@ import {
   BinIcon,
   CloseIcon,
   DataIcon,
-  EyeIcon,
   LinkIcon,
   SmileIcon,
   UsersIcon,
 } from '../../../icons';
 import Bin from './Bin';
-import Publications from './Publications';
 import Shares from './Shares';
 import GeneralSettings from './GeneralSettings';
 
@@ -89,16 +87,6 @@ export const Settings = ({
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex">
-                          <EyeIcon className="h-5 w-5 mr-2 self-center" />
-                          <span className={selected ? 'highlight' : ''}>
-                            Publications
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className="flex">
                           <BinIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Bin
@@ -123,9 +111,6 @@ export const Settings = ({
                     </Tab.Panel>
                     <Tab.Panel>
                       <Shares />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <Publications />
                     </Tab.Panel>
                     <Tab.Panel>
                       <Bin />

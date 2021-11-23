@@ -2,7 +2,13 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
 import { getNoteListState, sharesState } from '../../state';
-import { AddIcon, ClockIcon, FrownIcon } from '../../../icons';
+import {
+  AddIcon,
+  BinIcon,
+  ClockIcon,
+  EyeIcon,
+  FrownIcon,
+} from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Shares = (): React.ReactElement => {
@@ -55,12 +61,18 @@ export const Shares = (): React.ReactElement => {
                         : 'Never'}
                     </span>
                   </div>
+                  {share.public && (
+                    <div className="flex flex-row space-x-1 text-red-400">
+                      <EyeIcon className="h-4 w-4 self-center" />
+                      <span>Public</span>
+                    </div>
+                  )}
                 </div>
                 <button
+                  className="flex flex-row md:items-center"
                   onClick={() => revoke_share(share?.token)}
-                  className="text-yellow-400"
                 >
-                  Delete
+                  <BinIcon className="w-4 h-4" />
                 </button>
               </div>
             </li>

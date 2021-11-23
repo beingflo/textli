@@ -59,7 +59,7 @@ export const GeneralSettings = (): React.ReactElement => {
                 </div>
               )}
             </div>
-            <button className="ml-auto w-max mt-4 lg:mt-0 h-10 p-1.5 rounded-md bg-green-600 text-white font-semibold hover:bg-green-500 active:bg-green-600 transition">
+            <button className="ml-auto w-max mt-4 lg:mt-0 h-10 p-1.5 rounded-md bg-gray-800 text-white font-medium hover:bg-gray-700 active:bg-gray-800 transition">
               Add funds
             </button>
           </div>
