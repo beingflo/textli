@@ -15,7 +15,6 @@ import '../../style.css';
 import Settings from './Settings/Settings';
 import { Sharing } from './Sharing';
 import { AuthStatus, Share } from '../../types';
-import Publishing from './Publishing';
 import { useAtom } from 'jotai';
 import { authState, getCurrentNoteState, getSharesState } from '../state';
 
@@ -25,7 +24,6 @@ export const ActionGroup = (): React.ReactElement => {
   const [, setAuthStatus] = useAtom(authState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
-  const [showPublishing, setShowPublishing] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
 
@@ -56,7 +54,7 @@ export const ActionGroup = (): React.ReactElement => {
         <Popover.Button>
           <MoreIcon
             className={`${
-              isShared || isPublic ? 'text-yellow-400' : 'text-gray-700'
+              isShared ? 'text-yellow-400' : 'text-gray-700'
             } hover:-translate-x-0.5 transform transition active:scale-90`}
           />
         </Popover.Button>
@@ -73,24 +71,14 @@ export const ActionGroup = (): React.ReactElement => {
               <button
                 onClick={() => setShowSharing(true)}
                 disabled={!currentNote}
-                className="pt-1 disabled:opacity-60"
+                className="pt-1 disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
               >
                 <LinkIcon
-                  className={`${
-                    isShared ? 'text-yellow-400' : 'text-gray-700'
-                  } hover:-translate-x-0.5 transform transition active:scale-90`}
+                  className={isShared ? 'text-yellow-400' : 'text-gray-700'}
                 />
-              </button>
-              <button
-                onClick={() => setShowPublishing(true)}
-                disabled={!currentNote}
-                className="disabled:opacity-60"
-              >
-                <EyeIcon
-                  className={`${
-                    isPublic ? 'text-yellow-400' : 'text-gray-700'
-                  } hover:-translate-x-0.5 transform transition active:scale-90`}
-                />
+                {isPublic && (
+                  <EyeIcon className="w-4 h-4 text-red-500 absolute top-4 left-4" />
+                )}
               </button>
               <button onClick={() => setShowSettings(true)}>
                 <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
@@ -110,12 +98,6 @@ export const ActionGroup = (): React.ReactElement => {
       )}
       {showSharing && (
         <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
-      )}
-      {showPublishing && (
-        <Publishing
-          showPublishing={showPublishing}
-          setShowPublishing={setShowPublishing}
-        />
       )}
     </div>
   );

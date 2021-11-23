@@ -37,9 +37,16 @@ export const Sharing = ({
   const [share, setShare] = React.useState<Share>();
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
   const [expiration, setExpiration] = React.useState(expirationOptions[3]);
+  const [published, setPublished] = React.useState(false);
   const [userInfo] = useAtom(getUserInfoState);
 
   const [shareLink, setShareLink] = React.useState('');
+
+  React.useEffect(() => {
+    if (published) {
+      setExpiration(expirationOptions[0]);
+    }
+  }, [published, setExpiration]);
 
   React.useEffect(() => {
     const share = shares.find(
@@ -70,14 +77,25 @@ export const Sharing = ({
 
   const handleCreateShare = React.useCallback(() => {
     const func = async () => {
-      if (showSharing && currentNote?.id) {
+      if (showSharing && currentNote?.id && userInfo) {
+        let key = undefined;
+        if (published) {
+          const rawKey = await unwrap_note_key(
+            string2arrayBuffer(currentNote?.key?.wrapped_key),
+            userInfo?.username
+          );
+          key = await exportKey(rawKey);
+        }
+
         await create_share({
           note: currentNote?.id,
           expires_in: expiration?.expires_in,
+          public: key,
         });
         list_shares(setShares);
       }
     };
+
     func();
   }, [currentNote, showSharing, expiration]);
 
@@ -139,13 +157,22 @@ export const Sharing = ({
                 {share ? (
                   <>
                     <div className="flex flex-row justify-between">
-                      <span>Share expires at</span>
-                      <span>
+                      {share.expires_at ? (
+                        <span>Share expires at</span>
+                      ) : (
+                        <span>Share expires</span>
+                      )}
+                      <span className="font-medium">
                         {share?.expires_at
                           ? new Date(share?.expires_at).toLocaleString()
                           : 'Never'}
                       </span>
                     </div>
+                    {share?.public && (
+                      <div className="flex flex-row mt-2 text-red-500 font-medium">
+                        Share is published on your profile!
+                      </div>
+                    )}
                     <div className="mt-4 flex flex-row justify-between bg-gray-100 p-4 rounded-md">
                       <input
                         value={shareLink}
@@ -182,7 +209,7 @@ export const Sharing = ({
                     <div className="flex flex-row justify-end">
                       <button
                         onClick={handleDeleteShare}
-                        className="mt-8 p-2 bg-red-600 text-white rounded-md shadow-md transition hover:scale-105 active:scale-100"
+                        className="mt-8 p-2 bg-gray-600 text-white rounded-md shadow-md transition hover:bg-gray-500 active:bg-gray-600"
                       >
                         Delete share
                       </button>
@@ -194,9 +221,13 @@ export const Sharing = ({
                       <span className="inline-flex self-center">
                         Expire share in
                       </span>
-                      <Listbox value={expiration} onChange={setExpiration}>
-                        <div className="relative mt-1">
-                          <Listbox.Button className="relative w-48 py-2 pl-3 pr-10 text-left bg-gray-50 shadow-md rounded-md cursor-default focus:outline-none sm:text-sm">
+                      <Listbox
+                        value={expiration}
+                        onChange={setExpiration}
+                        disabled={published}
+                      >
+                        <div className="relative mt-1 w-1/2">
+                          <Listbox.Button className="relative disabled:opacity-50 disabled:cursor-not-allowed w-full py-2 pl-3 pr-10 text-left bg-gray-50 shadow-md rounded-md cursor-default focus:outline-none sm:text-sm">
                             <span className="block truncate">
                               {expiration.value}
                             </span>
@@ -258,10 +289,25 @@ export const Sharing = ({
                         </div>
                       </Listbox>
                     </div>
+                    <div className="flex flex-row justify-between mt-4">
+                      <span className="inline-flex self-center">
+                        Publish note
+                      </span>
+                      <div className="w-1/2">
+                        <input
+                          type="checkbox"
+                          checked={published}
+                          onChange={(event) =>
+                            setPublished(event.target.checked)
+                          }
+                          className="rounded-sm outline-none focus:ring-0 text-red-500 self-center"
+                        />
+                      </div>
+                    </div>
                     <div className="flex flex-row justify-end">
                       <button
                         onClick={handleCreateShare}
-                        className="mt-8 p-2 bg-green-600 text-white rounded-md shadow-md transition hover:scale-105 active:scale-100"
+                        className="mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition hover:bg-gray-700 active:bg-gray-800"
                       >
                         Create share
                       </button>
