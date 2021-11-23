@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetDeletedNoteList, useGetNoteList } from '../../../api/hooks';
 import { undelete_note } from '../../../api/note_api';
-import { FrownIcon } from '../../../icons';
+import { BinIcon, FrownIcon, RefreshIcon } from '../../../icons';
 import { NoteListItem } from '../../../types';
 
 export const Bin = (): React.ReactElement => {
@@ -38,14 +38,14 @@ export const Bin = (): React.ReactElement => {
                 {note?.metadata.title}
               </span>
               <div className="flex justify-between">
-                <span className="text-gray-500">
-                  {new Date(note?.deleted_at).toLocaleDateString()}
-                </span>
-                <button
-                  onClick={() => recover_note(note?.id)}
-                  className="text-yellow-400"
-                >
-                  Recover
+                <div className="flex flex-row space-x-1">
+                  <BinIcon className="h-4 w-4 self-center" />
+                  <span className="text-gray-500">
+                    {new Date(note?.deleted_at).toLocaleDateString()}
+                  </span>
+                </div>
+                <button onClick={() => recover_note(note?.id)}>
+                  <RefreshIcon className="w-4 h-4" />
                 </button>
               </div>
             </li>
