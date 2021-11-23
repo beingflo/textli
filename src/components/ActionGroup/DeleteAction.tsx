@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { handleException } from '../../api';
-import { useGetNote } from '../../api/hooks';
+import { useGetDeletedNoteList, useGetNote } from '../../api/hooks';
 import { delete_note, undelete_note } from '../../api/note_api';
 import {
   currentNoteState,
@@ -15,6 +15,7 @@ import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 
 export const DeleteAction = (): React.ReactElement => {
+  const getDeletedNoteList = useGetDeletedNoteList();
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
@@ -47,6 +48,7 @@ export const DeleteAction = (): React.ReactElement => {
         setTimeout(() => setShowUndelete(false), 5000);
 
         deleteFromNoteList(currentNote?.id);
+        getDeletedNoteList();
       })
       .catch((error) => {
         handleException(error);

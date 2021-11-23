@@ -1,5 +1,6 @@
 import {
   AuthStatus,
+  DeletedNoteListItem,
   KeyStatus,
   Note,
   NoteListItem,
@@ -73,3 +74,6 @@ export const deleteFromNoteListState = atom(null, (get, set, id: string) => {
 
   set(noteListState, newList);
 });
+
+export const deletedNoteListState = atom<Array<DeletedNoteListItem>>([]);
+export const getDeletedNoteListState = atom((get) => get(deletedNoteListState));

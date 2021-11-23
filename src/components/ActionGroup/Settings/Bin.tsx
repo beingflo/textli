@@ -1,24 +1,20 @@
+import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetDeletedNoteList, useGetNoteList } from '../../../api/hooks';
 import { undelete_note } from '../../../api/note_api';
 import { BinIcon, FrownIcon, RefreshIcon } from '../../../icons';
-import { NoteListItem } from '../../../types';
+import { DeletedNoteListItem } from '../../../types';
+import { getDeletedNoteListState } from '../../state';
 
 export const Bin = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const getDeletedNoteList = useGetDeletedNoteList();
 
-  const [deletedNotes, setDeletedNotes] = React.useState<Array<NoteListItem>>(
-    []
-  );
-
-  React.useEffect(() => {
-    getDeletedNoteList(setDeletedNotes);
-  }, [setDeletedNotes]);
+  const [deletedNotes] = useAtom(getDeletedNoteListState);
 
   const recover_note = (id: string) => {
     undelete_note(id).then(() => {
-      getDeletedNoteList(setDeletedNotes);
+      getDeletedNoteList();
       getNoteList();
     });
   };
@@ -32,10 +28,10 @@ export const Bin = (): React.ReactElement => {
             <div>Nothing here</div>
           </div>
         ) : (
-          deletedNotes?.map((note: any) => (
+          deletedNotes?.map((note: DeletedNoteListItem) => (
             <li key={note?.id} className="flex flex-col">
               <span className="truncate font-semibold">
-                {note?.metadata.title}
+                {note?.metadata?.title}
               </span>
               <div className="flex justify-between">
                 <div className="flex flex-row space-x-1">

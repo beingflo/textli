@@ -16,12 +16,13 @@ import Start from './Start';
 import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
-import { useGetNoteList } from '../api/hooks';
+import { useGetDeletedNoteList, useGetNoteList } from '../api/hooks';
 import { useAtom } from 'jotai';
 import { retrieveMainKey } from './crypto';
 
 const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
+  const getDeletedNoteList = useGetDeletedNoteList();
   const [, setShares] = useAtom(sharesState);
   const [authStatus, setAuthStatus] = useAtom(authState);
   const [keyStatus, setKeyStatus] = useAtom(keyState);
@@ -62,6 +63,7 @@ const Bootstrapper = (): React.ReactElement => {
 
   const refetchAllData = () => {
     getNoteList();
+    getDeletedNoteList();
     list_shares(setShares, true);
   };
 

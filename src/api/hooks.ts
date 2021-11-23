@@ -11,6 +11,7 @@ import {
   addToNoteListState,
   authState,
   currentNoteState,
+  deletedNoteListState,
   getEditorState,
   getUserInfoState,
   noteListState,
@@ -223,14 +224,11 @@ export const useGetNoteList = (): (() => Promise<void>) => {
   };
 };
 
-export const useGetDeletedNoteList = (): ((
-  setDeletedNotes: (notes: Array<DeletedNoteListItem>) => void
-) => Promise<void>) => {
+export const useGetDeletedNoteList = (): (() => Promise<void>) => {
   const [userInfo] = useAtom(getUserInfoState);
+  const [, setDeletedNoteList] = useAtom(deletedNoteListState);
 
-  return async (
-    setDeletedNotes: (notes: Array<DeletedNoteListItem>) => void
-  ) => {
+  return async () => {
     const encrypted_notes = await get_deleted_notes().catch(handleException);
 
     if (!encrypted_notes || !userInfo) {
@@ -269,6 +267,6 @@ export const useGetDeletedNoteList = (): ((
       .map((result: any) => result?.value);
 
     const sortedNotes = sortDeletedNotes(filteredNotes);
-    setDeletedNotes(sortedNotes);
+    setDeletedNoteList(sortedNotes);
   };
 };
