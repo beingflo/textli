@@ -11,7 +11,7 @@ const App = (): React.ReactElement => {
       </div>
       <div
         spellCheck="false"
-        className="max-w-xxs sm:max-w-md md:min-w-sm lg:max-w-6xl"
+        className="max-w-xxs sm:max-w-md md:min-w-sm lg:max-w-2xl"
       >
         <Editor />
       </div>

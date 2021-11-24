@@ -77,7 +77,7 @@ export const ActionGroup = (): React.ReactElement => {
                   className={isShared ? 'text-yellow-400' : 'text-gray-700'}
                 />
                 {isPublic && (
-                  <EyeIcon className="w-4 h-4 text-red-500 absolute top-4 left-4" />
+                  <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4" />
                 )}
               </button>
               <button onClick={() => setShowSettings(true)}>
