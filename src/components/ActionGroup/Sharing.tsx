@@ -69,7 +69,7 @@ export const Sharing = ({
       );
       const key = await exportKey(rawKey);
 
-      setShareLink(`${url}/${share?.token}#${key}`);
+      setShareLink(`${url}/note/${share?.token}#${key}`);
     };
 
     func();
