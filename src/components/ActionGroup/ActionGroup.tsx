@@ -6,6 +6,7 @@ import {
   LinkIcon,
   LogoutIcon,
   MoreIcon,
+  PieChartIcon,
   SettingsIcon,
 } from '../../icons';
 import { SaveAction } from './SaveAction';
@@ -60,13 +61,15 @@ export const ActionGroup = (): React.ReactElement => {
             className={isShared ? 'text-yellow-400' : 'text-gray-700'}
           />
           {isPublic && (
-            <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4" />
+            <EyeIcon className="w-4 h-4 text-red-400 absolute top-3.5 left-3.5" />
           )}
         </button>
       </div>
       <Popover className="relative">
         <Popover.Button>
-          <MoreIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+          <div>
+            <MoreIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+          </div>
         </Popover.Button>
         <Transition
           enter="transition-opacity ease-linear duration-75"
@@ -77,13 +80,25 @@ export const ActionGroup = (): React.ReactElement => {
           leaveTo="opacity-0"
         >
           <Popover.Panel className="absolute top-8 left-0">
-            <div className="space-y-2">
-              <button onClick={() => setShowSettings(true)}>
-                <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
-              </button>
-              <button onClick={handleLogout}>
-                <LogoutIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
-              </button>
+            <div className="space-y-1.5">
+              <div>
+                <button onClick={() => setShowSettings(true)}>
+                  <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => undefined}
+                  className="hover:-translate-x-0.5 transform transition active:scale-90"
+                >
+                  <PieChartIcon className="text-gray-700" />
+                </button>
+              </div>
+              <div>
+                <button onClick={handleLogout}>
+                  <LogoutIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                </button>
+              </div>
             </div>
           </Popover.Panel>
         </Transition>
