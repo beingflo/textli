@@ -124,7 +124,7 @@ export const Sharing = ({
         onClose={() => setShowSharing(false)}
         className="fixed z-10 inset-0 overflow-y-auto"
       >
-        <div className="flex justify-center min-h-screen">
+        <div className="flex justify-center">
           <Transition.Child
             enter="transition-opacity ease-linear duration-300"
             enterFrom="opacity-0"

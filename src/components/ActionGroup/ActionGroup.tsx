@@ -18,6 +18,7 @@ import { Sharing } from './Sharing';
 import { AuthStatus, Share } from '../../types';
 import { useAtom } from 'jotai';
 import { authState, getCurrentNoteState, getSharesState } from '../state';
+import Trends from './Trends';
 
 export const ActionGroup = (): React.ReactElement => {
   const [shares] = useAtom(getSharesState);
@@ -25,6 +26,7 @@ export const ActionGroup = (): React.ReactElement => {
   const [, setAuthStatus] = useAtom(authState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
+  const [showTrends, setShowTrends] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
 
@@ -88,7 +90,7 @@ export const ActionGroup = (): React.ReactElement => {
               </div>
               <div>
                 <button
-                  onClick={() => undefined}
+                  onClick={() => setShowTrends(true)}
                   className="hover:-translate-x-0.5 transform transition active:scale-90"
                 >
                   <PieChartIcon className="text-gray-700" />
@@ -111,6 +113,9 @@ export const ActionGroup = (): React.ReactElement => {
       )}
       {showSharing && (
         <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
+      )}
+      {showTrends && (
+        <Trends showTrends={showTrends} setShowTrends={setShowTrends} />
       )}
     </div>
   );
