@@ -46,17 +46,27 @@ export const ActionGroup = (): React.ReactElement => {
   }, [currentNote, shares]);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <SaveAction />
       <NewAction />
       <DeleteAction />
+      <div>
+        <button
+          onClick={() => setShowSharing(true)}
+          disabled={!currentNote}
+          className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
+        >
+          <LinkIcon
+            className={isShared ? 'text-yellow-400' : 'text-gray-700'}
+          />
+          {isPublic && (
+            <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4" />
+          )}
+        </button>
+      </div>
       <Popover className="relative">
         <Popover.Button>
-          <MoreIcon
-            className={`${
-              isShared ? 'text-yellow-400' : 'text-gray-700'
-            } hover:-translate-x-0.5 transform transition active:scale-90`}
-          />
+          <MoreIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
         </Popover.Button>
         <Transition
           enter="transition-opacity ease-linear duration-75"
@@ -68,18 +78,6 @@ export const ActionGroup = (): React.ReactElement => {
         >
           <Popover.Panel className="absolute top-8 left-0">
             <div className="space-y-2">
-              <button
-                onClick={() => setShowSharing(true)}
-                disabled={!currentNote}
-                className="pt-1 disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
-              >
-                <LinkIcon
-                  className={isShared ? 'text-yellow-400' : 'text-gray-700'}
-                />
-                {isPublic && (
-                  <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4" />
-                )}
-              </button>
               <button onClick={() => setShowSettings(true)}>
                 <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
               </button>

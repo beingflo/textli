@@ -31,8 +31,10 @@ export const NewAction = (): React.ReactElement => {
   );
 
   return (
-    <button onClick={handleNew}>
-      <NewIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
-    </button>
+    <div>
+      <button onClick={handleNew}>
+        <NewIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+      </button>
+    </div>
   );
 };
