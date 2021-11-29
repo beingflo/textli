@@ -1,5 +1,7 @@
 import { del, get, set } from 'idb-keyval';
 
+const KEY_DERIVATION_ITERATIONS = 1000000;
+
 export type KeyMaterial = {
   wrapped_key: string;
   iv_content: string;
@@ -52,7 +54,7 @@ export const generate_main_key = async (
     {
       name: 'PBKDF2',
       salt: salt,
-      iterations: 100000,
+      iterations: KEY_DERIVATION_ITERATIONS,
       hash: 'SHA-256',
     },
     keyMaterial,
