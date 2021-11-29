@@ -103,12 +103,15 @@ export const user_salt = (
     .catch(onFailure);
 };
 
-export const invalidate_sessions = (): Promise<void> => {
+export const invalidate_sessions = (
+  credentials: UserCredentials
+): Promise<void> => {
   return fetch(INVALIDATE_SESSIONS_URL, {
     credentials: 'include',
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(credentials),
   }).then(mapError);
 };

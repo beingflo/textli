@@ -103,15 +103,18 @@ const SessionConfirm = ({ setSessionConfirm }: any): React.ReactElement => {
   const [password, setPassword] = React.useState('');
   const [, setAuthStatus] = useAtom(authState);
 
-  const invalidateAllSessions = React.useCallback((event) => {
-    invalidate_sessions()
-      .then(() => {
-        setAuthStatus(AuthStatus.SIGNED_OUT);
-      })
-      .catch(handleException);
+  const invalidateAllSessions = React.useCallback(
+    (event) => {
+      invalidate_sessions({ name: username, password: password })
+        .then(() => {
+          setAuthStatus(AuthStatus.SIGNED_OUT);
+        })
+        .catch(handleException);
 
-    event.preventDefault();
-  }, []);
+      event.preventDefault();
+    },
+    [username, password]
+  );
 
   return (
     <>
