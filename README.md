@@ -1,1 +1,1 @@
-# Textli - Minimalist encrypted note application
+# Fieldnotes.land - Minimalist encrypted note taking application
