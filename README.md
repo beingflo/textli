@@ -1,1 +1,1 @@
-# Fieldnotes.land - Minimalist encrypted note taking application
+# fieldnotes.land - Minimalist encrypted note taking application
