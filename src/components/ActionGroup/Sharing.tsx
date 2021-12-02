@@ -97,7 +97,7 @@ export const Sharing = ({
     };
 
     func();
-  }, [currentNote, showSharing, expiration]);
+  }, [currentNote, showSharing, expiration, published]);
 
   const handleDeleteShare = React.useCallback(() => {
     const func = async () => {
