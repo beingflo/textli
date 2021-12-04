@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CloseIcon, SmileIcon } from '../../icons';
+import { CloseIcon, HappyIcon } from '../../icons';
 
 export type Props = {
   showTrends: boolean;
@@ -46,9 +46,11 @@ export const Trends = ({
                 <CloseIcon className="h-6 w-6" />
               </button>
             </div>
-            <div className="flex flex-row gap-1 pt-8">
-              <div>Coming soon</div>
-              <SmileIcon className="w-6 h-6" />
+            <div className="flex flex-col items-center pt-8">
+              <div className="flex flex-col items-center">
+                <HappyIcon className="w-12 h-12" />
+                <div>Coming soon</div>
+              </div>
             </div>
           </div>
         </div>

@@ -4,8 +4,8 @@ import {
   BinIcon,
   CloseIcon,
   DataIcon,
+  HappyIcon,
   LinkIcon,
-  SmileIcon,
   UsersIcon,
 } from '../../../icons';
 import Bin from './Bin';
@@ -116,8 +116,12 @@ export const Settings = ({
                       <Bin />
                     </Tab.Panel>
                     <Tab.Panel className="flex flex-row gap-1">
-                      <div>Coming soon</div>
-                      <SmileIcon className="w-6 h-6" />
+                      <div className="w-full flex flex-col items-center">
+                        <div className="flex flex-col items-center">
+                          <HappyIcon className="w-12 h-12" />
+                          <div>Coming soon</div>
+                        </div>
+                      </div>
                     </Tab.Panel>
                   </Tab.Panels>
                 </div>
