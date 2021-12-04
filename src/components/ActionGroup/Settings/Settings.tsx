@@ -118,7 +118,7 @@ export const Settings = ({
                     <Tab.Panel className="flex flex-row gap-1">
                       <div className="w-full flex flex-col items-center">
                         <div className="flex flex-col items-center">
-                          <HappyIcon className="w-12 h-12" />
+                          <HappyIcon className="w-16 h-16" />
                           <div>Coming soon</div>
                         </div>
                       </div>
