@@ -2,13 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
 import { getNoteListState, sharesState } from '../../state';
-import {
-  AddIcon,
-  BinIcon,
-  ClockIcon,
-  EyeIcon,
-  FrownIcon,
-} from '../../../icons';
+import { AddIcon, BinIcon, ClockIcon, EyeIcon, SadIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 
 export const Shares = (): React.ReactElement => {
@@ -38,7 +32,7 @@ export const Shares = (): React.ReactElement => {
       <ul className="space-y-4">
         {getSharesInfo?.length === 0 ? (
           <div className="flex flex-col items-center text-gray-600">
-            <FrownIcon className="w-10 h-10" />
+            <SadIcon className="w-16 h-16" />
             <div>Nothing here</div>
           </div>
         ) : (

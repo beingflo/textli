@@ -13,7 +13,7 @@ import {
   ArrowRightIcon,
   BinIcon,
   ClearIcon,
-  FrownIcon,
+  SadIcon,
   SearchIcon,
 } from '../icons';
 import { useFocus } from './util';
@@ -179,7 +179,7 @@ export const Sidebar = (): React.ReactElement => {
               <ul className="space-y-1 pl-9 pt-4">
                 {filteredNotes?.length === 0 ? (
                   <div className="flex flex-col items-center text-gray-600 pt-4">
-                    <FrownIcon className="w-10 h-10" />
+                    <SadIcon className="w-16 h-16" />
                     <div>Nothing here</div>
                   </div>
                 ) : (

@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { useGetDeletedNoteList, useGetNoteList } from '../../../api/hooks';
 import { undelete_note } from '../../../api/note_api';
-import { BinIcon, FrownIcon, RefreshIcon } from '../../../icons';
+import { BinIcon, RefreshIcon, SadIcon } from '../../../icons';
 import { DeletedNoteListItem } from '../../../types';
 import { getDeletedNoteListState } from '../../state';
 
@@ -24,7 +24,7 @@ export const Bin = (): React.ReactElement => {
       <ul className="space-y-4">
         {deletedNotes?.length === 0 ? (
           <div className="flex flex-col items-center text-gray-600">
-            <FrownIcon className="w-10 h-10" />
+            <SadIcon className="w-16 h-16" />
             <div>Nothing here</div>
           </div>
         ) : (
