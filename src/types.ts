@@ -19,6 +19,7 @@ export type NoteDto = NoteListItemDto & {
 export type Metadata = {
   title: string;
   tags: string;
+  version: number;
 };
 
 export type NoteListItem = {

@@ -1,11 +1,17 @@
 import React from 'react';
 import { DeletedNoteListItem, NoteListItem } from '../types';
 
+const NOTE_VERSION = 1;
+
 export const getMetadata = (content: string | undefined): string => {
   const title = new DOMParser().parseFromString(content ?? '', 'text/html');
   const trimmedTitle = title.body.firstElementChild?.textContent ?? '';
 
-  return JSON.stringify({ title: trimmedTitle, tags: '' });
+  return JSON.stringify({
+    title: trimmedTitle,
+    tags: '',
+    version: NOTE_VERSION,
+  });
 };
 
 export const useFocus = (): any => {
