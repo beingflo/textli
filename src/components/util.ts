@@ -2,10 +2,12 @@ import React from 'react';
 import { DeletedNoteListItem, NoteListItem } from '../types';
 
 const NOTE_VERSION = 1;
+const DEFAULT_TITLE = 'Untitled note';
 
 export const getMetadata = (content: string | undefined): string => {
   const title = new DOMParser().parseFromString(content ?? '', 'text/html');
-  const trimmedTitle = title.body.firstElementChild?.textContent ?? '';
+  const trimmedTitle =
+    title.body.firstElementChild?.textContent || DEFAULT_TITLE;
 
   return JSON.stringify({
     title: trimmedTitle,
