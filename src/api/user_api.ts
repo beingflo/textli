@@ -1,4 +1,3 @@
-import config from '../config.json';
 import {
   SignupCredentials,
   UserCredentials,
@@ -7,9 +6,10 @@ import {
 } from '../types';
 import { mapError, handleException } from './index';
 
-const USER_URL = `${config.api_url}/user`;
-const SESSION_URL = `${config.api_url}/session`;
-const INVALIDATE_SESSIONS_URL = `${config.api_url}/allsessions`;
+const API_URL = import.meta.env.VITE_API_URL;
+const USER_URL = `${API_URL}/user`;
+const SESSION_URL = `${API_URL}/session`;
+const INVALIDATE_SESSIONS_URL = `${API_URL}/allsessions`;
 
 export const user_login = (credentials: UserCredentials): Promise<void> => {
   return fetch(SESSION_URL, {

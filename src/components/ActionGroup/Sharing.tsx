@@ -10,7 +10,6 @@ import {
   SelectorIcon,
 } from '../../icons';
 import { Share } from '../../types';
-import config from '../../config.json';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
 import { useAtom } from 'jotai';
 
@@ -41,6 +40,7 @@ export const Sharing = ({
   const [userInfo] = useAtom(getUserInfoState);
 
   const [shareLink, setShareLink] = React.useState('');
+  const share_url = import.meta.env.VITE_SHARE_URL;
 
   React.useEffect(() => {
     if (published) {
@@ -62,7 +62,7 @@ export const Sharing = ({
       if (!currentNote?.key?.wrapped_key || !userInfo) {
         return '';
       }
-      const url = config.share_url;
+      const url = share_url;
       const rawKey = await unwrap_note_key(
         string2arrayBuffer(currentNote?.key?.wrapped_key),
         userInfo?.username
@@ -73,7 +73,7 @@ export const Sharing = ({
     };
 
     func();
-  }, [currentNote, share, config]);
+  }, [currentNote, share, share_url]);
 
   const handleCreateShare = React.useCallback(() => {
     const func = async () => {

@@ -1,8 +1,7 @@
-import config from '../config.json';
 import { mapError, handleException } from './index';
 import { CreateShareRequest, Share } from '../types';
 
-const SHARE_URL = `${config.api_url}/shares`;
+const SHARE_URL = `${import.meta.env.VITE_API_URL}/shares`;
 
 export const list_shares = (
   setShares: (shares: Array<Share>) => void,
