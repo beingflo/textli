@@ -70,7 +70,7 @@ export const GeneralSettings = (): React.ReactElement => {
                 className="w-max p-1.5 border border-gray-500 rounded-md hover:bg-gray-100"
                 onClick={() => setSessionConfirm(true)}
               >
-                Invalidate all sessions
+                Invalidate sessions
               </button>
             </div>
             <div className="flex flex-col">
