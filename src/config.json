@@ -1,4 +1,4 @@
 {
-  "api_url": "http://localhost:3030",
-  "share_url": "http://localhost:3001"
+  "api_url": "https://api.fieldnotes.land",
+  "share_url": "https://read.fieldnotes.land"
 }
