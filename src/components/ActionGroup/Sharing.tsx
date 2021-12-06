@@ -217,6 +217,21 @@ export const Sharing = ({
                   </>
                 ) : (
                   <>
+                    <div className="flex flex-row justify-between mb-4">
+                      <span className="inline-flex self-center">
+                        Publish note
+                      </span>
+                      <div className="w-1/2">
+                        <input
+                          type="checkbox"
+                          checked={published}
+                          onChange={(event) =>
+                            setPublished(event.target.checked)
+                          }
+                          className="rounded-sm outline-none focus:ring-0 text-red-500 self-center"
+                        />
+                      </div>
+                    </div>
                     <div className="flex flex-row justify-between">
                       <span className="inline-flex self-center">
                         Expire share in
@@ -288,21 +303,6 @@ export const Sharing = ({
                           </Transition>
                         </div>
                       </Listbox>
-                    </div>
-                    <div className="flex flex-row justify-between mt-4">
-                      <span className="inline-flex self-center">
-                        Publish note
-                      </span>
-                      <div className="w-1/2">
-                        <input
-                          type="checkbox"
-                          checked={published}
-                          onChange={(event) =>
-                            setPublished(event.target.checked)
-                          }
-                          className="rounded-sm outline-none focus:ring-0 text-red-500 self-center"
-                        />
-                      </div>
                     </div>
                     <div className="flex flex-row justify-end">
                       <button
