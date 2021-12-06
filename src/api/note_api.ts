@@ -1,4 +1,3 @@
-import config from '../config.json';
 import {
   DeletedNoteListItemDto,
   NoteDto,
@@ -9,7 +8,7 @@ import {
 } from '../types';
 import { mapError } from './index';
 
-const NOTE_URL = `${config.api_url}/notes`;
+const NOTE_URL = `${import.meta.env.VITE_API_URL}/notes`;
 
 export const get_notes = (): Promise<Array<NoteListItemDto>> => {
   return fetch(NOTE_URL, {
