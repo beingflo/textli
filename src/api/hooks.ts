@@ -72,7 +72,7 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
     setCurrentNote(note);
     addToNoteList(note);
 
-    editor?.commands.focus();
+    editor?.commands.focus('end', { scrollIntoView: false });
   };
 };
 
