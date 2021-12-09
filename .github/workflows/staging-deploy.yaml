@@ -1,8 +1,8 @@
-name: Prod deploy
+name: Staging deploy
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
 
   workflow_dispatch:
 
@@ -28,12 +28,12 @@ jobs:
         with:
           cmd: build
 
-      - name: Deploy to prod server
+      - name: Deploy to staging server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.STAGING_SERVER_SSH_KEY }}
           SOURCE: 'dist/'
-          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
-          REMOTE_USER: ${{ secrets.SERVER_USER }}
-          TARGET: '/var/www/write.fieldnotes.land/'
+          REMOTE_HOST: ${{ secrets.STAGING_SERVER_HOST }}
+          REMOTE_USER: ${{ secrets.STAGING_SERVER_USER }}
+          TARGET: '/var/www/write.stage.fieldnotes.land/'
           EXCLUDE: '/dist/, /node_modules/'
