@@ -49,7 +49,7 @@ export const ActionGroup = (): React.ReactElement => {
   }, [currentNote, shares]);
 
   return (
-    <div className="space-y-1.5 sticky top-6">
+    <div className="space-y-1.5 fixed top-6 right-6">
       <SaveAction />
       <NewAction />
       <DeleteAction />
