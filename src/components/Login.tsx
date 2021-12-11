@@ -33,6 +33,7 @@ const Login = (): React.ReactElement => {
   return (
     <>
       <SpinnerPage show={waiting} />
+      <div>test</div>
       <div className="mt-12">
         <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
           <label className="block">
