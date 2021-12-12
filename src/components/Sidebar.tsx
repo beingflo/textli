@@ -163,12 +163,13 @@ export const Sidebar = (): React.ReactElement => {
           <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
         <Transition
-          enter="transition ease-in-out duration-0 transform"
+          enter="transition ease-in-out duration-300 transform"
           enterFrom="-translate-x-full"
           enterTo="translate-x-0"
           leave="transition ease-in-out duration-300 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
+          onTransitionEnd={setInputFocus}
           className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96"
         >
           <Popover.Panel>
