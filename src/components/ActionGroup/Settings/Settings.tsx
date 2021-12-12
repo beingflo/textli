@@ -112,13 +112,13 @@ export const Settings = ({
                     <Tab.Panel className="focus:outline-none">
                       <GeneralSettings />
                     </Tab.Panel>
-                    <Tab.Panel>
+                    <Tab.Panel className="focus:outline-none">
                       <Shares />
                     </Tab.Panel>
-                    <Tab.Panel>
+                    <Tab.Panel className="focus:outline-none">
                       <Bin />
                     </Tab.Panel>
-                    <Tab.Panel className="flex flex-row gap-1">
+                    <Tab.Panel className="flex flex-row gap-1 focus:outline-none">
                       <div className="w-full flex flex-col items-center">
                         <div className="flex flex-col items-center">
                           <HappyIcon className="w-16 h-16" />
