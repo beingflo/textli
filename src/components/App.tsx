@@ -7,7 +7,7 @@ const App = (): React.ReactElement => {
   return (
     <div className="h-screen flex flex-col sm:flex-row justify-between w-full relative">
       <div className="sm:hidden bg-white fixed z-10 w-full h-16" />
-      <div className="w-12">
+      <div className="">
         <Sidebar />
       </div>
       <div
