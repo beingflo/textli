@@ -203,7 +203,7 @@ export const Sidebar = (): React.ReactElement => {
                   )}
                 </div>
               </div>
-              <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-z-index pl-16 pr-4 mt-4">
+              <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-16 pr-4 mt-4">
                 {filteredNotes?.length === 0 ? (
                   <div className="flex flex-col items-center text-gray-600 pt-4">
                     <SadIcon className="w-16 h-16" />
