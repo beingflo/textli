@@ -729,6 +729,11 @@ export const PieChartIcon = ({
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
+      width="24"
+      height="24"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path
         strokeLinecap="round"

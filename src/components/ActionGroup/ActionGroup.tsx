@@ -89,11 +89,8 @@ export const ActionGroup = (): React.ReactElement => {
                 </button>
               </div>
               <div>
-                <button
-                  onClick={() => setShowTrends(true)}
-                  className="hover:-translate-x-0.5 transform transition active:scale-90"
-                >
-                  <PieChartIcon className="text-gray-700" />
+                <button onClick={() => setShowTrends(true)}>
+                  <PieChartIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
               <div>
