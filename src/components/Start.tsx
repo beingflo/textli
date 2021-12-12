@@ -14,7 +14,7 @@ export const Start = (): React.ReactElement => {
               {({ selected }) => (
                 <div className="flex">
                   <button
-                    className={`text-2xl font-bold mx-auto ${
+                    className={`text-2xl font-bold mx-auto focus:outline-none ${
                       selected && 'highlight'
                     }`}
                   >
@@ -28,7 +28,7 @@ export const Start = (): React.ReactElement => {
               {({ selected }) => (
                 <div className="flex">
                   <button
-                    className={`text-2xl font-bold mx-auto ${
+                    className={`text-2xl font-bold mx-auto focus:outline-none ${
                       selected && 'highlight'
                     }`}
                   >

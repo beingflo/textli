@@ -65,7 +65,7 @@ export const Settings = ({
                   <Tab.List className="flex flex-row flex-wrap gap-y-2 justify-center border-b border-gray-400 pb-4 mb-4 border-dashed sm:border-none sm:flex-col sm:justify-start sm:gap-y-0 sm:w-max md:whitespace-nowrap space-x-4 sm:space-x-0 sm:space-y-4 sm:mb-0 sm:mr-8">
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
-                        <button className="flex">
+                        <button className="flex focus:outline-none">
                           <UsersIcon className="h-5 w-5 mr-2 self-center" />
                           <span
                             className={`${
@@ -79,7 +79,7 @@ export const Settings = ({
                     </Tab>
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
-                        <button className="flex">
+                        <button className="flex focus:outline-none">
                           <LinkIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Shares
@@ -89,7 +89,7 @@ export const Settings = ({
                     </Tab>
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
-                        <button className="flex">
+                        <button className="flex focus:outline-none">
                           <BinIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Bin
@@ -99,7 +99,7 @@ export const Settings = ({
                     </Tab>
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
-                        <button className="flex">
+                        <button className="flex focus:outline-none">
                           <DataIcon className="h-5 w-5 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Export
@@ -109,7 +109,7 @@ export const Settings = ({
                     </Tab>
                   </Tab.List>
                   <Tab.Panels className="flex-grow min-w-0">
-                    <Tab.Panel>
+                    <Tab.Panel className="focus:outline-none">
                       <GeneralSettings />
                     </Tab.Panel>
                     <Tab.Panel>

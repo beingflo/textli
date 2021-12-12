@@ -42,7 +42,10 @@ export const Trends = ({
                 Trends
               </Dialog.Title>
 
-              <button onClick={() => setShowTrends(false)}>
+              <button
+                onClick={() => setShowTrends(false)}
+                className="outline-none"
+              >
                 <CloseIcon className="h-6 w-6" />
               </button>
             </div>

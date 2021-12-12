@@ -149,7 +149,10 @@ export const Sharing = ({
                   Share
                 </Dialog.Title>
 
-                <button onClick={() => setShowSharing(false)}>
+                <button
+                  onClick={() => setShowSharing(false)}
+                  className="outline-none"
+                >
                   <CloseIcon className="h-6 w-6" />
                 </button>
               </div>
