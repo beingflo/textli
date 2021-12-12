@@ -5,6 +5,7 @@ import {
   getCurrentNoteState,
   getEditorState,
   getNoteListState,
+  getSharesState,
   getUserInfoState,
   keyState,
 } from './state';
@@ -13,6 +14,8 @@ import {
   ArrowRightIcon,
   BinIcon,
   ClearIcon,
+  EyeIcon,
+  LinkIcon,
   SadIcon,
   SearchIcon,
 } from '../icons';
@@ -20,7 +23,7 @@ import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
-import { KeyStatus, NoteListItem } from '../types';
+import { KeyStatus, NoteListItem, Share } from '../types';
 import { useAtom } from 'jotai';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { delete_note } from '../api/note_api';
@@ -32,6 +35,7 @@ import fuzzysort from 'fuzzysort';
 export const Sidebar = (): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
+  const [shares] = useAtom(getSharesState);
   const [keyStatus, setKeyStatus] = useAtom(keyState);
   const [currentNote] = useAtom(getCurrentNoteState);
   const [editor] = useAtom(getEditorState);
@@ -105,6 +109,14 @@ export const Sidebar = (): React.ReactElement => {
     [currentNote]
   );
 
+  const isShared = React.useCallback(
+    (id: string): { shared: boolean; public: boolean } => {
+      const share = shares.find((share: Share) => share?.note === id);
+      return { shared: !!share, public: !!share?.public };
+    },
+    [shares]
+  );
+
   const handleSelection = React.useCallback(
     (id: string) => {
       // Scroll to top incase we are further down the sidebar
@@ -127,6 +139,19 @@ export const Sidebar = (): React.ReactElement => {
     },
     [deleteFromNoteList]
   );
+
+  const SharedIndicator = (id: string) => {
+    const shared = isShared(id);
+
+    return (
+      <div className="relative">
+        {shared.shared && <LinkIcon className="h-5 w-5 text-yellow-400" />}
+        {shared.public && (
+          <EyeIcon className="w-3 h-3 absolute text-red-400 top-3 left-3" />
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="fixed top-0 z-20">
@@ -194,12 +219,15 @@ export const Sidebar = (): React.ReactElement => {
                           id={note?.id}
                           className="cursor-pointer truncate"
                         >
-                          <span
-                            className={`${
-                              isSelected(note?.id) ? 'highlight' : ''
-                            }`}
-                          >
-                            {note?.metadata?.title}
+                          <span className="flex flex-row gap-2 items-center">
+                            <span
+                              className={`${
+                                isSelected(note?.id) ? 'highlight' : ''
+                              }`}
+                            >
+                              {note?.metadata?.title}
+                            </span>
+                            {SharedIndicator(note.id)}
                           </span>
                         </li>
                       ) : (
