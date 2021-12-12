@@ -72,7 +72,7 @@ export const ActionGroup = (): React.ReactElement => {
       <Popover className="relative">
         <Popover.Button>
           <div>
-            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 outline-none text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 outline-none focus:outline-none text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
           </div>
         </Popover.Button>
         <Transition
