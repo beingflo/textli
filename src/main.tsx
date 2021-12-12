@@ -13,7 +13,3 @@ ReactDOM.render(
 
   document.getElementById('root')
 );
-
-if (navigator.serviceWorker && !navigator.serviceWorker.controller) {
-  navigator.serviceWorker.register('/serviceWorker.js');
-}
