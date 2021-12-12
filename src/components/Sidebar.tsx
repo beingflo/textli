@@ -133,7 +133,7 @@ export const Sidebar = (): React.ReactElement => {
       <Popover className="relative">
         <Popover.Button
           ref={openButtonRef}
-          className="ml-6 mt-6 outline-none text-gray-700"
+          className="ml-6 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
         >
           <ArrowRightIcon className="h-6 w-6" />
         </Popover.Button>
