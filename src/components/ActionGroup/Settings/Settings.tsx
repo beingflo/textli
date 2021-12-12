@@ -52,7 +52,10 @@ export const Settings = ({
                   Settings
                 </Dialog.Title>
 
-                <button onClick={() => setShowSettings(false)}>
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="outline-none"
+                >
                   <CloseIcon className="h-6 w-6" />
                 </button>
               </div>
