@@ -25,7 +25,7 @@ export const Settings = ({
     <Transition show={showSettings} as={React.Fragment} appear>
       <Dialog
         onClose={() => setShowSettings(false)}
-        className="fixed z-10 inset-0 overflow-y-auto"
+        className="fixed z-20 inset-0 overflow-y-auto"
       >
         <div className="flex justify-center min-h-screen">
           <Transition.Child
@@ -46,7 +46,7 @@ export const Settings = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl sm:my-6">
+            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl my-4">
               <div className="flex flex-row justify-between">
                 <Dialog.Title className="text-2xl font-bold highlight inline">
                   Settings
