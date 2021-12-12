@@ -12,9 +12,9 @@ export const Start = (): React.ReactElement => {
           <Tab.List className="grid grid-cols-3">
             <Tab as={Fragment}>
               {({ selected }) => (
-                <div className="flex">
+                <div className="flex focus:outline-none">
                   <button
-                    className={`text-2xl font-bold mx-auto focus:outline-none ${
+                    className={`text-2xl font-bold mx-auto ${
                       selected && 'highlight'
                     }`}
                   >
@@ -26,9 +26,9 @@ export const Start = (): React.ReactElement => {
             <h2 className="text-2xl font-bold text-center">|</h2>
             <Tab as={Fragment}>
               {({ selected }) => (
-                <div className="flex">
+                <div className="flex focus:outline-none">
                   <button
-                    className={`text-2xl font-bold mx-auto focus:outline-none ${
+                    className={`text-2xl font-bold mx-auto ${
                       selected && 'highlight'
                     }`}
                   >
