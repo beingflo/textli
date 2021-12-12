@@ -82,7 +82,7 @@ export const ActionGroup = (): React.ReactElement => {
           leaveTo="opacity-0"
         >
           <Popover.Panel className="absolute top-8 -left-2 sm:left-0 bg-white drop-shadow-lg sm:drop-shadow-none p-2 sm:p-0">
-            <div className="space-y-4 smspace-y-1.5">
+            <div className="space-y-4 sm:space-y-1.5">
               <div>
                 <button onClick={() => setShowSettings(true)}>
                   <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
