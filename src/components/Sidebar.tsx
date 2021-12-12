@@ -144,7 +144,7 @@ export const Sidebar = (): React.ReactElement => {
     const shared = isShared(id);
 
     return (
-      <div className="relative">
+      <div className="relative pr-1">
         {shared.shared && <LinkIcon className="h-5 w-5 text-yellow-400" />}
         {shared.public && (
           <EyeIcon className="w-3 h-3 absolute text-red-400 top-3 left-3" />
@@ -221,7 +221,7 @@ export const Sidebar = (): React.ReactElement => {
                         >
                           <span className="flex flex-row gap-2 items-center">
                             <span
-                              className={`${
+                              className={`truncate ${
                                 isSelected(note?.id) ? 'highlight' : ''
                               }`}
                             >
