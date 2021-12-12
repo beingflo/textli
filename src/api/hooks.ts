@@ -76,16 +76,16 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   };
 };
 
-export const useSaveNote = (): (() => Promise<void>) => {
+export const useSaveNote = (): (() => Promise<NoteStatus>) => {
   const [editor] = useAtom(getEditorState);
   const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const [, addToNoteList] = useAtom(addToNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
-  return async () => {
+  return async (): Promise<NoteStatus> => {
     if (!userInfo) {
-      return;
+      return NoteStatus.SYNCED;
     }
 
     editor?.commands?.focus();
@@ -97,12 +97,12 @@ export const useSaveNote = (): (() => Promise<void>) => {
 
     if (!mainKey) {
       console.error('No main key in indexeddb');
-      return;
+      return NoteStatus.SYNCED;
     }
 
     // No changes to be saved
     if (noteStatus === NoteStatus.SYNCED) {
-      return;
+      return NoteStatus.SYNCED;
     }
 
     const encrypted_note = await encrypt_note(
@@ -160,6 +160,7 @@ export const useSaveNote = (): (() => Promise<void>) => {
       }
     }
     setNoteStatus(NoteStatus.SYNCED);
+    return NoteStatus.CHANGED;
   };
 };
 

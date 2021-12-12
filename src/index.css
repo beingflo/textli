@@ -7,3 +7,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* Without this, the sidebar doesn't scroll until the unterlying editor has stopped its inertia :( */
+@layer utilities {
+  .fix-ios-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+}

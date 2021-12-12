@@ -34,13 +34,15 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     if (userInfo) {
-      retrieveMainKey(userInfo?.username).then((key: CryptoKey | undefined) => {
-        if (!key) {
-          setShowKeyprompt(true);
-        } else {
-          setKeyStatus(KeyStatus.PRESENT);
-        }
-      });
+      retrieveMainKey(userInfo?.username)
+        .then((key: CryptoKey | undefined) => {
+          if (!key) {
+            setShowKeyprompt(true);
+          } else {
+            setKeyStatus(KeyStatus.PRESENT);
+          }
+        })
+        .catch(() => setShowKeyprompt(true));
     }
   }, [userInfo, keyStatus]);
 

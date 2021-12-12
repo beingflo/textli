@@ -38,7 +38,11 @@ const KeyPrompt = ({ setDone }: Props): React.ReactElement => {
       return;
     }
 
-    await persistMainKey(key, userInfo?.username);
+    try {
+      await persistMainKey(key, userInfo?.username);
+    } catch (e) {
+      console.error('IndexedDB not supported: ', e);
+    }
 
     setDone();
   }, [password, setDone, userInfo]);

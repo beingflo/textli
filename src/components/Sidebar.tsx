@@ -5,6 +5,7 @@ import {
   getCurrentNoteState,
   getEditorState,
   getNoteListState,
+  getSharesState,
   getUserInfoState,
   keyState,
 } from './state';
@@ -13,6 +14,8 @@ import {
   ArrowRightIcon,
   BinIcon,
   ClearIcon,
+  EyeIcon,
+  LinkIcon,
   SadIcon,
   SearchIcon,
 } from '../icons';
@@ -20,7 +23,7 @@ import { useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
-import { KeyStatus, NoteListItem } from '../types';
+import { KeyStatus, NoteListItem, Share } from '../types';
 import { useAtom } from 'jotai';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { delete_note } from '../api/note_api';
@@ -32,6 +35,7 @@ import fuzzysort from 'fuzzysort';
 export const Sidebar = (): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
+  const [shares] = useAtom(getSharesState);
   const [keyStatus, setKeyStatus] = useAtom(keyState);
   const [currentNote] = useAtom(getCurrentNoteState);
   const [editor] = useAtom(getEditorState);
@@ -105,6 +109,14 @@ export const Sidebar = (): React.ReactElement => {
     [currentNote]
   );
 
+  const isShared = React.useCallback(
+    (id: string): { shared: boolean; public: boolean } => {
+      const share = shares.find((share: Share) => share?.note === id);
+      return { shared: !!share, public: !!share?.public };
+    },
+    [shares]
+  );
+
   const handleSelection = React.useCallback(
     (id: string) => {
       // Scroll to top incase we are further down the sidebar
@@ -128,12 +140,25 @@ export const Sidebar = (): React.ReactElement => {
     [deleteFromNoteList]
   );
 
+  const SharedIndicator = (id: string) => {
+    const shared = isShared(id);
+
+    return (
+      <div className="relative pr-1">
+        {shared.shared && <LinkIcon className="h-5 w-5 text-yellow-400" />}
+        {shared.public && (
+          <EyeIcon className="w-3 h-3 absolute text-red-400 top-3 left-3" />
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="fixed top-0 z-20">
       <Popover className="relative">
         <Popover.Button
           ref={openButtonRef}
-          className="ml-6 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
+          className="ml-5 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
         >
           <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
@@ -145,11 +170,11 @@ export const Sidebar = (): React.ReactElement => {
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
           onTransitionEnd={setInputFocus}
-          className="absolute top-0 border-r border-dashed border-gray-300 w-80 z-20 sm:w-96"
+          className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96"
         >
           <Popover.Panel>
-            <div className="bg-white flex flex-col h-screen px-6 w-full pt-4 pb-6">
-              <div className="flex flex-row align-middle">
+            <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
+              <div className="flex flex-row align-middle mx-5 sm:mx-6">
                 <Popover.Button className="pr-2">
                   <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </Popover.Button>
@@ -160,7 +185,7 @@ export const Sidebar = (): React.ReactElement => {
                     value={query}
                     ref={inputRef}
                     onChange={(event) => setQuery(event?.target?.value)}
-                    className="border border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+                    className="border border-gray-200 p-2 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
                   />
                   {query ? (
                     <button
@@ -178,7 +203,7 @@ export const Sidebar = (): React.ReactElement => {
                   )}
                 </div>
               </div>
-              <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain pl-9 mt-4">
+              <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-16 pr-4 mt-4">
                 {filteredNotes?.length === 0 ? (
                   <div className="flex flex-col items-center text-gray-600 pt-4">
                     <SadIcon className="w-16 h-16" />
@@ -194,12 +219,15 @@ export const Sidebar = (): React.ReactElement => {
                           id={note?.id}
                           className="cursor-pointer truncate"
                         >
-                          <span
-                            className={`${
-                              isSelected(note?.id) ? 'highlight' : ''
-                            }`}
-                          >
-                            {note?.metadata?.title}
+                          <span className="flex flex-row gap-2 items-center">
+                            <span
+                              className={`truncate ${
+                                isSelected(note?.id) ? 'highlight' : ''
+                              }`}
+                            >
+                              {note?.metadata?.title}
+                            </span>
+                            {SharedIndicator(note.id)}
                           </span>
                         </li>
                       ) : (
