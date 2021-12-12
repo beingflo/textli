@@ -134,7 +134,6 @@ export const Sidebar = (): React.ReactElement => {
         <Popover.Button ref={openButtonRef} className="pl-6 pt-6 outline-none">
           <ArrowRightIcon className="h-6 w-6 text-gray-700 hover:translate-x-0.5 transform transition active:scale-90" />
         </Popover.Button>
-
         <Transition
           enter="transition ease-in-out duration-300 transform"
           enterFrom="-translate-x-full"
@@ -176,7 +175,7 @@ export const Sidebar = (): React.ReactElement => {
                   )}
                 </div>
               </div>
-              <ul className="space-y-1 overflow-y-auto pl-9 mt-4">
+              <ul className="space-y-1 overflow-y-auto overscroll-contain pl-9 mt-4">
                 {filteredNotes?.length === 0 ? (
                   <div className="flex flex-col items-center text-gray-600 pt-4">
                     <SadIcon className="w-16 h-16" />
