@@ -14,6 +14,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('../serviceWorker.js');
+if (navigator.serviceWorker && !navigator.serviceWorker.controller) {
+  navigator.serviceWorker.register('/serviceWorker.js');
 }
