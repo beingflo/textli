@@ -39,10 +39,10 @@ export const Start = (): React.ReactElement => {
             </Tab>
           </Tab.List>
           <Tab.Panels>
-            <Tab.Panel>
+            <Tab.Panel className="focus:outline-none">
               <Login />
             </Tab.Panel>
-            <Tab.Panel>
+            <Tab.Panel className="focus:outline-none">
               <Signup />
             </Tab.Panel>
           </Tab.Panels>
