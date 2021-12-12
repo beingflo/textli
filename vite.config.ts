@@ -7,6 +7,7 @@ export default defineConfig({
     reactRefresh(),
     VitePWA({
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+      registerType: 'autoUpdate',
       manifest: {
         name: 'fieldnotes',
         short_name: 'fieldnotes',
