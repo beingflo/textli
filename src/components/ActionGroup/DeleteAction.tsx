@@ -103,7 +103,7 @@ export const DeleteAction = (): React.ReactElement => {
       >
         <button
           onClick={handleUndelete}
-          className="absolute top-0 right-8 text-white bg-yellow-400 rounded-sm px-1
+          className="absolute sm:top-0 -right-3 sm:right-8 text-white bg-yellow-400 rounded-sm px-1
                        hover:-translate-x-0.5 transform transition active:scale-90"
         >
           Undo

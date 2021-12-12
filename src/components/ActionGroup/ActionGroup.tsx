@@ -49,7 +49,7 @@ export const ActionGroup = (): React.ReactElement => {
   }, [currentNote, shares]);
 
   return (
-    <div className="space-y-1.5 fixed top-6 right-6">
+    <div className="flex flex-row sm:flex-col space-x-1.5 sm:space-x-0 sm:space-y-1.5 fixed top-6 right-6">
       <SaveAction />
       <NewAction />
       <DeleteAction />
@@ -81,7 +81,7 @@ export const ActionGroup = (): React.ReactElement => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Popover.Panel className="absolute top-8 left-0">
+          <Popover.Panel className="absolute top-8 -left-2 sm:left-0 bg-white drop-shadow-lg sm:drop-shadow-none p-2 sm:p-0">
             <div className="space-y-1.5">
               <div>
                 <button onClick={() => setShowSettings(true)}>
