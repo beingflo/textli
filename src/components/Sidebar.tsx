@@ -135,7 +135,7 @@ export const Sidebar = (): React.ReactElement => {
           ref={openButtonRef}
           className="ml-6 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
         >
-          <ArrowRightIcon className="h-6 w-6" />
+          <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
         <Transition
           enter="transition ease-in-out duration-300 transform"

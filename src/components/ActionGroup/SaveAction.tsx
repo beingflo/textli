@@ -28,7 +28,7 @@ export const SaveAction = (): React.ReactElement => {
   return (
     <div className="relative">
       <button onClick={handleSave}>
-        <SaveIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+        <SaveIcon className="h-7 w-7 sm:w-6 sm:h-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
       </button>
       <Transition
         show={showSaveConfirm}

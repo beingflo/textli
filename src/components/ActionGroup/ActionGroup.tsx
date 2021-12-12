@@ -60,17 +60,19 @@ export const ActionGroup = (): React.ReactElement => {
           className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
         >
           <LinkIcon
-            className={isShared ? 'text-yellow-400' : 'text-gray-700'}
+            className={`${
+              isShared ? 'text-yellow-400' : 'text-gray-700'
+            } h-7 w-7 sm:h-6 sm:w-6`}
           />
           {isPublic && (
-            <EyeIcon className="w-4 h-4 text-red-400 absolute top-3.5 left-3.5" />
+            <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4 sm:top-3.5 sm:left-3.5" />
           )}
         </button>
       </div>
       <Popover className="relative">
         <Popover.Button>
           <div>
-            <MoreIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
           </div>
         </Popover.Button>
         <Transition
