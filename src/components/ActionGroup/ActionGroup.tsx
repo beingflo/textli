@@ -49,7 +49,7 @@ export const ActionGroup = (): React.ReactElement => {
   }, [currentNote, shares]);
 
   return (
-    <div className="space-y-1.5">
+    <div className="flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:space-y-1.5 fixed top-6 right-6">
       <SaveAction />
       <NewAction />
       <DeleteAction />
@@ -60,17 +60,19 @@ export const ActionGroup = (): React.ReactElement => {
           className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
         >
           <LinkIcon
-            className={isShared ? 'text-yellow-400' : 'text-gray-700'}
+            className={`${
+              isShared ? 'text-yellow-400' : 'text-gray-700'
+            } h-7 w-7 sm:h-6 sm:w-6`}
           />
           {isPublic && (
-            <EyeIcon className="w-4 h-4 text-red-400 absolute top-3.5 left-3.5" />
+            <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4 sm:top-3.5 sm:left-3.5" />
           )}
         </button>
       </div>
       <Popover className="relative">
-        <Popover.Button>
+        <Popover.Button className="focus:outline-none">
           <div>
-            <MoreIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
           </div>
         </Popover.Button>
         <Transition
@@ -81,24 +83,21 @@ export const ActionGroup = (): React.ReactElement => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Popover.Panel className="absolute top-8 left-0">
-            <div className="space-y-1.5">
+          <Popover.Panel className="absolute top-8 -left-2 sm:left-0 bg-white drop-shadow-lg sm:drop-shadow-none p-2 sm:p-0">
+            <div className="space-y-4 sm:space-y-1.5">
               <div>
                 <button onClick={() => setShowSettings(true)}>
-                  <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
               <div>
-                <button
-                  onClick={() => setShowTrends(true)}
-                  className="hover:-translate-x-0.5 transform transition active:scale-90"
-                >
-                  <PieChartIcon className="text-gray-700" />
+                <button onClick={() => setShowTrends(true)}>
+                  <PieChartIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
               <div>
                 <button onClick={handleLogout}>
-                  <LogoutIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <LogoutIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
             </div>

@@ -90,7 +90,7 @@ export const DeleteAction = (): React.ReactElement => {
         disabled={!currentNote}
         className="disabled:opacity-60"
       >
-        <BinIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+        <BinIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
       </button>
       <Transition
         show={showUndelete}
@@ -103,7 +103,7 @@ export const DeleteAction = (): React.ReactElement => {
       >
         <button
           onClick={handleUndelete}
-          className="absolute top-0 right-8 text-white bg-yellow-400 rounded-sm px-1
+          className="absolute sm:top-0 -right-3 sm:right-8 text-white bg-yellow-400 rounded-sm px-1
                        hover:-translate-x-0.5 transform transition active:scale-90"
         >
           Undo

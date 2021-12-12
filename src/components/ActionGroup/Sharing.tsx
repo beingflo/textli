@@ -122,7 +122,7 @@ export const Sharing = ({
     <Transition show={showSharing} as={React.Fragment} appear>
       <Dialog
         onClose={() => setShowSharing(false)}
-        className="fixed z-10 inset-0 overflow-y-auto"
+        className="fixed z-20 inset-0 overflow-y-auto"
       >
         <div className="flex justify-center">
           <Transition.Child
@@ -143,13 +143,16 @@ export const Sharing = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-xl lg:max-w-xl sm:my-6">
+            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-xl lg:max-w-xl my-4">
               <div className="flex flex-row justify-between">
                 <Dialog.Title className="text-2xl font-bold highlight inline">
                   Share
                 </Dialog.Title>
 
-                <button onClick={() => setShowSharing(false)}>
+                <button
+                  onClick={() => setShowSharing(false)}
+                  className="outline-none"
+                >
                   <CloseIcon className="h-6 w-6" />
                 </button>
               </div>

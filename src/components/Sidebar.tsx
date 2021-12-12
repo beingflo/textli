@@ -129,12 +129,14 @@ export const Sidebar = (): React.ReactElement => {
   );
 
   return (
-    <>
-      <Popover>
-        <Popover.Button ref={openButtonRef} className="pl-6 pt-6 outline-none">
-          <ArrowRightIcon className="h-6 w-6 text-gray-700 hover:translate-x-0.5 transform transition active:scale-90" />
+    <div className="fixed top-0 z-20">
+      <Popover className="relative">
+        <Popover.Button
+          ref={openButtonRef}
+          className="ml-6 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
+        >
+          <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
-
         <Transition
           enter="transition ease-in-out duration-300 transform"
           enterFrom="-translate-x-full"
@@ -143,13 +145,13 @@ export const Sidebar = (): React.ReactElement => {
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
           onTransitionEnd={setInputFocus}
-          className="absolute top-0 bg-white border-r border-dashed border-gray-300 z-20 w-80 sm:w-96 min-h-full"
+          className="absolute top-0 border-r border-dashed border-gray-300 w-80 z-20 sm:w-96"
         >
           <Popover.Panel>
-            <div className="px-6 w-full pt-4 pb-6">
+            <div className="bg-white flex flex-col h-screen px-6 w-full pt-4 pb-6">
               <div className="flex flex-row align-middle">
                 <Popover.Button className="pr-2">
-                  <ArrowLeftIcon className="h-6 w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </Popover.Button>
                 <div className="relative w-full">
                   <input
@@ -176,7 +178,7 @@ export const Sidebar = (): React.ReactElement => {
                   )}
                 </div>
               </div>
-              <ul className="space-y-1 pl-9 pt-4">
+              <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain pl-9 mt-4">
                 {filteredNotes?.length === 0 ? (
                   <div className="flex flex-col items-center text-gray-600 pt-4">
                     <SadIcon className="w-16 h-16" />
@@ -225,7 +227,7 @@ export const Sidebar = (): React.ReactElement => {
           </Popover.Panel>
         </Transition>
       </Popover>
-    </>
+    </div>
   );
 };
 

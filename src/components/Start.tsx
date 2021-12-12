@@ -7,14 +7,14 @@ import '../style.css';
 export const Start = (): React.ReactElement => {
   return (
     <div className="flex h-auto">
-      <div className="p-8 shadow-lg border border-dashed border-gray-300 rounded-md mx-2 sm:mx-auto my-8 w-full sm:max-w-md">
+      <div className="p-8 shadow-lg border border-dashed border-gray-300 rounded-md mx-4 sm:mx-auto my-4 sm:my-8 w-full sm:max-w-md">
         <Tab.Group>
           <Tab.List className="grid grid-cols-3">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <div className="flex">
                   <button
-                    className={`text-2xl font-bold mx-auto ${
+                    className={`text-2xl font-bold mx-auto focus:outline-none ${
                       selected && 'highlight'
                     }`}
                   >
@@ -28,7 +28,7 @@ export const Start = (): React.ReactElement => {
               {({ selected }) => (
                 <div className="flex">
                   <button
-                    className={`text-2xl font-bold mx-auto ${
+                    className={`text-2xl font-bold mx-auto focus:outline-none ${
                       selected && 'highlight'
                     }`}
                   >
