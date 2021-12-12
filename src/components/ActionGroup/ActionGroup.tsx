@@ -87,17 +87,17 @@ export const ActionGroup = (): React.ReactElement => {
             <div className="space-y-4 sm:space-y-1.5">
               <div>
                 <button onClick={() => setShowSettings(true)}>
-                  <SettingsIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
               <div>
                 <button onClick={() => setShowTrends(true)}>
-                  <PieChartIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <PieChartIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
               <div>
                 <button onClick={handleLogout}>
-                  <LogoutIcon className="text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <LogoutIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
             </div>

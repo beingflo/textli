@@ -151,7 +151,7 @@ export const Sidebar = (): React.ReactElement => {
             <div className="bg-white flex flex-col h-screen px-6 w-full pt-4 pb-6">
               <div className="flex flex-row align-middle">
                 <Popover.Button className="pr-2">
-                  <ArrowLeftIcon className="h-6 w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
                 </Popover.Button>
                 <div className="relative w-full">
                   <input
