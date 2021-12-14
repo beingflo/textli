@@ -118,11 +118,14 @@ export const Sidebar = (): React.ReactElement => {
   );
 
   const handleSelection = React.useCallback(
-    (id: string) => {
+    (id: string, close: () => void) => {
       // Scroll to top incase we are further down the sidebar
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      getNote(id).then(() => setTimeout(() => setQuery(''), 300));
+      getNote(id).then(() => {
+        () => setTimeout(() => setQuery(''), 300);
+        close();
+      });
     },
     [editor]
   );
@@ -173,85 +176,87 @@ export const Sidebar = (): React.ReactElement => {
           className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96"
         >
           <Popover.Panel>
-            <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
-              <div className="flex flex-row align-middle mx-5 sm:mx-6">
-                <Popover.Button className="pr-2">
-                  <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
-                </Popover.Button>
-                <div className="relative w-full">
-                  <input
-                    type="search"
-                    placeholder="Search"
-                    value={query}
-                    ref={inputRef}
-                    onChange={(event) => setQuery(event?.target?.value)}
-                    className="border border-gray-200 p-2 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
-                  />
-                  {query ? (
-                    <button
-                      onClick={() => {
-                        setQuery('');
-                        setInputFocus();
-                      }}
-                    >
-                      <ClearIcon className="h-5 w-5 absolute top-2.5 right-2.5 text-gray-400" />
-                    </button>
-                  ) : (
-                    <button onClick={setInputFocus}>
-                      <SearchIcon className="h-5 w-5 absolute top-2.5 right-2.5 text-gray-400" />
-                    </button>
-                  )}
-                </div>
-              </div>
-              <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-16 pr-4 mt-4">
-                {filteredNotes?.length === 0 ? (
-                  <div className="flex flex-col items-center text-gray-600 pt-4">
-                    <SadIcon className="w-16 h-16" />
-                    <div>Nothing here</div>
+            {({ close }) => (
+              <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
+                <div className="flex flex-row align-middle mx-5 sm:mx-6">
+                  <Popover.Button className="pr-2">
+                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  </Popover.Button>
+                  <div className="relative w-full">
+                    <input
+                      type="search"
+                      placeholder="Search"
+                      value={query}
+                      ref={inputRef}
+                      onChange={(event) => setQuery(event?.target?.value)}
+                      className="border border-gray-200 p-2 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+                    />
+                    {query ? (
+                      <button
+                        onClick={() => {
+                          setQuery('');
+                          setInputFocus();
+                        }}
+                      >
+                        <ClearIcon className="h-5 w-5 absolute top-2.5 right-2.5 text-gray-400" />
+                      </button>
+                    ) : (
+                      <button onClick={setInputFocus}>
+                        <SearchIcon className="h-5 w-5 absolute top-2.5 right-2.5 text-gray-400" />
+                      </button>
+                    )}
                   </div>
-                ) : (
-                  filteredNotes.map((note: NoteListItem) => (
-                    <React.Fragment key={note?.id}>
-                      {note?.metadata?.title ? (
-                        <li
-                          onClick={() => handleSelection(note?.id)}
-                          key={note?.id}
-                          id={note?.id}
-                          className="cursor-pointer truncate"
-                        >
-                          <span className="flex flex-row gap-2 items-center">
-                            <span
-                              className={`truncate ${
-                                isSelected(note?.id) ? 'highlight' : ''
-                              }`}
-                            >
-                              {note?.metadata?.title}
-                            </span>
-                            {SharedIndicator(note.id)}
-                          </span>
-                        </li>
-                      ) : (
-                        <li
-                          key={note?.id}
-                          id={note?.id}
-                          className="cursor-default truncate flex flex-row bg-red-500 p-1 rounded-md"
-                          aria-disabled
-                        >
-                          <ExclamationCircleIcon className="h-4 w-4 self-center" />
-                          <span className="pl-1">Decryption failure</span>
-                          <button
-                            onClick={() => handleDelete(note?.id)}
-                            className="ml-auto"
+                </div>
+                <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-16 pr-4 mt-4">
+                  {filteredNotes?.length === 0 ? (
+                    <div className="flex flex-col items-center text-gray-600 pt-4">
+                      <SadIcon className="w-16 h-16" />
+                      <div>Nothing here</div>
+                    </div>
+                  ) : (
+                    filteredNotes.map((note: NoteListItem) => (
+                      <React.Fragment key={note?.id}>
+                        {note?.metadata?.title ? (
+                          <li
+                            onClick={() => handleSelection(note?.id, close)}
+                            key={note?.id}
+                            id={note?.id}
+                            className="cursor-pointer truncate"
                           >
-                            <BinIcon className="h-4 w-4 self-center" />
-                          </button>
-                        </li>
-                      )}
-                    </React.Fragment>
-                  ))
-                )}
-              </ul>
-            </div>
+                            <span className="flex flex-row gap-2 items-center">
+                              <span
+                                className={`truncate ${
+                                  isSelected(note?.id) ? 'highlight' : ''
+                                }`}
+                              >
+                                {note?.metadata?.title}
+                              </span>
+                              {SharedIndicator(note.id)}
+                            </span>
+                          </li>
+                        ) : (
+                          <li
+                            key={note?.id}
+                            id={note?.id}
+                            className="cursor-default truncate flex flex-row bg-red-500 p-1 rounded-md"
+                            aria-disabled
+                          >
+                            <ExclamationCircleIcon className="h-4 w-4 self-center" />
+                            <span className="pl-1">Decryption failure</span>
+                            <button
+                              onClick={() => handleDelete(note?.id)}
+                              className="ml-auto"
+                            >
+                              <BinIcon className="h-4 w-4 self-center" />
+                            </button>
+                          </li>
+                        )}
+                      </React.Fragment>
+                    ))
+                  )}
+                </ul>
+              </div>
+            )}
           </Popover.Panel>
         </Transition>
       </Popover>

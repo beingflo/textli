@@ -34,7 +34,6 @@ import {
 } from './note_api';
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
-  const [editor] = useAtom(getEditorState);
   const [, setNoteStatus] = useAtom(noteStatusState);
   const [, setCurrentNote] = useAtom(currentNoteState);
   const [, addToNoteList] = useAtom(addToNoteListState);
@@ -42,7 +41,9 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
 
   return async (id: string) => {
     setNoteStatus(NoteStatus.INPROGRESS);
+
     const noteDto = await get_note(id).catch(handleException);
+
     setNoteStatus(NoteStatus.SYNCED);
 
     if (!noteDto || !userInfo) {
@@ -71,8 +72,6 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
 
     setCurrentNote(note);
     addToNoteList(note);
-
-    editor?.commands.focus('end', { scrollIntoView: false });
   };
 };
 
