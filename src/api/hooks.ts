@@ -41,8 +41,12 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   const [userInfo] = useAtom(getUserInfoState);
 
   return async (id: string) => {
+    editor?.commands.focus('end', { scrollIntoView: false });
+
     setNoteStatus(NoteStatus.INPROGRESS);
+
     const noteDto = await get_note(id).catch(handleException);
+
     setNoteStatus(NoteStatus.SYNCED);
 
     if (!noteDto || !userInfo) {
@@ -71,8 +75,6 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
 
     setCurrentNote(note);
     addToNoteList(note);
-
-    editor?.commands.focus('end', { scrollIntoView: false });
   };
 };
 
