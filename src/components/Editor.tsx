@@ -51,7 +51,9 @@ export const Editor = (): React.ReactElement => {
   });
 
   React.useEffect(() => {
-    editor?.commands?.setContent(note?.content ?? '');
+    if (editor?.getHTML() !== note?.content) {
+      editor?.commands?.setContent(note?.content ?? '');
+    }
   }, [note]);
 
   React.useEffect(() => {
