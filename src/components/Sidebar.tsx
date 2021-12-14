@@ -219,16 +219,18 @@ export const Sidebar = (): React.ReactElement => {
                           id={note?.id}
                           className="cursor-pointer truncate"
                         >
-                          <span className="flex flex-row gap-2 items-center">
-                            <span
-                              className={`truncate ${
-                                isSelected(note?.id) ? 'highlight' : ''
-                              }`}
-                            >
-                              {note?.metadata?.title}
+                          <Popover.Button>
+                            <span className="flex flex-row gap-2 items-center">
+                              <span
+                                className={`truncate ${
+                                  isSelected(note?.id) ? 'highlight' : ''
+                                }`}
+                              >
+                                {note?.metadata?.title}
+                              </span>
+                              {SharedIndicator(note.id)}
                             </span>
-                            {SharedIndicator(note.id)}
-                          </span>
+                          </Popover.Button>
                         </li>
                       ) : (
                         <li
