@@ -6,7 +6,6 @@ import {
   LinkIcon,
   LogoutIcon,
   MoreIcon,
-  PieChartIcon,
   SettingsIcon,
 } from '../../icons';
 import { SaveAction } from './SaveAction';
@@ -18,7 +17,6 @@ import { Sharing } from './Sharing';
 import { AuthStatus, Share } from '../../types';
 import { useAtom } from 'jotai';
 import { authState, getCurrentNoteState, getSharesState } from '../state';
-import Trends from './Trends';
 
 export const ActionGroup = (): React.ReactElement => {
   const [shares] = useAtom(getSharesState);
@@ -26,7 +24,6 @@ export const ActionGroup = (): React.ReactElement => {
   const [, setAuthStatus] = useAtom(authState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
-  const [showTrends, setShowTrends] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
 
@@ -61,18 +58,18 @@ export const ActionGroup = (): React.ReactElement => {
         >
           <LinkIcon
             className={`${
-              isShared ? 'text-yellow-400' : 'text-gray-700'
-            } h-7 w-7 sm:h-6 sm:w-6`}
+              isShared && 'icon-highlight'
+            } h-7 w-7 sm:h-6 sm:w-6 text-black`}
           />
           {isPublic && (
-            <EyeIcon className="w-4 h-4 text-red-400 absolute top-4 left-4 sm:top-3.5 sm:left-3.5" />
+            <EyeIcon className="w-4 h-4 text-red-500 absolute top-4 left-4 sm:top-3.5 sm:left-3.5" />
           )}
         </button>
       </div>
       <Popover className="relative">
         <Popover.Button className="focus:outline-none">
           <div>
-            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
           </div>
         </Popover.Button>
         <Transition
@@ -87,17 +84,12 @@ export const ActionGroup = (): React.ReactElement => {
             <div className="space-y-4 sm:space-y-1.5">
               <div>
                 <button onClick={() => setShowSettings(true)}>
-                  <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
-                </button>
-              </div>
-              <div>
-                <button onClick={() => setShowTrends(true)}>
-                  <PieChartIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
               <div>
                 <button onClick={handleLogout}>
-                  <LogoutIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <LogoutIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
                 </button>
               </div>
             </div>
@@ -112,9 +104,6 @@ export const ActionGroup = (): React.ReactElement => {
       )}
       {showSharing && (
         <Sharing showSharing={showSharing} setShowSharing={setShowSharing} />
-      )}
-      {showTrends && (
-        <Trends showTrends={showTrends} setShowTrends={setShowTrends} />
       )}
     </div>
   );

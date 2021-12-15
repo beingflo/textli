@@ -56,7 +56,7 @@ export const Shares = (): React.ReactElement => {
                     </span>
                   </div>
                   {share.public && (
-                    <div className="flex flex-row space-x-1 text-red-400">
+                    <div className="flex flex-row space-x-1 text-red-500">
                       <EyeIcon className="h-4 w-4 self-center" />
                       <span>Public</span>
                     </div>

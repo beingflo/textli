@@ -148,10 +148,16 @@ export const Sidebar = (): React.ReactElement => {
 
     return (
       <div className="relative pr-1">
-        {shared.shared && <LinkIcon className="h-5 w-5 text-yellow-400" />}
-        {shared.public && (
-          <EyeIcon className="w-3 h-3 absolute text-red-400 top-3 left-3" />
-        )}
+        <LinkIcon
+          className={`${
+            shared.shared || 'invisible'
+          } h-5 w-5 text-black icon-highlight`}
+        />
+        <EyeIcon
+          className={`${
+            shared.public || 'invisible'
+          } w-3 h-3 absolute text-red-500 top-3 left-3`}
+        />
       </div>
     );
   };
@@ -161,7 +167,7 @@ export const Sidebar = (): React.ReactElement => {
       <Popover className="relative">
         <Popover.Button
           ref={openButtonRef}
-          className="ml-5 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
+          className="ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transform transition active:scale-90"
         >
           <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
@@ -180,7 +186,7 @@ export const Sidebar = (): React.ReactElement => {
               <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
                 <div className="flex flex-row align-middle mx-5 sm:mx-6">
                   <Popover.Button className="pr-2">
-                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
                   </Popover.Button>
                   <div className="relative w-full">
                     <input
@@ -207,7 +213,7 @@ export const Sidebar = (): React.ReactElement => {
                     )}
                   </div>
                 </div>
-                <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-16 pr-4 mt-4">
+                <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-8 pr-4 mt-4">
                   {filteredNotes?.length === 0 ? (
                     <div className="flex flex-col items-center text-gray-600 pt-4">
                       <SadIcon className="w-16 h-16" />
@@ -224,6 +230,7 @@ export const Sidebar = (): React.ReactElement => {
                             className="cursor-pointer truncate"
                           >
                             <span className="flex flex-row gap-2 items-center">
+                              {SharedIndicator(note.id)}
                               <span
                                 className={`truncate ${
                                   isSelected(note?.id) ? 'highlight' : ''
@@ -231,7 +238,6 @@ export const Sidebar = (): React.ReactElement => {
                               >
                                 {note?.metadata?.title}
                               </span>
-                              {SharedIndicator(note.id)}
                             </span>
                           </li>
                         ) : (
