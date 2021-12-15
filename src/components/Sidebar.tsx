@@ -148,12 +148,16 @@ export const Sidebar = (): React.ReactElement => {
 
     return (
       <div className="relative pr-1">
-        {shared.shared && (
-          <LinkIcon className="h-5 w-5 text-black icon-highlight" />
-        )}
-        {shared.public && (
-          <EyeIcon className="w-3 h-3 absolute text-red-500 top-3 left-3" />
-        )}
+        <LinkIcon
+          className={`${
+            shared.shared || 'invisible'
+          } h-5 w-5 text-black icon-highlight`}
+        />
+        <EyeIcon
+          className={`${
+            shared.public || 'invisible'
+          } w-3 h-3 absolute text-red-500 top-3 left-3`}
+        />
       </div>
     );
   };
@@ -209,7 +213,7 @@ export const Sidebar = (): React.ReactElement => {
                     )}
                   </div>
                 </div>
-                <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-16 pr-4 mt-4">
+                <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-8 pr-4 mt-4">
                   {filteredNotes?.length === 0 ? (
                     <div className="flex flex-col items-center text-gray-600 pt-4">
                       <SadIcon className="w-16 h-16" />
@@ -226,6 +230,7 @@ export const Sidebar = (): React.ReactElement => {
                             className="cursor-pointer truncate"
                           >
                             <span className="flex flex-row gap-2 items-center">
+                              {SharedIndicator(note.id)}
                               <span
                                 className={`truncate ${
                                   isSelected(note?.id) ? 'highlight' : ''
@@ -233,7 +238,6 @@ export const Sidebar = (): React.ReactElement => {
                               >
                                 {note?.metadata?.title}
                               </span>
-                              {SharedIndicator(note.id)}
                             </span>
                           </li>
                         ) : (
