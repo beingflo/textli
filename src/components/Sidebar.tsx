@@ -43,6 +43,7 @@ export const Sidebar = (): React.ReactElement => {
   const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
   const [query, setQuery] = React.useState('');
   const [filteredNotes, setFilteredNotes] = React.useState(notes);
+  const [focused, setFocused] = React.useState(0);
 
   const [inputRef, setInputFocus] = useFocus();
 
@@ -54,8 +55,41 @@ export const Sidebar = (): React.ReactElement => {
       openButtonRef?.current?.click();
       event.preventDefault();
     },
-    { enableOnContentEditable: true },
+    { enableOnContentEditable: true, enableOnTags: ['INPUT'] },
     [openButtonRef]
+  );
+
+  useHotkeys(
+    'down',
+    (event: KeyboardEvent) => {
+      setFocused((focused) => Math.min(focused + 1, filteredNotes.length - 1));
+      event.preventDefault();
+    },
+    { enableOnTags: ['INPUT'] },
+    [filteredNotes, setFocused]
+  );
+
+  useHotkeys(
+    'up',
+    (event: KeyboardEvent) => {
+      setFocused((focused) => Math.max(focused - 1, 0));
+      event.preventDefault();
+    },
+    { enableOnTags: ['INPUT'] },
+    [setFocused]
+  );
+
+  useHotkeys(
+    'enter',
+    (event: KeyboardEvent) => {
+      handleSelection(filteredNotes[focused]?.id, () => {
+        openButtonRef?.current?.click();
+        setFocused(0);
+      });
+      event.preventDefault();
+    },
+    { enableOnTags: ['INPUT'] },
+    [filteredNotes, focused, setFocused]
   );
 
   const hasDecryptionFailure = React.useMemo(
@@ -220,7 +254,7 @@ export const Sidebar = (): React.ReactElement => {
                       <div>Nothing here</div>
                     </div>
                   ) : (
-                    filteredNotes.map((note: NoteListItem) => (
+                    filteredNotes.map((note: NoteListItem, index: number) => (
                       <React.Fragment key={note?.id}>
                         {note?.metadata?.title ? (
                           <li
@@ -234,7 +268,7 @@ export const Sidebar = (): React.ReactElement => {
                               <span
                                 className={`truncate ${
                                   isSelected(note?.id) ? 'highlight' : ''
-                                }`}
+                                } ${index === focused && 'md:underline'}`}
                               >
                                 {note?.metadata?.title}
                               </span>
