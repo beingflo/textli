@@ -157,11 +157,11 @@ export const Sidebar = (): React.ReactElement => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       getNote(id).then(() => {
-        () => setTimeout(() => setQuery(''), 300);
+        setTimeout(() => setQuery(''), 300);
         close();
       });
     },
-    [editor]
+    [editor, setQuery]
   );
 
   const handleDelete = React.useCallback(
