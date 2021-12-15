@@ -148,9 +148,11 @@ export const Sidebar = (): React.ReactElement => {
 
     return (
       <div className="relative pr-1">
-        {shared.shared && <LinkIcon className="h-5 w-5 text-yellow-400" />}
+        {shared.shared && (
+          <LinkIcon className="h-5 w-5 text-black icon-highlight" />
+        )}
         {shared.public && (
-          <EyeIcon className="w-3 h-3 absolute text-red-400 top-3 left-3" />
+          <EyeIcon className="w-3 h-3 absolute text-red-500 top-3 left-3" />
         )}
       </div>
     );
@@ -161,7 +163,7 @@ export const Sidebar = (): React.ReactElement => {
       <Popover className="relative">
         <Popover.Button
           ref={openButtonRef}
-          className="ml-5 mt-6 outline-none text-gray-700 hover:translate-x-0.5 transform transition active:scale-90"
+          className="ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transform transition active:scale-90"
         >
           <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
@@ -180,7 +182,7 @@ export const Sidebar = (): React.ReactElement => {
               <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
                 <div className="flex flex-row align-middle mx-5 sm:mx-6">
                   <Popover.Button className="pr-2">
-                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-gray-700 hover:-translate-x-0.5 transform transition active:scale-90" />
+                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
                   </Popover.Button>
                   <div className="relative w-full">
                     <input

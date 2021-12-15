@@ -172,7 +172,7 @@ export const Sharing = ({
                       </span>
                     </div>
                     {share?.public && (
-                      <div className="flex flex-row mt-2 text-red-400 font-medium">
+                      <div className="flex flex-row mt-2 text-red-500 font-medium">
                         This note is published on your profile!
                       </div>
                     )}

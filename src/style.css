@@ -1,3 +1,7 @@
 .highlight {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, #fcd34d 50%);
 }
+
+.icon-highlight {
+  filter: drop-shadow(3px 2px 1px rgba(252, 211, 77, 1));
+}
