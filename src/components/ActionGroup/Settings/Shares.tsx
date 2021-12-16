@@ -59,7 +59,8 @@ export const Shares = (): React.ReactElement => {
                   <div className="flex flex-row space-x-1">
                     <TrendingUpIcon className="h-4 w-4 self-center" />
                     <span className="text-gray-500">
-                      {share.view_count} views
+                      {share.view_count}
+                      {share.view_count === 1 ? ' view' : ' views'}
                     </span>
                   </div>
                   {share.public && (
