@@ -71,6 +71,7 @@ export type Share = {
   token: string;
   note: string;
   public?: string;
+  view_count: number;
   created_at: string;
   expires_at: string;
 };
