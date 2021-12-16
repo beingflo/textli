@@ -201,26 +201,26 @@ export const Sidebar = (): React.ReactElement => {
       <Popover className="relative">
         <Popover.Button
           ref={openButtonRef}
-          className="ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transform transition active:scale-90"
+          className="ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transition active:scale-90"
         >
           <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
         <Transition
-          enter="transition ease-in-out duration-300 transform"
+          enter="transition ease-in-out duration-300"
           enterFrom="-translate-x-full"
           enterTo="translate-x-0"
-          leave="transition ease-in-out duration-300 transform"
+          leave="transition ease-in-out duration-300"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
           onTransitionEnd={setInputFocus}
-          className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96"
+          className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96 lg:w-120 2xl:w-160"
         >
           <Popover.Panel>
             {({ close }) => (
               <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
                 <div className="flex flex-row align-middle mx-5 sm:mx-6">
                   <Popover.Button className="pr-2">
-                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
+                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
                   </Popover.Button>
                   <div className="relative w-full">
                     <input

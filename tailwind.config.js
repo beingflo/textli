@@ -1,8 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontWeight: ['hover', 'focus'],
@@ -22,8 +21,11 @@ module.exports = {
       maxWidth: {
         xxs: '16rem',
       },
+      width: {
+        120: '30rem',
+        160: '40rem',
+      },
     },
   },
-  variants: {},
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

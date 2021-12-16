@@ -4,6 +4,7 @@ import { delete_share, list_shares } from '../../../api/share_api';
 import { getNoteListState, sharesState } from '../../state';
 import { AddIcon, BinIcon, ClockIcon, EyeIcon, SadIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
+import { TrendingUpIcon } from '@heroicons/react/outline';
 
 export const Shares = (): React.ReactElement => {
   const [shares, setShares] = useAtom(sharesState);
@@ -53,6 +54,13 @@ export const Shares = (): React.ReactElement => {
                       {share?.expires_at
                         ? new Date(share?.expires_at).toLocaleDateString()
                         : 'Never'}
+                    </span>
+                  </div>
+                  <div className="flex flex-row space-x-1">
+                    <TrendingUpIcon className="h-4 w-4 self-center" />
+                    <span className="text-gray-500">
+                      {share.view_count}
+                      {share.view_count === 1 ? ' view' : ' views'}
                     </span>
                   </div>
                   {share.public && (
