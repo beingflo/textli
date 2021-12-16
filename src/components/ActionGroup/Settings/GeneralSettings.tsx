@@ -120,7 +120,7 @@ const SessionConfirm = ({ setSessionConfirm }: any): React.ReactElement => {
     <>
       <button
         onClick={() => setSessionConfirm(false)}
-        className="mb-4 text-gray-600 hover:-translate-x-0.5 transform transition active:translate-x-0"
+        className="mb-4 text-gray-600 hover:-translate-x-0.5 transition active:translate-x-0"
       >
         <div className="flex flex-row gap-1">
           <ArrowLeftIcon className="w-6 h-6" />
@@ -192,7 +192,7 @@ const PasswordConfirm = ({ setPasswordConfirm }: any): React.ReactElement => {
     <div>
       <button
         onClick={() => setPasswordConfirm(false)}
-        className="mb-4 text-gray-600 hover:-translate-x-0.5 transform transition active:translate-x-0"
+        className="mb-4 text-gray-600 hover:-translate-x-0.5 transition active:translate-x-0"
       >
         <div className="flex flex-row gap-1">
           <ArrowLeftIcon className="w-6 h-6" />
@@ -279,7 +279,7 @@ const DeleteConfirm = ({ setDeleteConfirm }: any): React.ReactElement => {
     <>
       <button
         onClick={() => setDeleteConfirm(false)}
-        className="mb-4 text-gray-600 hover:-translate-x-0.5 transform transition active:translate-x-0"
+        className="mb-4 text-gray-600 hover:-translate-x-0.5 transition active:translate-x-0"
       >
         <div className="flex flex-row gap-1">
           <ArrowLeftIcon className="w-6 h-6" />

@@ -54,7 +54,7 @@ export const ActionGroup = (): React.ReactElement => {
         <button
           onClick={() => setShowSharing(true)}
           disabled={!currentNote}
-          className="disabled:opacity-60 relative hover:-translate-x-0.5 transform transition active:scale-90"
+          className="disabled:opacity-60 relative hover:-translate-x-0.5 transition active:scale-90"
         >
           <LinkIcon
             className={`${
@@ -69,7 +69,7 @@ export const ActionGroup = (): React.ReactElement => {
       <Popover className="relative">
         <Popover.Button className="focus:outline-none">
           <div>
-            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
+            <MoreIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
           </div>
         </Popover.Button>
         <Transition
@@ -84,12 +84,12 @@ export const ActionGroup = (): React.ReactElement => {
             <div className="space-y-4 sm:space-y-1.5">
               <div>
                 <button onClick={() => setShowSettings(true)}>
-                  <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
                 </button>
               </div>
               <div>
                 <button onClick={handleLogout}>
-                  <LogoutIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
+                  <LogoutIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
                 </button>
               </div>
             </div>
