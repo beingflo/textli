@@ -213,7 +213,7 @@ export const Sidebar = (): React.ReactElement => {
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
           onTransitionEnd={setInputFocus}
-          className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96"
+          className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96 lg:w-120 2xl:w-160"
         >
           <Popover.Panel>
             {({ close }) => (
