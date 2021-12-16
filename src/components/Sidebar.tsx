@@ -19,7 +19,7 @@ import {
   SadIcon,
   SearchIcon,
 } from '../icons';
-import { useFocus } from './util';
+import { sortNotes, useFocus } from './util';
 import { Popover, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
@@ -129,11 +129,12 @@ export const Sidebar = (): React.ReactElement => {
       })
       .then((results) => {
         const mappedResults = results.map((result) => result.obj);
+        const sortedNotes = sortNotes(mappedResults);
 
         if (query === '') {
           setFilteredNotes(notes);
         } else {
-          setFilteredNotes(mappedResults);
+          setFilteredNotes(sortedNotes);
         }
       });
   }, [notes, query]);
