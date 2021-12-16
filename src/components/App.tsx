@@ -12,7 +12,7 @@ const App = (): React.ReactElement => {
       </div>
       <div
         spellCheck="false"
-        className="h-full max-w-full mt-12 ml-4 mr-4 sm:mt-0 sm:ml-0 sm:mr-0 sm:max-w-md md:min-w-sm lg:max-w-2xl"
+        className="h-full max-w-full mt-12 ml-4 mr-4 sm:mt-0 sm:ml-0 sm:mr-0 sm:max-w-md md:min-w-sm lg:max-w-2xl 2xl:max-w-4xl"
       >
         <Editor />
       </div>
