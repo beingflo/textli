@@ -11,6 +11,7 @@ import {
 import Bin from './Bin';
 import Shares from './Shares';
 import GeneralSettings from './GeneralSettings';
+import { CloudUploadIcon } from '@heroicons/react/outline';
 
 export type Props = {
   showSettings: boolean;
@@ -107,6 +108,16 @@ export const Settings = ({
                         </button>
                       )}
                     </Tab>
+                    <Tab as={React.Fragment}>
+                      {({ selected }) => (
+                        <button className="flex focus:outline-none">
+                          <CloudUploadIcon className="h-5 w-5 mr-2 self-center" />
+                          <span className={selected ? 'highlight' : ''}>
+                            Sync
+                          </span>
+                        </button>
+                      )}
+                    </Tab>
                   </Tab.List>
                   <Tab.Panels className="flex-grow min-w-0">
                     <Tab.Panel className="focus:outline-none">
@@ -117,6 +128,14 @@ export const Settings = ({
                     </Tab.Panel>
                     <Tab.Panel className="focus:outline-none">
                       <Bin />
+                    </Tab.Panel>
+                    <Tab.Panel className="flex flex-row gap-1 focus:outline-none">
+                      <div className="w-full flex flex-col items-center">
+                        <div className="flex flex-col items-center">
+                          <HappyIcon className="w-16 h-16" />
+                          <div>Coming soon</div>
+                        </div>
+                      </div>
                     </Tab.Panel>
                     <Tab.Panel className="flex flex-row gap-1 focus:outline-none">
                       <div className="w-full flex flex-col items-center">
