@@ -198,11 +198,11 @@ export const Sidebar = (): React.ReactElement => {
   };
 
   return (
-    <div className="fixed top-0 z-20">
+    <div className="absolute top-0 z-20">
       <Popover className="relative">
         <Popover.Button
           ref={openButtonRef}
-          className="ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transition active:scale-90"
+          className="fixed ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transition active:scale-90"
         >
           <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </Popover.Button>
@@ -218,7 +218,7 @@ export const Sidebar = (): React.ReactElement => {
         >
           <Popover.Panel>
             {({ close }) => (
-              <div className="bg-white flex flex-col h-screen w-full pt-4 pb-6">
+              <div className="bg-white flex flex-col sm:h-screen w-full pt-4 pb-6">
                 <div className="flex flex-row align-middle mx-5 sm:mx-6">
                   <Popover.Button className="pr-2">
                     <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
@@ -248,7 +248,7 @@ export const Sidebar = (): React.ReactElement => {
                     )}
                   </div>
                 </div>
-                <ul className="space-y-2 sm:space-y-1 overflow-y-auto overscroll-contain fix-ios-scroll pl-8 pr-4 mt-4">
+                <ul className="space-y-2 sm:space-y-1 sm:overflow-y-auto sm:overscroll-contain fix-ios-scroll pl-8 pr-4 mt-4">
                   {filteredNotes?.length === 0 ? (
                     <div className="flex flex-col items-center text-gray-600 pt-4">
                       <SadIcon className="w-16 h-16" />
