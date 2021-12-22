@@ -262,7 +262,7 @@ export const Sidebar = (): React.ReactElement => {
                             onClick={() => handleSelection(note?.id, close)}
                             key={note?.id}
                             id={note?.id}
-                            className="cursor-pointer truncate"
+                            className="sm:cursor-pointer truncate"
                           >
                             <span className="flex flex-row gap-2 items-center">
                               {SharedIndicator(note.id)}
