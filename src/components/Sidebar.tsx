@@ -218,7 +218,7 @@ export const Sidebar = (): React.ReactElement => {
         >
           <Popover.Panel>
             {({ close }) => (
-              <div className="bg-white flex flex-col sm:h-screen touch-pan-y w-full pt-4 pb-6">
+              <div className="bg-white flex flex-col sm:h-screen w-full pt-4 pb-6">
                 <div className="flex flex-row align-middle mx-5 sm:mx-6">
                   <Popover.Button className="pr-2">
                     <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
