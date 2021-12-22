@@ -266,7 +266,7 @@ export const Sidebar = (): React.ReactElement => {
                     <CloseIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black" />
                   </button>
                 </div>
-                <ul className="space-y-2 sm:space-y-1 sm:overflow-y-auto sm:overscroll-contain mt-4">
+                <ul className="space-y-2 sm:space-y-1 sm:overflow-y-auto sm:overscroll-contain fix-ios-scroll mt-4">
                   {filteredNotes?.length === 0 ? (
                     <div className="flex flex-col items-center text-gray-600 pt-4">
                       <SadIcon className="w-16 h-16" />
