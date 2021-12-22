@@ -10,22 +10,21 @@ import {
   keyState,
 } from './state';
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
   BinIcon,
   ClearIcon,
+  CloseIcon,
   EyeIcon,
   LinkIcon,
   SadIcon,
   SearchIcon,
 } from '../icons';
 import { sortNotes, useFocus } from './util';
-import { Popover, Transition } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
 import { KeyStatus, NoteListItem, Share } from '../types';
 import { useAtom } from 'jotai';
-import { ExclamationCircleIcon } from '@heroicons/react/outline';
+import { ExclamationCircleIcon, ViewListIcon } from '@heroicons/react/outline';
 import { delete_note } from '../api/note_api';
 import { handleException } from '../api';
 import { toast } from 'react-toastify';
@@ -44,19 +43,18 @@ export const Sidebar = (): React.ReactElement => {
   const [query, setQuery] = React.useState('');
   const [filteredNotes, setFilteredNotes] = React.useState(notes);
   const [focused, setFocused] = React.useState(0);
+  const [showFinder, setShowFinder] = React.useState(false);
 
   const [inputRef, setInputFocus] = useFocus();
 
-  const openButtonRef = React.useRef<HTMLButtonElement>(null);
-
   useHotkeys(
-    'command+/,ctrl+/',
+    'command+/,ctrl+/,command+k,ctrl+k',
     (event: KeyboardEvent) => {
-      openButtonRef?.current?.click();
+      setShowFinder((old) => !old);
       event.preventDefault();
     },
     { enableOnContentEditable: true, enableOnTags: ['INPUT'] },
-    [openButtonRef]
+    [setShowFinder]
   );
 
   useHotkeys(
@@ -82,14 +80,11 @@ export const Sidebar = (): React.ReactElement => {
   useHotkeys(
     'enter',
     (event: KeyboardEvent) => {
-      handleSelection(filteredNotes[focused]?.id, () => {
-        openButtonRef?.current?.click();
-        setFocused(0);
-      });
+      handleSelection(filteredNotes[focused]?.id);
       event.preventDefault();
     },
     { enableOnTags: ['INPUT'] },
-    [filteredNotes, focused, setFocused]
+    [filteredNotes, focused, setShowFinder]
   );
 
   const hasDecryptionFailure = React.useMemo(
@@ -153,13 +148,18 @@ export const Sidebar = (): React.ReactElement => {
   );
 
   const handleSelection = React.useCallback(
-    (id: string, close: () => void) => {
+    (id: string) => {
       // Scroll to top incase we are further down the sidebar
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       getNote(id).then(() => {
-        setTimeout(() => setQuery(''), 300);
-        close();
+        setTimeout(() => {
+          setQuery('');
+          setFocused(0);
+          editor?.commands.focus('end', { scrollIntoView: false });
+        }, 200);
+
+        setShowFinder(false);
       });
     },
     [editor, setQuery]
@@ -198,32 +198,47 @@ export const Sidebar = (): React.ReactElement => {
   };
 
   return (
-    <div className="absolute top-0 z-20">
-      <Popover className="relative">
-        <Popover.Button
-          ref={openButtonRef}
+    <>
+      <div className="fixed top-0 z-20">
+        <button
+          onClick={() => setShowFinder(true)}
           className="fixed ml-5 mt-6 outline-none text-black hover:translate-x-0.5 transition active:scale-90"
         >
-          <ArrowRightIcon className="h-7 w-7 sm:h-6 sm:w-6" />
-        </Popover.Button>
-        <Transition
-          enter="transition ease-in-out duration-300"
-          enterFrom="-translate-x-full"
-          enterTo="translate-x-0"
-          leave="transition ease-in-out duration-300"
-          leaveFrom="translate-x-0"
-          leaveTo="-translate-x-full"
-          onTransitionEnd={setInputFocus}
-          className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96 lg:w-120 2xl:w-160"
+          <ViewListIcon className="h-7 w-7 sm:h-6 sm:w-6" />
+        </button>
+      </div>
+      <Transition
+        show={showFinder}
+        onTransitionEnd={setInputFocus}
+        appear
+        className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96 lg:w-120 2xl:w-160"
+      >
+        <Dialog
+          onClose={() => setShowFinder(false)}
+          className="fixed z-20 inset-0 overflow-y-auto"
         >
-          <Popover.Panel>
-            {({ close }) => (
-              <div className="bg-white flex flex-col sm:h-screen w-full pt-4 pb-6">
-                <div className="flex flex-row align-middle mx-5 sm:mx-6">
-                  <Popover.Button className="pr-2">
-                    <ArrowLeftIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
-                  </Popover.Button>
-                  <div className="relative w-full">
+          <div className="flex justify-center">
+            <Transition.Child
+              enter="transition-opacity ease-linear duration-75"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity ease-linear duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0 bg-gray-200 opacity-60" />
+            </Transition.Child>
+            <Transition.Child
+              enter="transition-opacity ease-out duration-75"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity ease-linear duration-75"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="relative py-6 px-4 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-xl lg:max-w-xl my-4">
+                <div className="flex flex-row align-middle">
+                  <div className="relative w-full pl-6">
                     <input
                       type="search"
                       placeholder="Search"
@@ -247,8 +262,11 @@ export const Sidebar = (): React.ReactElement => {
                       </button>
                     )}
                   </div>
+                  <button onClick={() => setShowFinder(false)} className="pl-4">
+                    <CloseIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black" />
+                  </button>
                 </div>
-                <ul className="space-y-2 sm:space-y-1 sm:overflow-y-auto sm:overscroll-contain fix-ios-scroll pl-8 pr-4 mt-4">
+                <ul className="space-y-2 sm:space-y-1 sm:overflow-y-auto sm:overscroll-contain mt-4">
                   {filteredNotes?.length === 0 ? (
                     <div className="flex flex-col items-center text-gray-600 pt-4">
                       <SadIcon className="w-16 h-16" />
@@ -259,7 +277,7 @@ export const Sidebar = (): React.ReactElement => {
                       <React.Fragment key={note?.id}>
                         {note?.metadata?.title ? (
                           <li
-                            onClick={() => handleSelection(note?.id, close)}
+                            onClick={() => handleSelection(note?.id)}
                             key={note?.id}
                             id={note?.id}
                             className="cursor-pointer truncate"
@@ -297,11 +315,11 @@ export const Sidebar = (): React.ReactElement => {
                   )}
                 </ul>
               </div>
-            )}
-          </Popover.Panel>
-        </Transition>
-      </Popover>
-    </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
   );
 };
 
