@@ -58,8 +58,8 @@ const Bootstrapper = (): React.ReactElement => {
       user_info()
         .then((data: UserInfo) => {
           setUserInfo(data);
-          if (isNote) {
-            getNote(params?.id);
+          if (isNote && params?.id) {
+            getNote(params.id);
           }
           setAuthStatus(AuthStatus.SIGNED_IN);
         })
