@@ -4175,6 +4175,11 @@ workbox-window@6.4.2, workbox-window@^6.4.2:
     "@types/trusted-types" "^2.0.2"
     workbox-core "6.4.2"
 
+wouter@^2.7:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/wouter/-/wouter-2.7.5.tgz#c7466a2630bed3a4ec010aea0cda42a5bae69e5d"
+  integrity sha512-TOI9gD1wa7a8wW+lh3rjg0C+MjYGKMV3eC+++6D+7n1z36ZJIBPWe2G9Hs1jYNPsV7oKiPTI3UFC5TGhZjQfrQ==
+
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
