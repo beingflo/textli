@@ -60,9 +60,6 @@ const Bootstrapper = (): React.ReactElement => {
       user_info()
         .then((data: UserInfo) => {
           setUserInfo(data);
-          if (isNote && params?.id) {
-            getNote(params.id);
-          }
           setAuthStatus(AuthStatus.SIGNED_IN);
         })
         .catch(() => {
@@ -70,7 +67,14 @@ const Bootstrapper = (): React.ReactElement => {
           setWaiting(false);
         });
     }
-  }, [authStatus, isNote, getNote, params?.id]);
+  }, [authStatus, setUserInfo, setAuthStatus, setWaiting, setKeyStatus]);
+
+  // Run once to reload note in url
+  React.useEffect(() => {
+    if (authStatus === AuthStatus.SIGNED_IN && isNote && params?.id) {
+      getNote(params.id);
+    }
+  }, [authStatus]);
 
   const refetchAllData = React.useCallback(() => {
     getNoteList();
