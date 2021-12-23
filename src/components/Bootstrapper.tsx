@@ -60,9 +60,6 @@ const Bootstrapper = (): React.ReactElement => {
       user_info()
         .then((data: UserInfo) => {
           setUserInfo(data);
-          if (isNote && params?.id) {
-            getNote(params.id);
-          }
           setAuthStatus(AuthStatus.SIGNED_IN);
         })
         .catch(() => {
@@ -70,13 +67,34 @@ const Bootstrapper = (): React.ReactElement => {
           setWaiting(false);
         });
     }
-  }, [authStatus, isNote, getNote, params?.id]);
+  }, [authStatus, setUserInfo, setAuthStatus, setWaiting, setKeyStatus]);
 
-  const refetchAllData = () => {
+  // Run once to reload note in url
+  React.useEffect(() => {
+    if (authStatus === AuthStatus.SIGNED_IN && isNote && params?.id) {
+      getNote(params.id);
+    }
+  }, [authStatus]);
+
+  const refetchAllData = React.useCallback(() => {
     getNoteList();
     getDeletedNoteList();
     list_shares(setShares, true);
-  };
+  }, [getNoteList, getDeletedNoteList, setShares]);
+
+  const fetchDataOnVisible = React.useCallback(() => {
+    if (document.visibilityState === 'visible') {
+      refetchAllData();
+    }
+  }, [refetchAllData]);
+
+  React.useEffect(() => {
+    document.addEventListener('visibilitychange', fetchDataOnVisible);
+
+    return () => {
+      document.removeEventListener('visibilitychange', fetchDataOnVisible);
+    };
+  }, [fetchDataOnVisible]);
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.SIGNED_IN) {
