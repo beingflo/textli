@@ -2,6 +2,7 @@ import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
 import {
   authState,
+  getCurrentNoteState,
   keyState,
   sharesState,
   showKeypromptState,
@@ -34,6 +35,7 @@ const Bootstrapper = (): React.ReactElement => {
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [userInfo, setUserInfo] = useAtom(userInfoState);
   const [isNote, params] = useRoute('/note/:id');
+  const [currentNote] = useAtom(getCurrentNoteState);
 
   const [waiting, setWaiting] = React.useState(true);
 
@@ -82,6 +84,14 @@ const Bootstrapper = (): React.ReactElement => {
       setWaiting(false);
     }
   }, [authStatus]);
+
+  React.useEffect(() => {
+    if (isNote && currentNote?.metadata?.title) {
+      document.title = `${currentNote?.metadata?.title} - fieldnotes`;
+    } else {
+      document.title = 'fieldnotes';
+    }
+  }, [isNote, currentNote?.metadata?.title]);
 
   return (
     <>
