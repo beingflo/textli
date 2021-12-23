@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup/ActionGroup';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
-const intervalMS = 60 * 60 * 1000;
+const intervalMS = 2 * 60 * 1000;
 
 const App = (): React.ReactElement => {
   const {
