@@ -13,6 +13,7 @@ import {
 } from '../state';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
+import { useLocation } from 'wouter';
 
 export const DeleteAction = (): React.ReactElement => {
   const getDeletedNoteList = useGetDeletedNoteList();
@@ -21,6 +22,7 @@ export const DeleteAction = (): React.ReactElement => {
   const getNote = useGetNote();
   const [, setNoteStatus] = useAtom(noteStatusState);
   const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
+  const [, setLocation] = useLocation();
 
   const [showUndelete, setShowUndelete] = React.useState(false);
   const [deletedNote, setDeletedNote] = React.useState('');
@@ -34,6 +36,7 @@ export const DeleteAction = (): React.ReactElement => {
       editor?.commands.setContent('');
 
       setCurrentNote(undefined);
+      setLocation('/');
       return;
     }
 
@@ -41,6 +44,7 @@ export const DeleteAction = (): React.ReactElement => {
     delete_note(currentNote?.id)
       .then(() => {
         setCurrentNote(undefined);
+        setLocation('/');
 
         setDeletedNote(currentNote?.id);
 
@@ -74,6 +78,7 @@ export const DeleteAction = (): React.ReactElement => {
     undelete_note(deletedNote)
       .then(() => {
         getNote(deletedNote);
+        setLocation(`/note/${deletedNote}`);
         setDeletedNote('');
         setShowUndelete(false);
       })

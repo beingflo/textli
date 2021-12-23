@@ -4,11 +4,13 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { currentNoteState, getEditorState, noteStatusState } from '../state';
 import { NewIcon } from '../../icons';
 import { NoteStatus } from '../../types';
+import { useLocation } from 'wouter';
 
 export const NewAction = (): React.ReactElement => {
   const [editor] = useAtom(getEditorState);
   const [, setNoteStatus] = useAtom(noteStatusState);
   const [, setCurrentNote] = useAtom(currentNoteState);
+  const [, setLocation] = useLocation();
 
   const handleNew = React.useCallback(() => {
     // If unsaved, handle gracefully
@@ -18,7 +20,8 @@ export const NewAction = (): React.ReactElement => {
     editor?.commands?.focus();
 
     setCurrentNote(undefined);
-  }, [editor]);
+    setLocation('/');
+  }, [editor, setLocation, setCurrentNote, setNoteStatus]);
 
   useHotkeys(
     'command+e,ctrl+e',

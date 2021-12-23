@@ -2,7 +2,6 @@ import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
 import {
   authState,
-  currentNoteState,
   keyState,
   sharesState,
   showKeypromptState,
@@ -16,19 +15,25 @@ import Start from './Start';
 import KeyPrompt from './KeyPrompt';
 import { user_info } from '../api/user_api';
 import { list_shares } from '../api/share_api';
-import { useGetDeletedNoteList, useGetNoteList } from '../api/hooks';
+import {
+  useGetDeletedNoteList,
+  useGetNote,
+  useGetNoteList,
+} from '../api/hooks';
 import { useAtom } from 'jotai';
 import { retrieveMainKey } from './crypto';
+import { useRoute } from 'wouter';
 
 const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
+  const getNote = useGetNote();
   const getDeletedNoteList = useGetDeletedNoteList();
   const [, setShares] = useAtom(sharesState);
   const [authStatus, setAuthStatus] = useAtom(authState);
   const [keyStatus, setKeyStatus] = useAtom(keyState);
   const [showKeyprompt, setShowKeyprompt] = useAtom(showKeypromptState);
   const [userInfo, setUserInfo] = useAtom(userInfoState);
-  const [, setCurrentNote] = useAtom(currentNoteState);
+  const [isNote, params] = useRoute('/note/:id');
 
   const [waiting, setWaiting] = React.useState(true);
 
@@ -48,12 +53,14 @@ const Bootstrapper = (): React.ReactElement => {
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.REATTEMPT) {
-      setCurrentNote(undefined);
       setKeyStatus(KeyStatus.MISSING);
 
       user_info()
         .then((data: UserInfo) => {
           setUserInfo(data);
+          if (isNote && params?.id) {
+            getNote(params.id);
+          }
           setAuthStatus(AuthStatus.SIGNED_IN);
         })
         .catch(() => {
@@ -61,7 +68,7 @@ const Bootstrapper = (): React.ReactElement => {
           setWaiting(false);
         });
     }
-  }, [authStatus]);
+  }, [authStatus, isNote, getNote, params?.id]);
 
   const refetchAllData = () => {
     getNoteList();

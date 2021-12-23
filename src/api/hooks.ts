@@ -32,6 +32,7 @@ import {
   save_note,
   update_note,
 } from './note_api';
+import React from 'react';
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
   const [, setNoteStatus] = useAtom(noteStatusState);
@@ -39,40 +40,45 @@ export const useGetNote = (): ((id: string) => Promise<void>) => {
   const [, addToNoteList] = useAtom(addToNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
-  return async (id: string) => {
-    setNoteStatus(NoteStatus.INPROGRESS);
+  const getNote = React.useCallback(
+    async (id: string) => {
+      setNoteStatus(NoteStatus.INPROGRESS);
 
-    const noteDto = await get_note(id).catch(handleException);
+      const noteDto = await get_note(id).catch(handleException);
 
-    setNoteStatus(NoteStatus.SYNCED);
+      setNoteStatus(NoteStatus.SYNCED);
 
-    if (!noteDto || !userInfo) {
-      return;
-    }
+      if (!noteDto || !userInfo) {
+        return;
+      }
 
-    const key: KeyMaterial = JSON.parse(noteDto?.key);
+      const key: KeyMaterial = JSON.parse(noteDto?.key);
 
-    const decrypted_note = await decrypt_note(
-      key,
-      userInfo?.username,
-      noteDto?.metadata,
-      noteDto?.content
-    );
+      const decrypted_note = await decrypt_note(
+        key,
+        userInfo?.username,
+        noteDto?.metadata,
+        noteDto?.content
+      );
 
-    const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
+      const parsedMetadata = JSON.parse(decrypted_note?.metadata ?? '');
 
-    const note = {
-      key,
-      id: noteDto?.id,
-      created_at: noteDto?.created_at,
-      modified_at: noteDto?.modified_at,
-      metadata: parsedMetadata,
-      content: decrypted_note?.content ?? '',
-    };
+      const note = {
+        key,
+        id: noteDto?.id,
+        created_at: noteDto?.created_at,
+        modified_at: noteDto?.modified_at,
+        metadata: parsedMetadata,
+        content: decrypted_note?.content ?? '',
+      };
 
-    setCurrentNote(note);
-    addToNoteList(note);
-  };
+      setCurrentNote(note);
+      addToNoteList(note);
+    },
+    [setNoteStatus, setCurrentNote, addToNoteList, userInfo]
+  );
+
+  return getNote;
 };
 
 export const useSaveNote = (): (() => Promise<NoteStatus>) => {

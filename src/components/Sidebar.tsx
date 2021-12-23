@@ -30,6 +30,7 @@ import { handleException } from '../api';
 import { toast } from 'react-toastify';
 import { removeMainKey } from './crypto';
 import fuzzysort from 'fuzzysort';
+import { useLocation } from 'wouter';
 
 export const Sidebar = (): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
@@ -44,6 +45,7 @@ export const Sidebar = (): React.ReactElement => {
   const [filteredNotes, setFilteredNotes] = React.useState(notes);
   const [focused, setFocused] = React.useState(0);
   const [showFinder, setShowFinder] = React.useState(false);
+  const [, setLocation] = useLocation();
 
   const [inputRef, setInputFocus] = useFocus();
 
@@ -153,11 +155,13 @@ export const Sidebar = (): React.ReactElement => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       getNote(id).then(() => {
-        setTimeout(() => {
-          setQuery('');
-          setFocused(0);
-          editor?.commands.focus('end', { scrollIntoView: false });
-        }, 200);
+        setTimeout(
+          () => editor?.commands.focus('end', { scrollIntoView: false }),
+          300
+        );
+        setQuery('');
+        setFocused(0);
+        setLocation(`/note/${id}`);
 
         setShowFinder(false);
       });
