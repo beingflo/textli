@@ -174,7 +174,7 @@ export const useGetNoteList = (): (() => Promise<void>) => {
   const [, setNoteList] = useAtom(noteListState);
   const [userInfo] = useAtom(getUserInfoState);
 
-  return async () => {
+  const getNoteList = React.useCallback(async () => {
     setNoteList([]);
 
     const encrypted_notes = await get_notes().catch((error) => {
@@ -227,14 +227,16 @@ export const useGetNoteList = (): (() => Promise<void>) => {
 
     setAuthStatus(AuthStatus.SIGNED_IN);
     setNoteList(sortedNotes);
-  };
+  }, [setAuthStatus, setNoteList, userInfo]);
+
+  return getNoteList;
 };
 
 export const useGetDeletedNoteList = (): (() => Promise<void>) => {
   const [userInfo] = useAtom(getUserInfoState);
   const [, setDeletedNoteList] = useAtom(deletedNoteListState);
 
-  return async () => {
+  const getDeletedNotes = React.useCallback(async () => {
     const encrypted_notes = await get_deleted_notes().catch(handleException);
 
     if (!encrypted_notes || !userInfo) {
@@ -274,5 +276,7 @@ export const useGetDeletedNoteList = (): (() => Promise<void>) => {
 
     const sortedNotes = sortDeletedNotes(filteredNotes);
     setDeletedNoteList(sortedNotes);
-  };
+  }, [userInfo, setDeletedNoteList]);
+
+  return getDeletedNotes;
 };

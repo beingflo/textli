@@ -72,11 +72,25 @@ const Bootstrapper = (): React.ReactElement => {
     }
   }, [authStatus, isNote, getNote, params?.id]);
 
-  const refetchAllData = () => {
+  const refetchAllData = React.useCallback(() => {
     getNoteList();
     getDeletedNoteList();
     list_shares(setShares, true);
-  };
+  }, [getNoteList, getDeletedNoteList, setShares]);
+
+  const fetchDataOnVisible = React.useCallback(() => {
+    if (document.visibilityState === 'visible') {
+      refetchAllData();
+    }
+  }, [refetchAllData]);
+
+  React.useEffect(() => {
+    document.addEventListener('visibilitychange', fetchDataOnVisible);
+
+    return () => {
+      document.removeEventListener('visibilitychange', fetchDataOnVisible);
+    };
+  }, [fetchDataOnVisible]);
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.SIGNED_IN) {
