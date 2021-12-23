@@ -46,7 +46,7 @@ export const ActionGroup = (): React.ReactElement => {
   }, [currentNote, shares]);
 
   return (
-    <div className="flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:space-y-1.5 fixed top-6 right-6">
+    <div className="bg-green-50 flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:space-y-1.5 fixed top-6 right-6">
       <SaveAction />
       <NewAction />
       <DeleteAction />
