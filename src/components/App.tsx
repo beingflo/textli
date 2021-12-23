@@ -2,8 +2,29 @@ import React from 'react';
 import Editor from './Editor';
 import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup/ActionGroup';
+import { useRegisterSW } from 'virtual:pwa-register/react';
+
+const intervalMS = 2 * 60 * 1000;
 
 const App = (): React.ReactElement => {
+  const {
+    updateServiceWorker,
+    needRefresh: [needRefresh, setNeedRefresh],
+  } = useRegisterSW({
+    onRegistered(r) {
+      r &&
+        setInterval(() => {
+          r.update();
+        }, intervalMS);
+    },
+  });
+
+  if (needRefresh) {
+    console.log('PWA refreshing');
+    setNeedRefresh(false);
+    updateServiceWorker();
+  }
+
   return (
     <div className="h-screen flex flex-col sm:flex-row justify-between w-full relative">
       <div className="sm:hidden bg-white fixed z-10 w-full h-16" />
