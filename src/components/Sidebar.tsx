@@ -29,7 +29,6 @@ import { delete_note } from '../api/note_api';
 import { handleException } from '../api';
 import { toast } from 'react-toastify';
 import { removeMainKey } from './crypto';
-import fuzzysort from 'fuzzysort';
 import { useLocation } from 'wouter';
 
 export const Sidebar = (): React.ReactElement => {
@@ -120,20 +119,21 @@ export const Sidebar = (): React.ReactElement => {
   }, [hasDecryptionFailure, userInfo]);
 
   React.useEffect(() => {
-    fuzzysort
-      .goAsync(query, notes, {
-        keys: ['metadata.title', 'metadata.tags'],
-      })
-      .then((results) => {
-        const mappedResults = results.map((result) => result.obj);
-        const sortedNotes = sortNotes(mappedResults);
+    const searchTerms = query.split(' ');
+    const filteredNotes = notes.filter((note: NoteListItem) =>
+      searchTerms.every(
+        (term) =>
+          note.metadata?.title?.toLowerCase().includes(term.toLowerCase()) ||
+          note.metadata?.title?.toLowerCase().includes(term.toLowerCase())
+      )
+    );
+    const sortedNotes = sortNotes(filteredNotes);
 
-        if (query === '') {
-          setFilteredNotes(notes);
-        } else {
-          setFilteredNotes(sortedNotes);
-        }
-      });
+    if (query === '') {
+      setFilteredNotes(notes);
+    } else {
+      setFilteredNotes(sortedNotes);
+    }
   }, [notes, query]);
 
   const isSelected = React.useCallback(
