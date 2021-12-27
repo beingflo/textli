@@ -310,7 +310,9 @@ export const Sharing = ({
                     <div className="flex flex-row justify-end">
                       <button
                         onClick={handleCreateShare}
-                        className="mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition hover:bg-gray-700 active:bg-gray-800"
+                        className={`
+                          ${published && 'bg-red-500 '}
+                          mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition hover:bg-gray-700 active:bg-gray-800`}
                       >
                         Create share
                       </button>
