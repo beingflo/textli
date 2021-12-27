@@ -33,7 +33,7 @@ const App = (): React.ReactElement => {
       </div>
       <div
         spellCheck="false"
-        className="h-full max-w-full mt-12 mx-4 sm:mt-0 sm:mx-12 md:min-w-sm lg:max-w-2xl 2xl:max-w-7xl"
+        className="h-full max-w-full mt-12 mx-4 sm:mt-0 sm:mx-12 sm:min-w-sm lg:max-w-2xl 2xl:max-w-7xl"
       >
         <Editor />
       </div>
