@@ -30,11 +30,7 @@ export const Editor = (): React.ReactElement => {
         placeholder: 'Write something nice ...',
       }),
       TextStyle,
-      Link.configure({
-        HTMLAttributes: {
-          target: '_blank',
-        },
-      }),
+      Link,
       Image,
       Table,
       TableCell,
