@@ -6,6 +6,9 @@ import { AuthStatus } from '../types';
 import { SpinnerPage } from './Spinner';
 import { authState } from './state';
 
+const FORBIDDEN_CHARS_REGEX = /[;/?:@&=+$,#*\[\]{}()^|]/;
+const FORBIDDEN_CHARS = ';/?:@&=+$,#*[]{}()^|';
+
 const Signup = (): React.ReactElement => {
   const [, setAuthState] = useAtom(authState);
 
@@ -15,6 +18,8 @@ const Signup = (): React.ReactElement => {
   const [email, setEmail] = React.useState('');
 
   const [waiting, setWaiting] = React.useState(false);
+
+  const forbiddenChars = FORBIDDEN_CHARS_REGEX.test(username);
 
   const submit = React.useCallback(
     (event: any) => {
@@ -43,7 +48,7 @@ const Signup = (): React.ReactElement => {
   const passwordNoMatch: boolean =
     password !== passwordConfirm && (password !== '' || passwordConfirm !== '');
 
-  const submitDisabled = !passwordMatch || !username;
+  const submitDisabled = !passwordMatch || !username || forbiddenChars;
 
   return (
     <>
@@ -60,6 +65,12 @@ const Signup = (): React.ReactElement => {
               onChange={(event) => setUsername(event?.target?.value)}
             />
           </label>
+          {forbiddenChars && (
+            <span className="text-red-500">
+              Your name must not contain any of the following characters:
+              <span className="pl-1">{FORBIDDEN_CHARS}</span>
+            </span>
+          )}
           <label className="block">
             <span className="text-gray-700 text-sm">Password</span>
             <input
