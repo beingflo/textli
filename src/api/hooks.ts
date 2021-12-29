@@ -33,6 +33,7 @@ import {
   update_note,
 } from './note_api';
 import React from 'react';
+import { useLocation } from 'wouter';
 
 export const useGetNote = (): ((id: string) => Promise<void>) => {
   const [, setNoteStatus] = useAtom(noteStatusState);
@@ -87,6 +88,7 @@ export const useSaveNote = (): (() => Promise<NoteStatus>) => {
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const [, addToNoteList] = useAtom(addToNoteListState);
   const [userInfo] = useAtom(getUserInfoState);
+  const [, setLocation] = useLocation();
 
   return async (): Promise<NoteStatus> => {
     if (!userInfo) {
@@ -142,6 +144,7 @@ export const useSaveNote = (): (() => Promise<NoteStatus>) => {
         };
         setCurrentNote(note);
         addToNoteList(note);
+        setLocation(`/note/${note.id}`);
       }
     } else {
       // Existing note
