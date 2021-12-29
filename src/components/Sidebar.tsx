@@ -240,7 +240,7 @@ export const Sidebar = (): React.ReactElement => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="relative py-6 px-4 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-xl lg:max-w-xl my-4">
+              <div className="relative py-6 px-4 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-2xl lg:max-w-2xl my-4">
                 <div className="flex flex-row align-middle">
                   <div className="relative w-full pl-6">
                     <input
