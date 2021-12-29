@@ -20,6 +20,7 @@ import {
   useGetDeletedNoteList,
   useGetNote,
   useGetNoteList,
+  useSaveNote,
 } from '../api/hooks';
 import { useAtom } from 'jotai';
 import { retrieveMainKey } from './crypto';
@@ -28,6 +29,7 @@ import { useRoute } from 'wouter';
 const Bootstrapper = (): React.ReactElement => {
   const getNoteList = useGetNoteList();
   const getNote = useGetNote();
+  const saveNote = useSaveNote();
   const getDeletedNoteList = useGetDeletedNoteList();
   const [, setShares] = useAtom(sharesState);
   const [authStatus, setAuthStatus] = useAtom(authState);
@@ -95,6 +97,20 @@ const Bootstrapper = (): React.ReactElement => {
       document.removeEventListener('visibilitychange', fetchDataOnVisible);
     };
   }, [fetchDataOnVisible]);
+
+  const saveDataOnHidden = React.useCallback(() => {
+    if (document.visibilityState === 'hidden') {
+      saveNote();
+    }
+  }, [saveNote]);
+
+  React.useEffect(() => {
+    document.addEventListener('visibilitychange', saveDataOnHidden);
+
+    return () => {
+      document.removeEventListener('visibilitychange', saveDataOnHidden);
+    };
+  }, [saveDataOnHidden]);
 
   React.useEffect(() => {
     if (authStatus === AuthStatus.SIGNED_IN) {
