@@ -172,8 +172,8 @@ export const Sharing = ({
                       </span>
                     </div>
                     {share?.public && (
-                      <div className="flex flex-row mt-2 text-red-500 font-medium">
-                        This note is published on your profile!
+                      <div className="flex flex-row mt-2 text-green-600 font-medium">
+                        This note is visible on your public profile!
                       </div>
                     )}
                     <div className="mt-4 flex flex-row justify-between bg-gray-100 p-4 rounded-md">
@@ -212,7 +212,7 @@ export const Sharing = ({
                     <div className="flex flex-row justify-end">
                       <button
                         onClick={handleDeleteShare}
-                        className="mt-8 p-2 bg-gray-600 text-white rounded-md shadow-md transition hover:bg-gray-500 active:bg-gray-600"
+                        className="mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition"
                       >
                         Delete share
                       </button>
@@ -231,7 +231,7 @@ export const Sharing = ({
                           onChange={(event) =>
                             setPublished(event.target.checked)
                           }
-                          className="rounded-sm outline-none focus:ring-0 text-red-500 self-center"
+                          className="rounded-sm outline-none focus:ring-0 text-green-600 self-center"
                         />
                       </div>
                     </div>
@@ -272,7 +272,7 @@ export const Sharing = ({
                                   }
                                   value={option}
                                 >
-                                  {({ selected, active }) => (
+                                  {({ selected }) => (
                                     <>
                                       <span
                                         className={`${
@@ -284,14 +284,7 @@ export const Sharing = ({
                                         {option?.value}
                                       </span>
                                       {selected ? (
-                                        <span
-                                          className={`${
-                                            active
-                                              ? 'text-amber-600'
-                                              : 'text-amber-600'
-                                          }
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                                        >
+                                        <span className="text-yellow-500 absolute inset-y-0 left-0 flex items-center pl-3">
                                           <CheckIcon
                                             className="w-5 h-5"
                                             aria-hidden="true"
@@ -311,8 +304,8 @@ export const Sharing = ({
                       <button
                         onClick={handleCreateShare}
                         className={`
-                          ${published && 'bg-red-500 '}
-                          mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition hover:bg-gray-700 active:bg-gray-800`}
+                          ${published && 'bg-green-600 '}
+                          mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition`}
                       >
                         Create share
                       </button>

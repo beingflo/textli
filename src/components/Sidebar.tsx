@@ -195,7 +195,7 @@ export const Sidebar = (): React.ReactElement => {
         <EyeIcon
           className={`${
             shared.public || 'invisible'
-          } w-3 h-3 absolute text-red-500 top-3 left-3`}
+          } w-3 h-3 absolute text-green-600 top-3 left-3`}
         />
       </div>
     );
