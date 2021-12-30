@@ -291,7 +291,10 @@ export const Sidebar = (): React.ReactElement => {
                               <span
                                 className={`truncate ${
                                   isSelected(note?.id) ? 'highlight' : ''
-                                } ${index === focused && 'md:underline'}`}
+                                } ${
+                                  index === focused &&
+                                  'md:underline md:underline-offset-4'
+                                }`}
                               >
                                 {note?.metadata?.title}
                               </span>
