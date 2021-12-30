@@ -62,7 +62,7 @@ export const ActionGroup = (): React.ReactElement => {
             } h-7 w-7 sm:h-6 sm:w-6 text-black`}
           />
           {isPublic && (
-            <EyeIcon className="w-4 h-4 text-red-500 absolute top-4 left-4 sm:top-3.5 sm:left-3.5" />
+            <EyeIcon className="w-4 h-4 text-green-600 absolute top-4 left-4 sm:top-3.5 sm:left-3.5" />
           )}
         </button>
       </div>
