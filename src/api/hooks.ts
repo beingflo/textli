@@ -178,8 +178,6 @@ export const useGetNoteList = (): (() => Promise<void>) => {
   const [userInfo] = useAtom(getUserInfoState);
 
   const getNoteList = React.useCallback(async () => {
-    setNoteList([]);
-
     const encrypted_notes = await get_notes().catch((error) => {
       handleException(error);
       setAuthStatus(AuthStatus.SIGNED_OUT);
