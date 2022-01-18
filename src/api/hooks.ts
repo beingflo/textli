@@ -112,6 +112,11 @@ export const useSaveNote = (): (() => Promise<NoteStatus>) => {
       return NoteStatus.SYNCED;
     }
 
+    // Empty document, no change
+    if (!currentNote && content === '<p></p>') {
+      return NoteStatus.SYNCED;
+    }
+
     const encrypted_note = await encrypt_note(
       mainKey,
       userInfo?.username,
@@ -178,8 +183,6 @@ export const useGetNoteList = (): (() => Promise<void>) => {
   const [userInfo] = useAtom(getUserInfoState);
 
   const getNoteList = React.useCallback(async () => {
-    setNoteList([]);
-
     const encrypted_notes = await get_notes().catch((error) => {
       handleException(error);
       setAuthStatus(AuthStatus.SIGNED_OUT);
