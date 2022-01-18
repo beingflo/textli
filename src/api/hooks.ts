@@ -112,6 +112,11 @@ export const useSaveNote = (): (() => Promise<NoteStatus>) => {
       return NoteStatus.SYNCED;
     }
 
+    // Empty document, no change
+    if (!currentNote && content === '<p></p>') {
+      return NoteStatus.SYNCED;
+    }
+
     const encrypted_note = await encrypt_note(
       mainKey,
       userInfo?.username,
