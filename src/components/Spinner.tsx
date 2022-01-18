@@ -3,7 +3,7 @@ import './spinner.css';
 
 export const Spinner = (): React.ReactElement => {
   return (
-    <div className={`h-8 w-8`}>
+    <div className={`h-5 w-5`}>
       <div className="spinner" />
     </div>
   );
