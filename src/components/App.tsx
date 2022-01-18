@@ -4,7 +4,8 @@ import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup/ActionGroup';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
-const intervalMS = 2 * 60 * 1000;
+// Attempt to refetch PWA every 2 hours
+const intervalMS = 2 * 3600 * 60 * 1000;
 
 const App = (): React.ReactElement => {
   const {
