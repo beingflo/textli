@@ -5,7 +5,6 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useSaveNote } from '../../api/hooks';
 import { CheckIcon, SaveIcon } from '../../icons';
 import { NoteStatus } from '../../types';
-import { Spinner } from '../Spinner';
 import { noteStatusState } from '../state';
 
 export const SaveAction = (): React.ReactElement => {
@@ -51,9 +50,9 @@ export const SaveAction = (): React.ReactElement => {
         leave="transition-opacity ease-linear duration-300"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="absolute top-8 right-1 sm:top-0.5 sm:right-8"
+        className="absolute top-8 right-0.5 sm:top-0.5 sm:right-8"
       >
-        <Spinner />
+        <div className="slow-spinning border-black h-6 w-6 sm:h-5 sm:w-5 border border-dashed rounded-full bg-white" />
       </Transition>
       <Transition
         show={showSaveConfirm[0]}

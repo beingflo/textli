@@ -23,3 +23,12 @@
 .spinning {
   animation: spinning 1s linear infinite;
 }
+
+@keyframes slow-spinning {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.slow-spinning {
+  animation: slow-spinning 2s linear infinite;
+}
