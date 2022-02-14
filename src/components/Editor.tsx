@@ -42,7 +42,8 @@ export const Editor = (): React.ReactElement => {
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose py-6 px-2 focus:outline-none min-h-full',
+        class:
+          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-black marker:text-gray-900 prose-pre:bg-gray-800 prose-pre:rounded-sm py-6 px-2 focus:outline-none min-h-full',
       },
     },
     onUpdate() {
