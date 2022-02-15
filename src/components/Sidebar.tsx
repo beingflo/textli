@@ -137,6 +137,10 @@ export const Sidebar = (): React.ReactElement => {
     }
   }, [notes, query]);
 
+  React.useEffect(() => {
+    setTimeout(() => setFocused(0), 100);
+  }, [setFocused, showFinder]);
+
   const isSelected = React.useCallback(
     (id: string) => currentNote?.id === id,
     [currentNote]
@@ -295,7 +299,7 @@ export const Sidebar = (): React.ReactElement => {
                                   'md:bg-yellow-300 md:rounded-lg md:px-1 md:-translate-x-1'
                                 } ${
                                   isSelected(note?.id)
-                                    ? 'highlight rounded-none'
+                                    ? 'highlight md:rounded-none px-1 -translate-x-1'
                                     : ''
                                 }`}
                               >
