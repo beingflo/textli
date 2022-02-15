@@ -164,8 +164,8 @@ export const Sidebar = (): React.ReactElement => {
           () => editor?.commands.focus('end', { scrollIntoView: false }),
           300
         );
+        setTimeout(() => setFocused(0), 200);
         setQuery('');
-        setFocused(0);
         setLocation(`/note/${id}`);
 
         setShowFinder(false);
