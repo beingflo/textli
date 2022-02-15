@@ -81,7 +81,7 @@ export const Settings = ({
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex focus:outline-none">
-                          <LinkIcon className="h-5 w-5 mr-2 self-center" />
+                          <LinkIcon className="h-5 w-5 stroke-2 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Shares
                           </span>
@@ -91,7 +91,7 @@ export const Settings = ({
                     <Tab as={React.Fragment}>
                       {({ selected }) => (
                         <button className="flex focus:outline-none">
-                          <BinIcon className="h-5 w-5 mr-2 self-center" />
+                          <BinIcon className="h-5 w-5 stroke-2 mr-2 self-center" />
                           <span className={selected ? 'highlight' : ''}>
                             Bin
                           </span>

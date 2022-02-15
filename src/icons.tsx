@@ -13,7 +13,7 @@ export const SaveIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -61,7 +61,7 @@ export const NewIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -87,7 +87,7 @@ export const BinIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -113,7 +113,7 @@ export const MoreIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -138,7 +138,7 @@ export const LinkIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -162,7 +162,7 @@ export const SettingsIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -193,7 +193,7 @@ export const LogoutIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -245,7 +245,7 @@ export const ArrowLeftIcon = ({
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
+        strokeWidth={1.5}
         d="M11 17l-5-5m0 0l5-5m-5 5h12"
       />
     </svg>
@@ -268,7 +268,7 @@ export const SearchIcon = ({
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
+        strokeWidth={1.5}
         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
       />
     </svg>
@@ -437,7 +437,7 @@ export const CloseIcon = ({
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
+        strokeWidth={1.5}
         d="M6 18L18 6M6 6l12 12"
       />
     </svg>
@@ -822,6 +822,29 @@ export const HappyIcon = ({
         <path d="m666.48 437.76c-7.6797-1.5586-16.199 3.2383-22.441-4.3203 0-1.8008 0-4.1992 0.71875-5.2812h0.003907c3.5742-4.1094 8.2773-7.0742 13.527-8.5273 5.25-1.4492 10.812-1.3242 15.992 0.36719 7.2969 3.1172 12.773 9.3906 14.879 17.039 0.058594 3.4336-0.51172 6.8516-1.6797 10.082-11.16 3.1172-13.441-8.5195-21-9.3594z" />
         <path d="m518.4 436.68h-24l-16.32 10.441-5.0391-8.3984v-0.003906c6.1055-10.379 16.914-17.105 28.922-18 7.5586-0.71875 11.398 2.1602 16.438 15.961z" />
       </g>
+    </svg>
+  );
+};
+
+export const ViewListIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 6h16M4 10h16M4 14h16M4 18h16"
+      />
     </svg>
   );
 };

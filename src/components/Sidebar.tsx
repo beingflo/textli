@@ -17,6 +17,7 @@ import {
   LinkIcon,
   SadIcon,
   SearchIcon,
+  ViewListIcon,
 } from '../icons';
 import { sortNotes, useFocus } from './util';
 import { Dialog, Transition } from '@headlessui/react';
@@ -24,7 +25,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetNote } from '../api/hooks';
 import { KeyStatus, NoteListItem, Share } from '../types';
 import { useAtom } from 'jotai';
-import { ExclamationCircleIcon, ViewListIcon } from '@heroicons/react/outline';
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { delete_note } from '../api/note_api';
 import { handleException } from '../api';
 import { toast } from 'react-toastify';
@@ -290,10 +291,12 @@ export const Sidebar = (): React.ReactElement => {
                               {SharedIndicator(note.id)}
                               <span
                                 className={`truncate ${
-                                  isSelected(note?.id) ? 'highlight' : ''
-                                } ${
                                   index === focused &&
-                                  'md:underline md:underline-offset-4'
+                                  'bg-yellow-300 rounded-lg px-1 -translate-x-1'
+                                } ${
+                                  isSelected(note?.id)
+                                    ? 'highlight rounded-none'
+                                    : ''
                                 }`}
                               >
                                 {note?.metadata?.title}
