@@ -291,10 +291,12 @@ export const Sidebar = (): React.ReactElement => {
                               {SharedIndicator(note.id)}
                               <span
                                 className={`truncate ${
-                                  isSelected(note?.id) ? 'highlight' : ''
-                                } ${
                                   index === focused &&
-                                  'md:underline md:underline-offset-4'
+                                  'bg-yellow-300 rounded-lg px-1 -translate-x-1'
+                                } ${
+                                  isSelected(note?.id)
+                                    ? 'highlight rounded-none'
+                                    : ''
                                 }`}
                               >
                                 {note?.metadata?.title}
