@@ -74,7 +74,7 @@ export const Shares = (): React.ReactElement => {
                   className="flex flex-row md:items-center"
                   onClick={() => revoke_share(share?.token)}
                 >
-                  <BinIcon className="w-4 h-4" />
+                  <BinIcon className="w-4 h-4 stroke-2" />
                 </button>
               </div>
             </li>

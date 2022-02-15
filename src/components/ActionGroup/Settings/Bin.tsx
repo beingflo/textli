@@ -35,7 +35,7 @@ export const Bin = (): React.ReactElement => {
               </span>
               <div className="flex justify-between">
                 <div className="flex flex-row space-x-1">
-                  <BinIcon className="h-4 w-4 self-center" />
+                  <BinIcon className="h-4 w-4 stroke-2 self-center" />
                   <span className="text-gray-500">
                     {new Date(note?.deleted_at).toLocaleDateString()}
                   </span>
