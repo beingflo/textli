@@ -296,7 +296,7 @@ export const Sidebar = (): React.ReactElement => {
                               <span
                                 className={`truncate ${
                                   index === focused &&
-                                  'md:bg-yellow-300 md:rounded-lg md:px-1 md:-translate-x-1'
+                                  'md:bg-yellow-300 md:rounded-sm md:px-1 md:-translate-x-1'
                                 } ${
                                   isSelected(note?.id)
                                     ? 'highlight md:rounded-none px-1 -translate-x-1'
