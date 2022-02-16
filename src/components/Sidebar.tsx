@@ -49,6 +49,15 @@ export const Sidebar = (): React.ReactElement => {
 
   const [inputRef, setInputFocus] = useFocus();
 
+  const handleCloseFinder = React.useCallback(() => {
+    setTimeout(() => {
+      setFocused(0);
+      setQuery('');
+    }, 200);
+
+    setShowFinder(false);
+  }, [setShowFinder, setQuery, setFocused]);
+
   useHotkeys(
     'command+/,ctrl+/,command+k,ctrl+k',
     (event: KeyboardEvent) => {
@@ -86,7 +95,7 @@ export const Sidebar = (): React.ReactElement => {
       event.preventDefault();
     },
     { enableOnTags: ['INPUT'] },
-    [filteredNotes, focused, setShowFinder]
+    [filteredNotes, focused]
   );
 
   const hasDecryptionFailure = React.useMemo(
@@ -164,14 +173,12 @@ export const Sidebar = (): React.ReactElement => {
           () => editor?.commands.focus('end', { scrollIntoView: false }),
           300
         );
-        setTimeout(() => setFocused(0), 200);
-        setQuery('');
-        setLocation(`/note/${id}`);
+        handleCloseFinder();
 
-        setShowFinder(false);
+        setLocation(`/note/${id}`);
       });
     },
-    [editor, setQuery]
+    [editor, handleCloseFinder]
   );
 
   const handleDelete = React.useCallback(
@@ -223,7 +230,7 @@ export const Sidebar = (): React.ReactElement => {
         className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96 lg:w-120 2xl:w-160"
       >
         <Dialog
-          onClose={() => setShowFinder(false)}
+          onClose={handleCloseFinder}
           className="fixed z-20 inset-0 overflow-y-auto"
         >
           <div className="flex justify-center">
@@ -271,7 +278,7 @@ export const Sidebar = (): React.ReactElement => {
                       </button>
                     )}
                   </div>
-                  <button onClick={() => setShowFinder(false)} className="pl-4">
+                  <button onClick={handleCloseFinder} className="pl-4">
                     <CloseIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black" />
                   </button>
                 </div>
