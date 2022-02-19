@@ -203,9 +203,9 @@ export const Sharing = ({
                           leave="transition-opacity ease-linear duration-300"
                           leaveFrom="opacity-100"
                           leaveTo="opacity-0"
-                          className="absolute top-1 right-16"
+                          className="absolute top-0.5 right-[3.75rem]"
                         >
-                          <CheckIcon className="h-4 w-4 text-green-600" />
+                          <CheckIcon className="h-5 w-5 text-green-600" />
                         </Transition>
                       </div>
                     </div>
