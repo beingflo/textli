@@ -20,7 +20,7 @@ export const DeleteAction = (): React.ReactElement => {
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
-  const [, setNoteStatus] = useAtom(noteStatusState);
+  const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
   const [, deleteFromNoteList] = useAtom(deleteFromNoteListState);
   const [, setLocation] = useLocation();
 
@@ -92,7 +92,7 @@ export const DeleteAction = (): React.ReactElement => {
     <div className="relative">
       <button
         onClick={handleDelete}
-        disabled={!currentNote}
+        disabled={!currentNote && noteStatus !== NoteStatus.CHANGED}
         className="disabled:opacity-60"
       >
         <BinIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
