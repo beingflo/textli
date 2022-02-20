@@ -223,12 +223,7 @@ export const Sidebar = (): React.ReactElement => {
           <ViewListIcon className="h-7 w-7 sm:h-6 sm:w-6" />
         </button>
       </div>
-      <Transition
-        show={showFinder}
-        onTransitionEnd={setInputFocus}
-        appear
-        className="absolute top-0 border-r border-dashed border-gray-300 w-screen z-20 sm:w-96 lg:w-120 2xl:w-160"
-      >
+      <Transition show={showFinder} onTransitionEnd={setInputFocus} appear>
         <Dialog
           onClose={handleCloseFinder}
           className="fixed z-20 inset-0 overflow-y-auto"
@@ -242,7 +237,7 @@ export const Sidebar = (): React.ReactElement => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-200 opacity-60" />
+              <Dialog.Overlay className="fixed inset-0 bg-white bg-opacity-100" />
             </Transition.Child>
             <Transition.Child
               enter="transition-opacity ease-out duration-75"
@@ -252,7 +247,7 @@ export const Sidebar = (): React.ReactElement => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="relative py-6 px-4 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-2xl lg:max-w-2xl my-4">
+              <div className="relative py-6 px-4 bg-white mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-2xl lg:max-w-2xl my-4">
                 <div className="flex flex-row align-middle">
                   <div className="relative w-full pl-6">
                     <input
@@ -261,7 +256,7 @@ export const Sidebar = (): React.ReactElement => {
                       value={query}
                       ref={inputRef}
                       onChange={(event) => setQuery(event?.target?.value)}
-                      className="border border-gray-200 p-2 focus:ring-0 focus:border-gray-400 placeholder-gray-400 bg-white rounded-md w-full"
+                      className="p-2 focus:ring-0 border-none focus:border-none placeholder-gray-400 bg-white rounded-md w-full"
                     />
                     {query ? (
                       <button
@@ -304,7 +299,11 @@ export const Sidebar = (): React.ReactElement => {
                                 className={`truncate ${
                                   index === focused &&
                                   'md:bg-yellow-300 md:rounded-sm md:px-1 md:-translate-x-1'
-                                } ${isSelected(note?.id) ? 'highlight' : ''}`}
+                                } ${
+                                  isSelected(note?.id) && index !== focused
+                                    ? 'highlight'
+                                    : ''
+                                }`}
                               >
                                 {note?.metadata?.title}
                               </span>
