@@ -11,6 +11,8 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
 import './editorStyles.css';
 import { editorState, getCurrentNoteState, noteStatusState } from './state';
 import { NoteStatus } from '../types';
@@ -36,6 +38,10 @@ export const Editor = (): React.ReactElement => {
       TableCell,
       TableRow,
       TableHeader,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
     ],
     autofocus: 'end',
     editable: true,
