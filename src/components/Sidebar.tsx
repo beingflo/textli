@@ -91,8 +91,10 @@ export const Sidebar = (): React.ReactElement => {
   useHotkeys(
     'enter',
     (event: KeyboardEvent) => {
-      handleSelection(filteredNotes[focused]?.id);
-      event.preventDefault();
+      if (showFinder) {
+        handleSelection(filteredNotes[focused]?.id);
+        event.preventDefault();
+      }
     },
     { enableOnTags: ['INPUT'] },
     [filteredNotes, focused]
