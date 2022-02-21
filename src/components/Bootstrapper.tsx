@@ -85,10 +85,14 @@ const Bootstrapper = (): React.ReactElement => {
   }, [getNoteList, getDeletedNoteList, setShares]);
 
   const fetchDataOnVisible = React.useCallback(() => {
-    if (document.visibilityState === 'visible') {
+    if (
+      document.visibilityState === 'visible' &&
+      authStatus === AuthStatus.SIGNED_IN &&
+      keyStatus === KeyStatus.PRESENT
+    ) {
       refetchAllData();
     }
-  }, [refetchAllData]);
+  }, [refetchAllData, authStatus, keyStatus]);
 
   React.useEffect(() => {
     document.addEventListener('visibilitychange', fetchDataOnVisible);
