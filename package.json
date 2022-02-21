@@ -1,6 +1,6 @@
 {
   "name": "fieldnotes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -21,6 +21,8 @@
     "@tiptap/extension-table-cell": "^2.0.0-beta.14",
     "@tiptap/extension-table-header": "^2.0.0-beta.16",
     "@tiptap/extension-table-row": "^2.0.0-beta.14",
+    "@tiptap/extension-task-item": "^2.0.0-beta.31",
+    "@tiptap/extension-task-list": "^2.0.0-beta.26",
     "@tiptap/extension-text-style": "^2.0.0-beta.17",
     "@tiptap/extension-typography": "^2.0.0-beta.14",
     "@tiptap/react": "^2.0.0-beta.62",
