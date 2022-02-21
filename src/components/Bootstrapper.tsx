@@ -85,10 +85,14 @@ const Bootstrapper = (): React.ReactElement => {
   }, [getNoteList, getDeletedNoteList, setShares]);
 
   const fetchDataOnVisible = React.useCallback(() => {
-    if (document.visibilityState === 'visible') {
+    if (
+      document.visibilityState === 'visible' &&
+      authStatus === AuthStatus.SIGNED_IN &&
+      keyStatus === KeyStatus.PRESENT
+    ) {
       refetchAllData();
     }
-  }, [refetchAllData]);
+  }, [refetchAllData, authStatus, keyStatus]);
 
   React.useEffect(() => {
     document.addEventListener('visibilitychange', fetchDataOnVisible);
@@ -113,11 +117,17 @@ const Bootstrapper = (): React.ReactElement => {
   }, [saveDataOnHidden]);
 
   React.useEffect(() => {
-    if (authStatus === AuthStatus.SIGNED_IN) {
+    if (
+      authStatus === AuthStatus.SIGNED_IN &&
+      keyStatus === KeyStatus.PRESENT
+    ) {
       refetchAllData();
+    }
+
+    if (authStatus === AuthStatus.SIGNED_IN) {
       setWaiting(false);
     }
-  }, [authStatus]);
+  }, [authStatus, keyStatus]);
 
   React.useEffect(() => {
     if (isNote && currentNote?.metadata?.title) {
