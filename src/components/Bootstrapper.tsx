@@ -113,11 +113,17 @@ const Bootstrapper = (): React.ReactElement => {
   }, [saveDataOnHidden]);
 
   React.useEffect(() => {
-    if (authStatus === AuthStatus.SIGNED_IN) {
+    if (
+      authStatus === AuthStatus.SIGNED_IN &&
+      keyStatus === KeyStatus.PRESENT
+    ) {
       refetchAllData();
+    }
+
+    if (authStatus === AuthStatus.SIGNED_IN) {
       setWaiting(false);
     }
-  }, [authStatus]);
+  }, [authStatus, keyStatus]);
 
   React.useEffect(() => {
     if (isNote && currentNote?.metadata?.title) {
