@@ -21,7 +21,7 @@ export const GeneralSettings = (): React.ReactElement => {
   const balance = parseFloat(userInfo?.balance ?? '0');
   const balanceFixed = balance.toFixed(2);
   const balance_days = parseFloat(userInfo?.remaining_days ?? '0');
-  const remaining_weeks = (balance_days / 7).toFixed(1);
+  const remaining_weeks = (balance_days / 7).toFixed(0);
 
   return (
     <>
