@@ -49,7 +49,7 @@ export const Editor = (): React.ReactElement => {
     editorProps: {
       attributes: {
         class:
-          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-gray-800 marker:text-gray-800 prose-pre:bg-gray-800 prose-pre:rounded-sm py-6 px-2 focus:outline-none min-h-full',
+          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-gray-800 marker:text-gray-800 prose-pre:bg-gray-800 prose-pre:rounded-sm py-6 md:py-10 px-2 focus:outline-none min-h-full',
       },
     },
     onUpdate() {
