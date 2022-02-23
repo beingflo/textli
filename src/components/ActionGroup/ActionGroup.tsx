@@ -3,6 +3,7 @@ import React from 'react';
 import { user_logout } from '../../api/user_api';
 import {
   EyeIcon,
+  HomeIcon,
   LinkIcon,
   LogoutIcon,
   MoreIcon,
@@ -16,16 +17,26 @@ import Settings from './Settings/Settings';
 import { Sharing } from './Sharing';
 import { AuthStatus, Share } from '../../types';
 import { useAtom } from 'jotai';
-import { authState, getCurrentNoteState, getSharesState } from '../state';
+import {
+  authState,
+  getCurrentNoteState,
+  getSharesState,
+  getUserInfoState,
+} from '../state';
+
+const shareUrl = import.meta.env.VITE_SHARE_URL;
 
 export const ActionGroup = (): React.ReactElement => {
   const [shares] = useAtom(getSharesState);
+  const [userInfo] = useAtom(getUserInfoState);
   const [currentNote] = useAtom(getCurrentNoteState);
   const [, setAuthStatus] = useAtom(authState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
+
+  const userDashboard = `${shareUrl}/${userInfo?.username}`;
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => setAuthStatus(AuthStatus.SIGNED_OUT));
@@ -82,6 +93,11 @@ export const ActionGroup = (): React.ReactElement => {
         >
           <Popover.Panel className="absolute top-8 -left-2 sm:left-0 bg-white drop-shadow-lg sm:drop-shadow-none p-2 sm:p-0">
             <div className="space-y-4 sm:space-y-1.5">
+              <div>
+                <button onClick={() => window.open(userDashboard, '_blank')}>
+                  <HomeIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
+                </button>
+              </div>
               <div>
                 <button onClick={() => setShowSettings(true)}>
                   <SettingsIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
