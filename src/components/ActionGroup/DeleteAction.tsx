@@ -10,14 +10,17 @@ import {
   deleteFromNoteListState,
   getEditorState,
   noteStatusState,
+  sharesState,
 } from '../state';
 import { BinIcon } from '../../icons';
 import { NoteStatus } from '../../types';
 import { useLocation } from 'wouter';
+import { list_shares } from '../../api/share_api';
 
 export const DeleteAction = (): React.ReactElement => {
   const getDeletedNoteList = useGetDeletedNoteList();
   const [currentNote, setCurrentNote] = useAtom(currentNoteState);
+  const [, setShares] = useAtom(sharesState);
   const [editor] = useAtom(getEditorState);
   const getNote = useGetNote();
   const [noteStatus, setNoteStatus] = useAtom(noteStatusState);
@@ -53,6 +56,7 @@ export const DeleteAction = (): React.ReactElement => {
 
         deleteFromNoteList(currentNote?.id);
         getDeletedNoteList();
+        list_shares(setShares, false);
       })
       .catch((error) => {
         handleException(error);
@@ -60,7 +64,7 @@ export const DeleteAction = (): React.ReactElement => {
       .finally(() => {
         setNoteStatus(NoteStatus.SYNCED);
       });
-  }, [currentNote, showUndelete, editor]);
+  }, [currentNote, showUndelete, editor, setShares]);
 
   useHotkeys(
     'command+d,ctrl+d',
