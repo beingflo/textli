@@ -47,9 +47,11 @@ export const Editor = (): React.ReactElement => {
     editable: true,
     content: '',
     editorProps: {
+      scrollThreshold: 40,
+      scrollMargin: 40,
       attributes: {
         class:
-          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-gray-800 marker:text-gray-800 prose-pre:bg-gray-800 prose-pre:rounded-sm py-6 md:py-10 px-2 focus:outline-none min-h-full',
+          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-gray-800 marker:text-gray-800 prose-pre:bg-gray-800 prose-pre:rounded-sm py-6 md:pt-10 md:pb-16 px-2 focus:outline-none min-h-full',
       },
     },
     onUpdate() {
