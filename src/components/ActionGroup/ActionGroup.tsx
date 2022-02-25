@@ -91,7 +91,7 @@ export const ActionGroup = (): React.ReactElement => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Popover.Panel className="absolute top-8 -left-2 sm:left-0 bg-white border border-gray-800 md:border-none shadow-lg rounded sm:shadow-none p-2 sm:p-0">
+          <Popover.Panel className="absolute top-8 -left-2 sm:left-0 bg-white border border-gray-800 sm:border-none shadow-lg rounded sm:shadow-none p-2 sm:p-0">
             <div className="space-y-4 sm:space-y-1.5">
               <div>
                 <button onClick={() => window.open(userDashboard, '_blank')}>
