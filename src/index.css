@@ -13,4 +13,7 @@
   .fix-ios-scroll {
     -webkit-overflow-scrolling: touch;
   }
+  .scrollbar-gutter {
+    scrollbar-gutter: stable both-edges;
+  }
 }

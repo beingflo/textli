@@ -235,7 +235,7 @@ export const Sidebar = (): React.ReactElement => {
       <Transition show={showFinder} onTransitionEnd={setInputFocus} appear>
         <Dialog
           onClose={handleCloseFinder}
-          className="fixed z-20 inset-0 overflow-y-auto"
+          className="fixed z-20 inset-0 overflow-y-auto scroollbar-gutter"
         >
           <div className="flex justify-center">
             <Transition.Child
