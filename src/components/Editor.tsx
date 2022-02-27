@@ -79,7 +79,7 @@ export const Editor = (): React.ReactElement => {
   return (
     <>
       <SelectionMenu editor={editor} />
-      <EditorContent className="h-full" editor={editor} />;
+      <EditorContent className="h-full" editor={editor} />
     </>
   );
 };
