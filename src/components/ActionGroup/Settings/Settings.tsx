@@ -37,7 +37,7 @@ export const Settings = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-200 opacity-30" />
+            <Dialog.Overlay className="fixed inset-0 bg-gray-400 opacity-40" />
           </Transition.Child>
           <Transition.Child
             enter="transition-opacity ease-linear duration-150"
@@ -47,7 +47,7 @@ export const Settings = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="relative p-6 bg-white border border-gray-300 border-dashed shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl my-4">
+            <div className="relative p-6 bg-white border border-gray-600 shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl my-4">
               <div className="flex flex-row justify-between">
                 <Dialog.Title className="text-2xl font-bold highlight inline">
                   Settings

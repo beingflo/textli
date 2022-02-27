@@ -31,6 +31,7 @@ import { handleException } from '../api';
 import { toast } from 'react-toastify';
 import { removeMainKey } from './crypto';
 import { useLocation } from 'wouter';
+import { SpinnerPage } from './Spinner';
 
 export const Sidebar = (): React.ReactElement => {
   const [notes] = useAtom(getNoteListState);
@@ -45,6 +46,7 @@ export const Sidebar = (): React.ReactElement => {
   const [filteredNotes, setFilteredNotes] = React.useState(notes);
   const [focused, setFocused] = React.useState(0);
   const [showFinder, setShowFinder] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [, setLocation] = useLocation();
 
   const [inputRef, setInputFocus] = useFocus();
@@ -169,18 +171,22 @@ export const Sidebar = (): React.ReactElement => {
     (id: string) => {
       // Scroll to top incase we are further down the sidebar
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setLoading(true);
 
-      getNote(id).then(() => {
-        setTimeout(
-          () => editor?.commands.focus('end', { scrollIntoView: false }),
-          300
-        );
-        handleCloseFinder();
+      getNote(id)
+        .then(() => {
+          setTimeout(
+            () => editor?.commands.focus('end', { scrollIntoView: false }),
+            300
+          );
+          handleCloseFinder();
+          setLoading(false);
 
-        setLocation(`/note/${id}`);
-      });
+          setLocation(`/note/${id}`);
+        })
+        .finally(() => setLoading(false));
     },
-    [editor, handleCloseFinder]
+    [editor, handleCloseFinder, setLoading]
   );
 
   const handleDelete = React.useCallback(
@@ -217,6 +223,7 @@ export const Sidebar = (): React.ReactElement => {
 
   return (
     <>
+      {loading && <SpinnerPage />}
       <div className="fixed top-0 z-20">
         <button
           onClick={() => setShowFinder(true)}
@@ -228,7 +235,7 @@ export const Sidebar = (): React.ReactElement => {
       <Transition show={showFinder} onTransitionEnd={setInputFocus} appear>
         <Dialog
           onClose={handleCloseFinder}
-          className="fixed z-20 inset-0 overflow-y-auto"
+          className="fixed z-20 inset-0 overflow-y-auto scroollbar-gutter"
         >
           <div className="flex justify-center">
             <Transition.Child

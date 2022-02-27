@@ -13,10 +13,12 @@ import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
+import Underline from '@tiptap/extension-underline';
 import './editorStyles.css';
 import { editorState, getCurrentNoteState, noteStatusState } from './state';
 import { NoteStatus } from '../types';
 import { useAtom } from 'jotai';
+import SelectionMenu from './SelectionMenu';
 
 export const Editor = (): React.ReactElement => {
   const [note] = useAtom(getCurrentNoteState);
@@ -26,7 +28,12 @@ export const Editor = (): React.ReactElement => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Highlight,
+      Highlight.configure({
+        HTMLAttributes: {
+          class: 'bg-yellow-300 p-0.5 rounded-sm',
+        },
+      }),
+      Underline,
       Typography,
       Placeholder.configure({
         placeholder: 'Write something nice ...',
@@ -47,9 +54,11 @@ export const Editor = (): React.ReactElement => {
     editable: true,
     content: '',
     editorProps: {
+      scrollThreshold: 40,
+      scrollMargin: 40,
       attributes: {
         class:
-          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-gray-800 marker:text-gray-800 prose-pre:bg-gray-800 prose-pre:rounded-sm py-6 px-2 focus:outline-none min-h-full',
+          'prose prose-headings:font-semibold prose-h1:tracking-tight prose-p:text-gray-800 marker:text-gray-800 prose-pre:bg-gray-800 prose-pre:rounded-sm pt-6 pb-16 md:pt-10 px-2 focus:outline-none min-h-full',
       },
     },
     onUpdate() {
@@ -67,7 +76,12 @@ export const Editor = (): React.ReactElement => {
     setEditor(editor);
   }, [editor]);
 
-  return <EditorContent className="h-full" editor={editor} />;
+  return (
+    <>
+      <SelectionMenu editor={editor} />
+      <EditorContent className="h-full" editor={editor} />
+    </>
+  );
 };
 
 export default Editor;
