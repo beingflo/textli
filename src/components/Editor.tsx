@@ -28,7 +28,11 @@ export const Editor = (): React.ReactElement => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Highlight,
+      Highlight.configure({
+        HTMLAttributes: {
+          class: 'bg-yellow-300 p-0.5 rounded-sm',
+        },
+      }),
       Underline,
       Typography,
       Placeholder.configure({
