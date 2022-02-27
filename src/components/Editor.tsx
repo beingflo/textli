@@ -13,10 +13,12 @@ import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
+import Underline from '@tiptap/extension-underline';
 import './editorStyles.css';
 import { editorState, getCurrentNoteState, noteStatusState } from './state';
 import { NoteStatus } from '../types';
 import { useAtom } from 'jotai';
+import SelectionMenu from './SelectionMenu';
 
 export const Editor = (): React.ReactElement => {
   const [note] = useAtom(getCurrentNoteState);
@@ -27,6 +29,7 @@ export const Editor = (): React.ReactElement => {
     extensions: [
       StarterKit,
       Highlight,
+      Underline,
       Typography,
       Placeholder.configure({
         placeholder: 'Write something nice ...',
@@ -69,7 +72,12 @@ export const Editor = (): React.ReactElement => {
     setEditor(editor);
   }, [editor]);
 
-  return <EditorContent className="h-full" editor={editor} />;
+  return (
+    <>
+      <SelectionMenu editor={editor} />
+      <EditorContent className="h-full" editor={editor} />;
+    </>
+  );
 };
 
 export default Editor;
