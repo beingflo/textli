@@ -21,7 +21,7 @@ export const SelectionMenu = ({
         <BubbleMenu
           editor={editor}
           tippyOptions={{
-            duration: [500, 200],
+            duration: [300, 200],
             placement: 'top-start',
           }}
           className="grid grid-rows-1 grid-flow-col divide-x divide-gray-700 bg-white rounded border border-gray-700 fill-gray-700"
