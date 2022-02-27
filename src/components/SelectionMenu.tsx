@@ -2,6 +2,7 @@ import { BubbleMenu } from '@tiptap/react';
 import React from 'react';
 import {
   BoldIcon,
+  ClearFormattingIcon,
   CodeIcon,
   HighlightIcon,
   ItalicIcon,
@@ -20,7 +21,7 @@ export const SelectionMenu = ({
         <BubbleMenu
           editor={editor}
           tippyOptions={{ duration: 100 }}
-          className="grid grid-rows-1 grid-flow-col divide-x divide-black bg-white rounded border border-gray-800 black fill-gray-800"
+          className="grid grid-rows-1 grid-flow-col divide-x divide-gray-700 bg-white rounded border border-gray-700 fill-gray-700"
         >
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
@@ -69,6 +70,12 @@ export const SelectionMenu = ({
             }`}
           >
             <CodeIcon />
+          </button>
+          <button
+            onClick={() => editor.chain().focus().unsetAllMarks().run()}
+            className={`p-1 w-7 h-7`}
+          >
+            <ClearFormattingIcon />
           </button>
         </BubbleMenu>
       )}
