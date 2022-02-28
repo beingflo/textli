@@ -264,7 +264,10 @@ export const Sidebar = (): React.ReactElement => {
                       placeholder="Search"
                       value={query}
                       ref={inputRef}
-                      onChange={(event) => setQuery(event?.target?.value)}
+                      onChange={(event) => {
+                        setQuery(event?.target?.value);
+                        setFocused(0);
+                      }}
                       className="p-2 focus:ring-0 border-none focus:border-none placeholder-gray-400 bg-white rounded-md w-full"
                     />
                     {query ? (
