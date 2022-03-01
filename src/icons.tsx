@@ -990,3 +990,292 @@ export const ClearFormattingIcon = ({
     </svg>
   );
 };
+
+export const FormattingIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M11.246 15H4.754l-2 5H.6L7 4h2l6.4 16h-2.154l-2-5zm-.8-2L8 6.885 5.554 13h4.892zM21 12.535V12h2v8h-2v-.535a4 4 0 1 1 0-6.93zM19 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+    </svg>
+  );
+};
+
+export const Heading1Icon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0H24V24H0z" />
+      <path d="M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm8-12v12h-2v-9.796l-2 .536V8.67L19.5 8H21z" />
+    </svg>
+  );
+};
+
+export const Heading2Icon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0H24V24H0z" />
+      <path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z" />
+    </svg>
+  );
+};
+
+export const Heading3Icon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0H24V24H0z" />
+      <path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z" />
+    </svg>
+  );
+};
+
+export const Heading4Icon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0H24V24H0z" />
+      <path d="M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm9-12v8h1.5v2H22v2h-2v-2h-5.5v-1.34l5-8.66H22zm-2 3.133L17.19 16H20v-4.867z" />
+    </svg>
+  );
+};
+
+export const OrderedListIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M8 4h13v2H8V4zM5 3v3h1v1H3V6h1V4H3V3h2zM3 14v-2.5h2V11H3v-1h3v2.5H4v.5h2v1H3zm2 5.5H3v-1h2V18H3v-1h3v4H3v-1h2v-.5zM8 11h13v2H8v-2zm0 7h13v2H8v-2z" />
+    </svg>
+  );
+};
+
+export const UnorderedListIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M8 4h13v2H8V4zM4.5 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 6.9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM8 11h13v2H8v-2zm0 7h13v2H8v-2z" />
+    </svg>
+  );
+};
+
+export const CheckListIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M11 4h10v2H11V4zm0 4h6v2h-6V8zm0 6h10v2H11v-2zm0 4h6v2h-6v-2zM3 4h6v6H3V4zm2 2v2h2V6H5zm-2 8h6v6H3v-6zm2 2v2h2v-2H5z" />
+    </svg>
+  );
+};
+
+export const CodeBlockIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M16.95 8.464l1.414-1.414 4.95 4.95-4.95 4.95-1.414-1.414L20.485 12 16.95 8.464zm-9.9 0L3.515 12l3.535 3.536-1.414 1.414L.686 12l4.95-4.95L7.05 8.464z" />
+    </svg>
+  );
+};
+
+export const QuoteIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
+    </svg>
+  );
+};
+
+export const ImageIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M21 15v3h3v2h-3v3h-2v-3h-3v-2h3v-3h2zm.008-12c.548 0 .992.445.992.993V13h-2V5H4v13.999L14 9l3 3v2.829l-3-3L6.827 19H14v2H2.992A.993.993 0 0 1 2 20.007V3.993A1 1 0 0 1 2.992 3h18.016zM8 7a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
+    </svg>
+  );
+};
+
+export const TableIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M13 10v4h6v-4h-6zm-2 0H5v4h6v-4zm2 9h6v-3h-6v3zm-2 0v-3H5v3h6zm2-14v3h6V5h-6zm-2 0H5v3h6V5zM4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
+    </svg>
+  );
+};
+
+export const AlignLeftIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M3 4h18v2H3V4zm0 15h14v2H3v-2zm0-5h18v2H3v-2zm0-5h14v2H3V9z" />
+    </svg>
+  );
+};
+
+export const AlignCenterIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M3 4h18v2H3V4zm2 15h14v2H5v-2zm-2-5h18v2H3v-2zm2-5h14v2H5V9z" />
+    </svg>
+  );
+};
+
+export const AlignRightIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M3 4h18v2H3V4zm4 15h14v2H7v-2zm-4-5h18v2H3v-2zm4-5h14v2H7V9z" />
+    </svg>
+  );
+};
+
+export const AlignJustifyIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M3 4h18v2H3V4zm0 15h18v2H3v-2zm0-5h18v2H3v-2zm0-5h18v2H3V9z" />
+    </svg>
+  );
+};
+
+export const SeparatorIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M2 11h2v2H2v-2zm4 0h12v2H6v-2zm14 0h2v2h-2v-2z" />
+    </svg>
+  );
+};
