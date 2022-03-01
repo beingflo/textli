@@ -3,6 +3,7 @@ import Editor from './Editor';
 import Sidebar from './Sidebar';
 import ActionGroup from './ActionGroup/ActionGroup';
 import { useRegisterSW } from 'virtual:pwa-register/react';
+import Toolbar from './Toolbar';
 
 // Attempt to refetch PWA every 2 hours
 const intervalMS = 2 * 3600 * 60 * 1000;
@@ -29,8 +30,9 @@ const App = (): React.ReactElement => {
   return (
     <div className="h-screen overflow-auto scrollbar-gutter flex flex-col sm:flex-row justify-between w-full relative">
       <div className="sm:hidden bg-white fixed z-10 w-full h-16" />
-      <div>
+      <div className="flex flex-row sm:flex-col">
         <Sidebar />
+        <Toolbar />
       </div>
       <div
         spellCheck="false"
