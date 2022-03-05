@@ -16,12 +16,12 @@ export const Toolbar = (): React.ReactElement => {
   const [showToolbar, setShowToolbar] = React.useState(true);
 
   return (
-    <div className="fixed top-0 left-10 z-10 sm:top-10 sm:left-0">
+    <div className="fixed top-0 z-10 sm:top-10 sm:left-0">
       <button
         onClick={() => setShowToolbar((old) => !old)}
         className="fixed ml-5 mt-6 outline-none text-gray-800 hover:translate-x-0.5 transition active:scale-90"
       >
-        <FormattingIcon className="h-7 w-7 mt-0.5 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <FormattingIcon className="h-7 w-7 mt-0.5 ml-10 sm:ml-0.5 sm:h-6 sm:w-6" />
       </button>
       <Transition
         show={showToolbar}
@@ -31,7 +31,7 @@ export const Toolbar = (): React.ReactElement => {
         leave="transition-opacity ease-linear duration-75"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="fixed mt-16 ml-5 z-10 flex flex-col gap-4 text-gray-700"
+        className="fixed mt-14 ml-6 sm:mt-16 sm:ml-5 z-10 bg-white border p-1 sm:p-0 sm:border-0 shadow-lg sm:shadow-none rounded sm:rounded-none flex sm:flex-col gap-4 text-gray-700 sm:border-t border-gray-600 sm:pt-4"
       >
         <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
         <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
