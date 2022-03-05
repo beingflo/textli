@@ -21,7 +21,7 @@ export const Toolbar = (): React.ReactElement => {
         onClick={() => setShowToolbar((old) => !old)}
         className="fixed ml-5 mt-6 outline-none text-gray-800 hover:translate-x-0.5 transition active:scale-90"
       >
-        <FormattingIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
+        <FormattingIcon className="h-7 w-7 mt-0.5 sm:ml-0.5 sm:h-6 sm:w-6" />
       </button>
       <Transition
         show={showToolbar}
@@ -31,16 +31,16 @@ export const Toolbar = (): React.ReactElement => {
         leave="transition-opacity ease-linear duration-75"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="fixed mt-16 ml-5 z-10 flex flex-col gap-3"
+        className="fixed mt-16 ml-5 z-10 flex flex-col gap-4 text-gray-700"
       >
-        <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
-        <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-5 sm:w-5" />
+        <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
       </Transition>
     </div>
   );
