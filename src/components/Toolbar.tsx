@@ -4,6 +4,7 @@ import Tippy from '@tippyjs/react';
 import { useAtom } from 'jotai';
 import {
   AlignLeftIcon,
+  CheckListIcon,
   CodeBlockIcon,
   FormattingIcon,
   Heading1Icon,
@@ -11,6 +12,7 @@ import {
   Heading3Icon,
   Heading4Icon,
   ImageIcon,
+  OrderedListIcon,
   QuoteIcon,
   SeparatorIcon,
   TableIcon,
@@ -44,6 +46,17 @@ export const Toolbar = (): React.ReactElement => {
         }
       >
         <Heading4Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+    </div>
+  );
+
+  const ListTooltip = () => (
+    <div className="flex flex-row gap-2.5">
+      <button onClick={() => editor?.chain().focus().toggleOrderedList().run()}>
+        <OrderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+      <button onClick={() => editor?.chain().focus().toggleTaskList().run()}>
+        <CheckListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
       </button>
     </div>
   );
@@ -82,7 +95,20 @@ export const Toolbar = (): React.ReactElement => {
             <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
           </button>
         </Tippy>
-        <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Tippy
+          placement="right"
+          content={<ListTooltip />}
+          interactive
+          hideOnClick={false}
+          trigger="mouseenter"
+          touch={false}
+        >
+          <button
+            onClick={() => editor?.chain().focus().toggleBulletList().run()}
+          >
+            <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+          </button>
+        </Tippy>
         <button onClick={() => editor?.chain().focus().toggleCodeBlock().run()}>
           <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
         </button>
