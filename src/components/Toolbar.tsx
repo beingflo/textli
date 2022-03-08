@@ -108,7 +108,6 @@ export const Toolbar = (): React.ReactElement => {
           interactive
           hideOnClick={false}
           trigger="mouseenter"
-          touch={false}
         >
           <button
             onClick={() =>
