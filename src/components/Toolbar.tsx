@@ -1,19 +1,52 @@
-import { Transition } from '@headlessui/react';
 import React from 'react';
+import { Transition } from '@headlessui/react';
+import Tippy from '@tippyjs/react';
+import { useAtom } from 'jotai';
 import {
   AlignLeftIcon,
   CodeBlockIcon,
   FormattingIcon,
   Heading1Icon,
+  Heading2Icon,
+  Heading3Icon,
+  Heading4Icon,
   ImageIcon,
   QuoteIcon,
   SeparatorIcon,
   TableIcon,
   UnorderedListIcon,
 } from '../icons';
+import { getEditorState } from './state';
 
 export const Toolbar = (): React.ReactElement => {
   const [showToolbar, setShowToolbar] = React.useState(true);
+  const [editor] = useAtom(getEditorState);
+
+  const HeadingTooltip = () => (
+    <div className="flex flex-row gap-2.5">
+      <button
+        onClick={() =>
+          editor?.chain().focus().toggleHeading({ level: 2 }).run()
+        }
+      >
+        <Heading2Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+      <button
+        onClick={() =>
+          editor?.chain().focus().toggleHeading({ level: 3 }).run()
+        }
+      >
+        <Heading3Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+      <button
+        onClick={() =>
+          editor?.chain().focus().toggleHeading({ level: 4 }).run()
+        }
+      >
+        <Heading4Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+    </div>
+  );
 
   return (
     <div className="fixed top-0 z-10 sm:top-10 sm:left-0">
@@ -33,14 +66,39 @@ export const Toolbar = (): React.ReactElement => {
         leaveTo="opacity-0"
         className="fixed mt-14 ml-6 sm:mt-16 sm:ml-5 z-10 bg-white border p-1 sm:p-0 sm:border-0 shadow-lg sm:shadow-none rounded sm:rounded-none flex sm:flex-col gap-4 text-gray-700 sm:border-t border-gray-600 sm:pt-4"
       >
-        <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Tippy
+          placement="right"
+          content={<HeadingTooltip />}
+          interactive
+          hideOnClick={false}
+          trigger="mouseenter"
+          touch={false}
+        >
+          <button
+            onClick={() =>
+              editor?.chain().focus().toggleHeading({ level: 1 }).run()
+            }
+          >
+            <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+          </button>
+        </Tippy>
         <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <button onClick={() => editor?.chain().focus().toggleCodeBlock().run()}>
+          <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        </button>
+        <button
+          onClick={() => editor?.chain().focus().toggleBlockquote().run()}
+        >
+          <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        </button>
         <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
         <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
         <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <button
+          onClick={() => editor?.chain().focus().setHorizontalRule().run()}
+        >
+          <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        </button>
       </Transition>
     </div>
   );
