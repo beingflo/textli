@@ -19,6 +19,7 @@ import { editorState, getCurrentNoteState, noteStatusState } from './state';
 import { NoteStatus } from '../types';
 import { useAtom } from 'jotai';
 import SelectionMenu from './SelectionMenu';
+import TextAlign from '@tiptap/extension-text-align';
 
 export const Editor = (): React.ReactElement => {
   const [note] = useAtom(getCurrentNoteState);
@@ -39,6 +40,9 @@ export const Editor = (): React.ReactElement => {
         placeholder: 'Write something nice ...',
       }),
       TextStyle,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
       Link,
       Image,
       Table,

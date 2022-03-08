@@ -1267,6 +1267,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-task-list/-/extension-task-list-2.0.0-beta.26.tgz#75a20795429c40c3b12544483ea63014487d71c7"
   integrity sha512-7zPpz9eOUCnFyWNDFYPCUJ39gjID+mCI5BuXyXrjJjDfm8wxg/xTgg9+KC6xakczos7DypnhzlRKSs4EFczeUg==
 
+"@tiptap/extension-text-align@^2.0.0-beta.29":
+  version "2.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-text-align/-/extension-text-align-2.0.0-beta.29.tgz#31df3d23e7c66caf401a1850a80b88f5cedab0a8"
+  integrity sha512-FNGpl0tVtgG7AK9kVWF/+CGYHta05NpoME4/j6+vhNlZLBNXRA+AKg7W5T8UxmtaC9yGoJsBs2X8M9eCxWVaEQ==
+
 "@tiptap/extension-text-style@^2.0.0-beta.23":
   version "2.0.0-beta.23"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text-style/-/extension-text-style-2.0.0-beta.23.tgz#7f6ef918c6c21c3dd01b7a8d0f4f04be9960c080"

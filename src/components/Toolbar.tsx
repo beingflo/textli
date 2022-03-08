@@ -3,7 +3,10 @@ import { Transition } from '@headlessui/react';
 import Tippy from '@tippyjs/react';
 import { useAtom } from 'jotai';
 import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
   AlignLeftIcon,
+  AlignRightIcon,
   CheckListIcon,
   CodeBlockIcon,
   FormattingIcon,
@@ -57,6 +60,26 @@ export const Toolbar = (): React.ReactElement => {
       </button>
       <button onClick={() => editor?.chain().focus().toggleTaskList().run()}>
         <CheckListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+    </div>
+  );
+
+  const AlignmentTooltip = () => (
+    <div className="flex flex-row gap-2.5">
+      <button
+        onClick={() => editor?.chain().focus().setTextAlign('center').run()}
+      >
+        <AlignCenterIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+      <button
+        onClick={() => editor?.chain().focus().setTextAlign('right').run()}
+      >
+        <AlignRightIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+      </button>
+      <button
+        onClick={() => editor?.chain().focus().setTextAlign('justify').run()}
+      >
+        <AlignJustifyIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
       </button>
     </div>
   );
@@ -119,7 +142,20 @@ export const Toolbar = (): React.ReactElement => {
         </button>
         <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
         <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Tippy
+          placement="right"
+          content={<AlignmentTooltip />}
+          interactive
+          hideOnClick={false}
+          trigger="mouseenter"
+          touch={false}
+        >
+          <button
+            onClick={() => editor?.chain().focus().setTextAlign('left').run()}
+          >
+            <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+          </button>
+        </Tippy>
         <button
           onClick={() => editor?.chain().focus().setHorizontalRule().run()}
         >
