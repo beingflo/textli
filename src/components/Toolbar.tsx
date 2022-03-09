@@ -9,15 +9,25 @@ import {
   AlignRightIcon,
   CheckListIcon,
   CodeBlockIcon,
+  DeleteColumnIcon,
+  DeleteRowIcon,
   FormattingIcon,
+  HeaderColumnIcon,
+  HeaderRowIcon,
   Heading1Icon,
   Heading2Icon,
   Heading3Icon,
   Heading4Icon,
   ImageIcon,
+  InsertColumnLeftIcon,
+  InsertColumnRightIcon,
+  InsertRowBottomIcon,
+  InsertRowTopIcon,
+  MergeCellIcon,
   OrderedListIcon,
   QuoteIcon,
   SeparatorIcon,
+  SplitCellIcon,
   TableIcon,
   UnorderedListIcon,
 } from '../icons';
@@ -91,7 +101,50 @@ export const Toolbar = (): React.ReactElement => {
     return (
       <>
         {isTable ? (
-          <div>modification options</div>
+          <div className="grid grid-cols-2 p-2 w-20 gap-x-2 gap-y-4 z-20">
+            <button
+              onClick={() => editor?.chain().focus().addColumnBefore().run()}
+            >
+              <InsertColumnLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().addColumnAfter().run()}
+            >
+              <InsertColumnRightIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().addRowBefore().run()}
+            >
+              <InsertRowTopIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button onClick={() => editor?.chain().focus().addRowAfter().run()}>
+              <InsertRowBottomIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().deleteColumn().run()}
+            >
+              <DeleteColumnIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button onClick={() => editor?.chain().focus().deleteRow().run()}>
+              <DeleteRowIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().toggleHeaderRow().run()}
+            >
+              <HeaderRowIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().toggleHeaderColumn().run()}
+            >
+              <HeaderColumnIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button onClick={() => editor?.chain().focus().mergeCells().run()}>
+              <MergeCellIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+            <button onClick={() => editor?.chain().focus().splitCell().run()}>
+              <SplitCellIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+          </div>
         ) : (
           <form
             className="flex flex-row border border-black rounded-sm"
