@@ -26,6 +26,7 @@ import { getEditorState } from './state';
 export const Toolbar = (): React.ReactElement => {
   const [showToolbar, setShowToolbar] = React.useState(true);
   const [editor] = useAtom(getEditorState);
+  const [isTable, setIsTable] = React.useState(false);
 
   const HeadingTooltip = () => (
     <div className="flex flex-row gap-2.5">
@@ -84,6 +85,51 @@ export const Toolbar = (): React.ReactElement => {
     </div>
   );
 
+  editor?.on('transaction', () => setIsTable(editor?.can().addRowAfter()));
+
+  const TableTooltip = () => {
+    return (
+      <>
+        {isTable ? (
+          <div>modification options</div>
+        ) : (
+          <form
+            className="flex flex-row border border-black rounded-sm"
+            onSubmit={(event: any) => {
+              event.preventDefault();
+              const rows = event?.target?.rows?.value;
+              const cols = event?.target?.columns?.value;
+
+              editor
+                ?.chain()
+                .focus()
+                .insertTable({ rows, cols, withHeaderRow: false })
+                .run();
+            }}
+          >
+            <input
+              type="number"
+              name="rows"
+              className="border-none focus:ring-0 placeholder-gray-400 bg-white w-28"
+              placeholder="rows"
+              defaultValue={3}
+            />
+            <input
+              type="number"
+              name="columns"
+              className="border-none focus:ring-0 placeholder-gray-400 bg-white w-28"
+              placeholder="columns"
+              defaultValue={3}
+            />
+            <button className="p-2 bg-gray-100 rounded-sm hover:bg-gray-200">
+              Add
+            </button>
+          </form>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="fixed top-0 z-10 sm:top-10 sm:left-0">
       <button
@@ -108,6 +154,7 @@ export const Toolbar = (): React.ReactElement => {
           interactive
           hideOnClick={false}
           trigger="mouseenter"
+          touch={false}
         >
           <button
             onClick={() =>
@@ -140,7 +187,18 @@ export const Toolbar = (): React.ReactElement => {
           <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
         </button>
         <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Tippy
+          placement="right"
+          content={<TableTooltip />}
+          interactive
+          hideOnClick={false}
+          trigger="mouseenter"
+          touch={false}
+        >
+          <div>
+            <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+          </div>
+        </Tippy>
         <Tippy
           placement="right"
           content={<AlignmentTooltip />}
