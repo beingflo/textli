@@ -51,20 +51,20 @@ export const SelectionMenu = ({
             <StrikeIcon />
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleHighlight().run()}
-            className={`p-1 w-7 h-7 ${
-              editor.isActive('highlight') && 'fill-yellow-400'
-            }`}
-          >
-            <HighlightIcon />
-          </button>
-          <button
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             className={`p-1 w-7 h-7 ${
               editor.isActive('underline') && 'fill-yellow-400'
             }`}
           >
             <UnderlineIcon />
+          </button>
+          <button
+            onClick={() => editor.chain().focus().toggleHighlight().run()}
+            className={`p-1 w-7 h-7 ${
+              editor.isActive('highlight') && 'fill-yellow-400'
+            }`}
+          >
+            <HighlightIcon />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleCode().run()}
