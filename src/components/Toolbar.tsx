@@ -199,78 +199,107 @@ export const Toolbar = (): React.ReactElement => {
         leave="transition-opacity ease-linear duration-75"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="fixed mt-14 ml-6 sm:mt-16 sm:ml-5 z-10 bg-white border p-1 sm:p-0 sm:border-0 shadow-lg sm:shadow-none rounded sm:rounded-none flex sm:flex-col gap-4 text-gray-700 sm:border-t border-gray-600 sm:pt-4"
+        className="fixed h-9 md:h-auto mt-14 ml-6 sm:mt-16 sm:ml-5 z-10 bg-white border p-1 sm:p-0 sm:border-0 shadow-lg sm:shadow-none rounded sm:rounded-none flex sm:flex-col gap-2 text-gray-700 sm:border-t border-gray-600 sm:pt-4"
       >
-        <Tippy
-          placement="right"
-          content={<HeadingTooltip />}
-          interactive
-          hideOnClick={false}
-          trigger="mouseenter"
-          touch={false}
-        >
-          <button
-            onClick={() =>
-              editor?.chain().focus().toggleHeading({ level: 1 }).run()
-            }
+        <div className="hidden md:inline">
+          <Tippy
+            placement="right"
+            content={<HeadingTooltip />}
+            interactive
+            hideOnClick={false}
+            trigger="mouseenter"
+            touch={false}
           >
-            <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-          </button>
-        </Tippy>
-        <Tippy
-          placement="right"
-          content={<ListTooltip />}
-          interactive
-          hideOnClick={false}
-          trigger="mouseenter"
-          touch={false}
-        >
-          <button
-            onClick={() => editor?.chain().focus().toggleBulletList().run()}
+            <button
+              onClick={() =>
+                editor?.chain().focus().toggleHeading({ level: 1 }).run()
+              }
+            >
+              <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+          </Tippy>
+        </div>
+        <div className="inline md:hidden">
+          <Tippy placement="bottom" content={<HeadingTooltip />} interactive>
+            <button
+              onClick={() =>
+                editor?.chain().focus().toggleHeading({ level: 1 }).run()
+              }
+            >
+              <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+          </Tippy>
+        </div>
+        <div className="hidden md:inline">
+          <Tippy
+            placement="right"
+            content={<ListTooltip />}
+            interactive
+            hideOnClick={false}
+            trigger="mouseenter"
+            touch={false}
           >
-            <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-          </button>
-        </Tippy>
-        <button onClick={() => editor?.chain().focus().toggleCodeBlock().run()}>
-          <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        </button>
-        <button
-          onClick={() => editor?.chain().focus().toggleBlockquote().run()}
-        >
-          <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        </button>
-        <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        <Tippy
-          placement="right"
-          content={<TableTooltip />}
-          interactive
-          hideOnClick={false}
-          trigger="mouseenter"
-          touch={false}
-        >
-          <div>
-            <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-          </div>
-        </Tippy>
-        <Tippy
-          placement="right"
-          content={<AlignmentTooltip />}
-          interactive
-          hideOnClick={false}
-          trigger="mouseenter"
-          touch={false}
-        >
+            <button
+              onClick={() => editor?.chain().focus().toggleBulletList().run()}
+            >
+              <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+          </Tippy>
+        </div>
+        <div>
           <button
-            onClick={() => editor?.chain().focus().setTextAlign('left').run()}
+            onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
           >
-            <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
           </button>
-        </Tippy>
-        <button
-          onClick={() => editor?.chain().focus().setHorizontalRule().run()}
-        >
-          <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
-        </button>
+        </div>
+        <div>
+          <button
+            onClick={() => editor?.chain().focus().toggleBlockquote().run()}
+          >
+            <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+          </button>
+        </div>
+        <div className="md:pb-2">
+          <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        </div>
+        <div className="hidden md:inline md:pb-2">
+          <Tippy
+            placement="right"
+            content={<TableTooltip />}
+            interactive
+            hideOnClick={false}
+            trigger="mouseenter"
+            touch={false}
+          >
+            <div>
+              <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </div>
+          </Tippy>
+        </div>
+        <div className="hidden md:inline">
+          <Tippy
+            placement="right"
+            content={<AlignmentTooltip />}
+            interactive
+            hideOnClick={false}
+            trigger="mouseenter"
+            touch={false}
+          >
+            <button
+              onClick={() => editor?.chain().focus().setTextAlign('left').run()}
+            >
+              <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            </button>
+          </Tippy>
+        </div>
+        <div>
+          <button
+            onClick={() => editor?.chain().focus().setHorizontalRule().run()}
+          >
+            <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+          </button>
+        </div>
       </Transition>
     </div>
   );
