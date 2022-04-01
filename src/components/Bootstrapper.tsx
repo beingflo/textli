@@ -140,7 +140,7 @@ const Bootstrapper = (): React.ReactElement => {
   return (
     <>
       <ToastContainer
-        position="bottom-center"
+        position='bottom-center'
         autoClose={5000}
         transition={Zoom}
         hideProgressBar={true}

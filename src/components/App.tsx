@@ -28,19 +28,19 @@ const App = (): React.ReactElement => {
   }
 
   return (
-    <div className="h-screen overflow-auto scrollbar-gutter flex flex-col sm:flex-row justify-between w-full relative">
-      <div className="sm:hidden bg-white fixed z-10 w-full h-16" />
-      <div className="flex flex-row sm:flex-col">
+    <div className='scrollbar-gutter relative flex h-screen w-full flex-col justify-between overflow-auto sm:flex-row'>
+      <div className='fixed z-10 h-16 w-full bg-white sm:hidden' />
+      <div className='flex flex-row sm:flex-col'>
         <Sidebar />
         <Toolbar />
       </div>
       <div
-        spellCheck="false"
-        className="h-full max-w-full mt-16 mx-4 sm:mt-0 sm:mx-12 sm:min-w-sm lg:max-w-2xl 2xl:max-w-7xl"
+        spellCheck='false'
+        className='mx-4 mt-16 h-full max-w-full sm:mx-12 sm:mt-0 sm:min-w-sm lg:max-w-2xl 2xl:max-w-7xl'
       >
         <Editor />
       </div>
-      <div className="pr-6 pt-6 h-auto z-10">
+      <div className='z-10 h-auto pr-6 pt-6'>
         <ActionGroup />
       </div>
     </div>

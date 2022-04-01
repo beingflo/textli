@@ -122,97 +122,97 @@ export const Sharing = ({
     <Transition show={showSharing} as={React.Fragment} appear>
       <Dialog
         onClose={() => setShowSharing(false)}
-        className="fixed z-20 inset-0 overflow-y-auto"
+        className='fixed inset-0 z-20 overflow-y-auto'
       >
-        <div className="flex justify-center">
+        <div className='flex justify-center'>
           <Transition.Child
-            enter="transition-opacity ease-linear duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter='transition-opacity ease-linear duration-300'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='transition-opacity ease-linear duration-300'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-400 opacity-40" />
+            <Dialog.Overlay className='fixed inset-0 bg-gray-400 opacity-40' />
           </Transition.Child>
           <Transition.Child
-            enter="transition-opacity ease-linear duration-150"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-75"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter='transition-opacity ease-linear duration-150'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='transition-opacity ease-linear duration-75'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
           >
-            <div className="relative p-6 bg-white border border-gray-600 shadow-lg rounded mx-auto max-w-sm min-w-sm sm:min-w-lg sm:max-w-lg lg:min-w-xl lg:max-w-xl my-4">
-              <div className="flex flex-row justify-between">
-                <Dialog.Title className="text-2xl font-bold highlight inline">
+            <div className='relative mx-auto my-4 min-w-sm max-w-sm rounded border border-gray-600 bg-white p-6 shadow-lg sm:min-w-lg sm:max-w-lg lg:min-w-xl lg:max-w-xl'>
+              <div className='flex flex-row justify-between'>
+                <Dialog.Title className='highlight inline text-2xl font-bold'>
                   Share
                 </Dialog.Title>
 
                 <button
                   onClick={() => setShowSharing(false)}
-                  className="outline-none"
+                  className='outline-none'
                 >
-                  <CloseIcon className="h-6 w-6" />
+                  <CloseIcon className='h-6 w-6' />
                 </button>
               </div>
-              <div className="mt-8">
+              <div className='mt-8'>
                 {share ? (
                   <>
-                    <div className="flex flex-row justify-between">
+                    <div className='flex flex-row justify-between'>
                       {share.expires_at ? (
                         <span>Share expires at</span>
                       ) : (
                         <span>Share expires</span>
                       )}
-                      <span className="font-medium">
+                      <span className='font-medium'>
                         {share?.expires_at
                           ? new Date(share?.expires_at).toLocaleString()
                           : 'Never'}
                       </span>
                     </div>
                     {share?.public && (
-                      <div className="flex flex-row mt-2 text-green-600 font-medium">
+                      <div className='mt-2 flex flex-row font-medium text-green-600'>
                         This note is visible on your public profile!
                       </div>
                     )}
-                    <div className="mt-4 flex flex-row justify-between bg-gray-100 p-4 rounded-md">
+                    <div className='mt-4 flex flex-row justify-between rounded-md bg-gray-100 p-4'>
                       <input
                         value={shareLink}
                         readOnly
-                        className="outline-none bg-gray-100 w-4/5 truncate"
+                        className='w-4/5 truncate bg-gray-100 outline-none'
                       />
-                      <div className="relative">
+                      <div className='relative'>
                         <button
                           onClick={copyToClipboard}
-                          className="hover:scale-105 active:scale-100"
+                          className='hover:scale-105 active:scale-100'
                         >
-                          <CopyIcon className="h-6 w-6" />
+                          <CopyIcon className='h-6 w-6' />
                         </button>
                         <button
                           onClick={() => window.open(shareLink)}
-                          className="pl-2 hover:scale-105 active:scale-100"
+                          className='pl-2 hover:scale-105 active:scale-100'
                         >
-                          <ExternalLinkIcon className="h-6 w-6" />
+                          <ExternalLinkIcon className='h-6 w-6' />
                         </button>
                         <Transition
                           show={showClipboardConfirm}
-                          enter="transition-opacity ease-linear duration-75"
-                          enterFrom="opacity-0"
-                          enterTo="opacity-100"
-                          leave="transition-opacity ease-linear duration-300"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
-                          className="absolute top-0.5 right-[3.75rem]"
+                          enter='transition-opacity ease-linear duration-75'
+                          enterFrom='opacity-0'
+                          enterTo='opacity-100'
+                          leave='transition-opacity ease-linear duration-300'
+                          leaveFrom='opacity-100'
+                          leaveTo='opacity-0'
+                          className='absolute top-0.5 right-[3.75rem]'
                         >
-                          <CheckIcon className="h-5 w-5 text-green-600" />
+                          <CheckIcon className='h-5 w-5 text-green-600' />
                         </Transition>
                       </div>
                     </div>
-                    <div className="flex flex-row justify-end">
+                    <div className='flex flex-row justify-end'>
                       <button
                         onClick={handleDeleteShare}
-                        className="mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition"
+                        className='mt-8 rounded-md bg-gray-800 p-2 text-white shadow-md transition'
                       >
                         Delete share
                       </button>
@@ -220,23 +220,23 @@ export const Sharing = ({
                   </>
                 ) : (
                   <>
-                    <div className="flex flex-row justify-between mb-4">
-                      <span className="inline-flex self-center">
+                    <div className='mb-4 flex flex-row justify-between'>
+                      <span className='inline-flex self-center'>
                         Publish note
                       </span>
-                      <div className="w-1/2">
+                      <div className='w-1/2'>
                         <input
-                          type="checkbox"
+                          type='checkbox'
                           checked={published}
                           onChange={(event) =>
                             setPublished(event.target.checked)
                           }
-                          className="rounded-sm outline-none focus:ring-0 text-green-600 self-center"
+                          className='self-center rounded-sm text-green-600 outline-none focus:ring-0'
                         />
                       </div>
                     </div>
-                    <div className="flex flex-row justify-between">
-                      <span className="inline-flex self-center">
+                    <div className='flex flex-row justify-between'>
+                      <span className='inline-flex self-center'>
                         Expire share in
                       </span>
                       <Listbox
@@ -244,31 +244,31 @@ export const Sharing = ({
                         onChange={setExpiration}
                         disabled={published}
                       >
-                        <div className="relative mt-1 w-1/2">
-                          <Listbox.Button className="relative disabled:opacity-50 disabled:cursor-not-allowed w-full py-2 pl-3 pr-10 text-left bg-gray-50 shadow-md rounded-md cursor-default focus:outline-none sm:text-sm">
-                            <span className="block truncate">
+                        <div className='relative mt-1 w-1/2'>
+                          <Listbox.Button className='relative w-full cursor-default rounded-md bg-gray-50 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm'>
+                            <span className='block truncate'>
                               {expiration.value}
                             </span>
-                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                            <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                               <SelectorIcon
-                                className="w-5 h-5 text-gray-400"
-                                aria-hidden="true"
+                                className='h-5 w-5 text-gray-400'
+                                aria-hidden='true'
                               />
                             </span>
                           </Listbox.Button>
                           <Transition
                             as={Fragment}
-                            leave="transition ease-in duration-100"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
+                            leave='transition ease-in duration-100'
+                            leaveFrom='opacity-100'
+                            leaveTo='opacity-0'
                           >
-                            <Listbox.Options className="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg sm:text-sm">
+                            <Listbox.Options className='absolute z-10 mt-1 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg sm:text-sm'>
                               {expirationOptions.map((option) => (
                                 <Listbox.Option
                                   key={option?.id}
                                   className={({ active }) =>
                                     `${active ? 'bg-yellow-100' : 'bg-white'}
-                              cursor-default select-none relative py-2 pl-10 pr-4`
+                              relative cursor-default select-none py-2 pl-10 pr-4`
                                   }
                                   value={option}
                                 >
@@ -284,10 +284,10 @@ export const Sharing = ({
                                         {option?.value}
                                       </span>
                                       {selected ? (
-                                        <span className="text-yellow-500 absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-yellow-500'>
                                           <CheckIcon
-                                            className="w-5 h-5"
-                                            aria-hidden="true"
+                                            className='h-5 w-5'
+                                            aria-hidden='true'
                                           />
                                         </span>
                                       ) : null}
@@ -300,12 +300,12 @@ export const Sharing = ({
                         </div>
                       </Listbox>
                     </div>
-                    <div className="flex flex-row justify-end">
+                    <div className='flex flex-row justify-end'>
                       <button
                         onClick={handleCreateShare}
                         className={`
                           ${published && 'bg-green-600 '}
-                          mt-8 p-2 bg-gray-800 text-white rounded-md shadow-md transition`}
+                          mt-8 rounded-md bg-gray-800 p-2 text-white shadow-md transition`}
                       >
                         Create share
                       </button>

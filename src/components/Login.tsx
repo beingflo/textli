@@ -33,36 +33,36 @@ const Login = (): React.ReactElement => {
   return (
     <>
       <SpinnerPage show={waiting} />
-      <div className="mt-12">
-        <form className="grid grid-cols-1 gap-6" onSubmit={submit}>
-          <label className="block">
-            <span className="text-gray-700 text-sm">Username</span>
+      <div className='mt-12'>
+        <form className='grid grid-cols-1 gap-6' onSubmit={submit}>
+          <label className='block'>
+            <span className='text-sm text-gray-700'>Username</span>
             <input
-              type="text"
-              className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
-              placeholder="Enter your username"
+              type='text'
+              className='mt-0 block w-full border-0 border-b-2 border-gray-200 px-0.5 placeholder-gray-400 focus:border-gray-400 focus:ring-0'
+              placeholder='Enter your username'
               value={username}
               onChange={(event) => setUsername(event?.target?.value)}
             />
           </label>
-          <label className="block">
-            <span className="text-gray-700 text-sm">Password</span>
+          <label className='block'>
+            <span className='text-sm text-gray-700'>Password</span>
             <input
-              type="password"
-              className="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-400 placeholder-gray-400"
-              placeholder="Enter your password"
+              type='password'
+              className='mt-0 block w-full border-0 border-b-2 border-gray-200 px-0.5 placeholder-gray-400 focus:border-gray-400 focus:ring-0'
+              placeholder='Enter your password'
               value={password}
               onChange={(event) => setPassword(event?.target?.value)}
             />
           </label>
           <button
-            type="submit"
+            type='submit'
             disabled={submitDisabled}
-            className="w-full py-3 mt-14 bg-gray-800 rounded-md disabled:bg-gray-400
-                    font-medium text-white uppercase
-                    focus:outline-none hover:bg-gray-700 hover:shadow-none"
+            className='mt-14 w-full rounded-md bg-gray-800 py-3 font-medium
+                    uppercase text-white hover:bg-gray-700
+                    hover:shadow-none focus:outline-none disabled:bg-gray-400'
           >
-            <div className="relative">
+            <div className='relative'>
               <span>Login</span>
             </div>
           </button>

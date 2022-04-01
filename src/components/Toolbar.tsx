@@ -39,58 +39,58 @@ export const Toolbar = (): React.ReactElement => {
   const [isTable, setIsTable] = React.useState(false);
 
   const HeadingTooltip = () => (
-    <div className="flex flex-row gap-2.5">
+    <div className='flex flex-row gap-2.5'>
       <button
         onClick={() =>
           editor?.chain().focus().toggleHeading({ level: 2 }).run()
         }
       >
-        <Heading2Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Heading2Icon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
       <button
         onClick={() =>
           editor?.chain().focus().toggleHeading({ level: 3 }).run()
         }
       >
-        <Heading3Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Heading3Icon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
       <button
         onClick={() =>
           editor?.chain().focus().toggleHeading({ level: 4 }).run()
         }
       >
-        <Heading4Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <Heading4Icon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
     </div>
   );
 
   const ListTooltip = () => (
-    <div className="flex flex-row gap-2.5">
+    <div className='flex flex-row gap-2.5'>
       <button onClick={() => editor?.chain().focus().toggleOrderedList().run()}>
-        <OrderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <OrderedListIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
       <button onClick={() => editor?.chain().focus().toggleTaskList().run()}>
-        <CheckListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <CheckListIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
     </div>
   );
 
   const AlignmentTooltip = () => (
-    <div className="flex flex-row gap-2.5">
+    <div className='flex flex-row gap-2.5'>
       <button
         onClick={() => editor?.chain().focus().setTextAlign('center').run()}
       >
-        <AlignCenterIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <AlignCenterIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
       <button
         onClick={() => editor?.chain().focus().setTextAlign('right').run()}
       >
-        <AlignRightIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <AlignRightIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
       <button
         onClick={() => editor?.chain().focus().setTextAlign('justify').run()}
       >
-        <AlignJustifyIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <AlignJustifyIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
     </div>
   );
@@ -101,53 +101,53 @@ export const Toolbar = (): React.ReactElement => {
     return (
       <>
         {isTable ? (
-          <div className="grid grid-cols-2 p-2 w-20 gap-x-2 gap-y-4 z-20">
+          <div className='z-20 grid w-20 grid-cols-2 gap-x-2 gap-y-4 p-2'>
             <button
               onClick={() => editor?.chain().focus().addColumnBefore().run()}
             >
-              <InsertColumnLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <InsertColumnLeftIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button
               onClick={() => editor?.chain().focus().addColumnAfter().run()}
             >
-              <InsertColumnRightIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <InsertColumnRightIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button
               onClick={() => editor?.chain().focus().addRowBefore().run()}
             >
-              <InsertRowTopIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <InsertRowTopIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button onClick={() => editor?.chain().focus().addRowAfter().run()}>
-              <InsertRowBottomIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <InsertRowBottomIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button
               onClick={() => editor?.chain().focus().deleteColumn().run()}
             >
-              <DeleteColumnIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <DeleteColumnIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button onClick={() => editor?.chain().focus().deleteRow().run()}>
-              <DeleteRowIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <DeleteRowIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button
               onClick={() => editor?.chain().focus().toggleHeaderRow().run()}
             >
-              <HeaderRowIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <HeaderRowIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button
               onClick={() => editor?.chain().focus().toggleHeaderColumn().run()}
             >
-              <HeaderColumnIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <HeaderColumnIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button onClick={() => editor?.chain().focus().mergeCells().run()}>
-              <MergeCellIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <MergeCellIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
             <button onClick={() => editor?.chain().focus().splitCell().run()}>
-              <SplitCellIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <SplitCellIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
           </div>
         ) : (
           <form
-            className="flex flex-row border border-black rounded-sm"
+            className='flex flex-row rounded-sm border border-black'
             onSubmit={(event: any) => {
               event.preventDefault();
               const rows = event?.target?.rows?.value;
@@ -161,20 +161,20 @@ export const Toolbar = (): React.ReactElement => {
             }}
           >
             <input
-              type="number"
-              name="rows"
-              className="border-none focus:ring-0 placeholder-gray-400 bg-white w-28"
-              placeholder="rows"
+              type='number'
+              name='rows'
+              className='w-28 border-none bg-white placeholder-gray-400 focus:ring-0'
+              placeholder='rows'
               defaultValue={3}
             />
             <input
-              type="number"
-              name="columns"
-              className="border-none focus:ring-0 placeholder-gray-400 bg-white w-28"
-              placeholder="columns"
+              type='number'
+              name='columns'
+              className='w-28 border-none bg-white placeholder-gray-400 focus:ring-0'
+              placeholder='columns'
               defaultValue={3}
             />
-            <button className="p-2 bg-gray-100 rounded-sm hover:bg-gray-200">
+            <button className='rounded-sm bg-gray-100 p-2 hover:bg-gray-200'>
               Add
             </button>
           </form>
@@ -184,30 +184,30 @@ export const Toolbar = (): React.ReactElement => {
   };
 
   return (
-    <div className="fixed top-0 z-10 sm:top-10 sm:left-0">
+    <div className='fixed top-0 z-10 sm:top-10 sm:left-0'>
       <button
         onClick={() => setShowToolbar((old) => !old)}
-        className="fixed ml-5 mt-6 outline-none text-gray-800 hover:translate-x-0.5 transition active:scale-90"
+        className='fixed ml-5 mt-6 text-gray-800 outline-none transition hover:translate-x-0.5 active:scale-90'
       >
-        <FormattingIcon className="h-7 w-7 mt-0.5 ml-10 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <FormattingIcon className='mt-0.5 ml-10 h-7 w-7 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
       <Transition
         show={showToolbar}
-        enter="transition-opacity ease-linear duration-75"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity ease-linear duration-75"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        className="fixed h-9 md:h-auto mt-14 ml-6 sm:mt-16 sm:ml-5 z-10 bg-white border p-1 sm:p-0 sm:border-0 shadow-lg sm:shadow-none rounded sm:rounded-none flex sm:flex-col gap-2 text-gray-700 sm:border-t border-gray-600 sm:pt-4"
+        enter='transition-opacity ease-linear duration-75'
+        enterFrom='opacity-0'
+        enterTo='opacity-100'
+        leave='transition-opacity ease-linear duration-75'
+        leaveFrom='opacity-100'
+        leaveTo='opacity-0'
+        className='fixed z-10 mt-14 ml-6 flex h-9 gap-2 rounded border border-gray-600 bg-white p-1 text-gray-700 shadow-lg sm:mt-16 sm:ml-5 sm:flex-col sm:rounded-none sm:border-0 sm:border-t sm:p-0 sm:pt-4 sm:shadow-none md:h-auto'
       >
-        <div className="hidden md:inline">
+        <div className='hidden md:inline'>
           <Tippy
-            placement="right"
+            placement='right'
             content={<HeadingTooltip />}
             interactive
             hideOnClick={false}
-            trigger="mouseenter"
+            trigger='mouseenter'
             touch={false}
           >
             <button
@@ -215,34 +215,34 @@ export const Toolbar = (): React.ReactElement => {
                 editor?.chain().focus().toggleHeading({ level: 1 }).run()
               }
             >
-              <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <Heading1Icon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
           </Tippy>
         </div>
-        <div className="inline md:hidden">
-          <Tippy placement="bottom" content={<HeadingTooltip />} interactive>
+        <div className='inline md:hidden'>
+          <Tippy placement='bottom' content={<HeadingTooltip />} interactive>
             <button
               onClick={() =>
                 editor?.chain().focus().toggleHeading({ level: 1 }).run()
               }
             >
-              <Heading1Icon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <Heading1Icon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
           </Tippy>
         </div>
-        <div className="hidden md:inline">
+        <div className='hidden md:inline'>
           <Tippy
-            placement="right"
+            placement='right'
             content={<ListTooltip />}
             interactive
             hideOnClick={false}
-            trigger="mouseenter"
+            trigger='mouseenter'
             touch={false}
           >
             <button
               onClick={() => editor?.chain().focus().toggleBulletList().run()}
             >
-              <UnorderedListIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <UnorderedListIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
           </Tippy>
         </div>
@@ -250,46 +250,46 @@ export const Toolbar = (): React.ReactElement => {
           <button
             onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
           >
-            <CodeBlockIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            <CodeBlockIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
           </button>
         </div>
         <div>
           <button
             onClick={() => editor?.chain().focus().toggleBlockquote().run()}
           >
-            <QuoteIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            <QuoteIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
           </button>
         </div>
-        <div className="md:pb-2">
-          <ImageIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+        <div className='md:pb-2'>
+          <ImageIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
         </div>
-        <div className="hidden md:inline md:pb-2">
+        <div className='hidden md:inline md:pb-2'>
           <Tippy
-            placement="right"
+            placement='right'
             content={<TableTooltip />}
             interactive
             hideOnClick={false}
-            trigger="mouseenter"
+            trigger='mouseenter'
             touch={false}
           >
             <div>
-              <TableIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <TableIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </div>
           </Tippy>
         </div>
-        <div className="hidden md:inline">
+        <div className='hidden md:inline'>
           <Tippy
-            placement="right"
+            placement='right'
             content={<AlignmentTooltip />}
             interactive
             hideOnClick={false}
-            trigger="mouseenter"
+            trigger='mouseenter'
             touch={false}
           >
             <button
               onClick={() => editor?.chain().focus().setTextAlign('left').run()}
             >
-              <AlignLeftIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+              <AlignLeftIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
             </button>
           </Tippy>
         </div>
@@ -297,7 +297,7 @@ export const Toolbar = (): React.ReactElement => {
           <button
             onClick={() => editor?.chain().focus().setHorizontalRule().run()}
           >
-            <SeparatorIcon className="h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6" />
+            <SeparatorIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
           </button>
         </div>
       </Transition>
