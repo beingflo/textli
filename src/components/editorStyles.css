@@ -39,7 +39,7 @@ ul[data-type='taskList'] li > div {
 /* Table-specific styling */
 .ProseMirror table {
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
   width: 100%;
   margin: 0;
   overflow: hidden;
@@ -60,7 +60,7 @@ ul[data-type='taskList'] li > div {
 .ProseMirror table th {
   font-weight: bold;
   text-align: left;
-  background-color: #f1f3f5;
+  background-color: #fff0c1;
 }
 .ProseMirror table .selectedCell:after {
   z-index: 2;

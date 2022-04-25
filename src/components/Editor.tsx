@@ -46,8 +46,7 @@ export const Editor = (): React.ReactElement => {
       Link,
       Image,
       Table.configure({
-        resizable: true,
-        lastColumnResizable: false,
+        resizable: false,
       }),
       TableCell,
       TableRow,
