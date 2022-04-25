@@ -34,7 +34,7 @@ import {
 import { getEditorState } from './state';
 
 export const Toolbar = (): React.ReactElement => {
-  const [showToolbar, setShowToolbar] = React.useState(true);
+  const [showToolbar, setShowToolbar] = React.useState(false);
   const [editor] = useAtom(getEditorState);
   const [isTable, setIsTable] = React.useState(false);
 
@@ -187,7 +187,7 @@ export const Toolbar = (): React.ReactElement => {
     <div className='fixed top-0 z-10 sm:top-10 sm:left-0'>
       <button
         onClick={() => setShowToolbar((old) => !old)}
-        className='fixed ml-5 mt-6 text-gray-800 outline-none transition hover:translate-x-0.5 active:scale-90'
+        className='fixed ml-5 mt-6 hidden text-gray-800 outline-none transition hover:translate-x-0.5 active:scale-90 sm:inline'
       >
         <FormattingIcon className='mt-0.5 ml-10 h-7 w-7 sm:ml-0.5 sm:h-6 sm:w-6' />
       </button>
@@ -201,7 +201,7 @@ export const Toolbar = (): React.ReactElement => {
         leaveTo='opacity-0'
         className='fixed z-10 mt-14 ml-6 flex h-9 gap-2 rounded border border-gray-600 bg-white p-1 text-gray-700 shadow-lg sm:mt-16 sm:ml-5 sm:flex-col sm:rounded-none sm:border-0 sm:border-t sm:p-0 sm:pt-4 sm:shadow-none md:h-auto'
       >
-        <div className='hidden md:inline'>
+        <div className='inline'>
           <Tippy
             placement='right'
             content={<HeadingTooltip />}
@@ -219,18 +219,7 @@ export const Toolbar = (): React.ReactElement => {
             </button>
           </Tippy>
         </div>
-        <div className='inline md:hidden'>
-          <Tippy placement='bottom' content={<HeadingTooltip />} interactive>
-            <button
-              onClick={() =>
-                editor?.chain().focus().toggleHeading({ level: 1 }).run()
-              }
-            >
-              <Heading1Icon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
-            </button>
-          </Tippy>
-        </div>
-        <div className='hidden md:inline'>
+        <div className='inline'>
           <Tippy
             placement='right'
             content={<ListTooltip />}
@@ -263,7 +252,7 @@ export const Toolbar = (): React.ReactElement => {
         <div className='md:pb-2'>
           <ImageIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
         </div>
-        <div className='hidden md:inline md:pb-2'>
+        <div className='inline pb-2'>
           <Tippy
             placement='right'
             content={<TableTooltip />}
@@ -277,7 +266,7 @@ export const Toolbar = (): React.ReactElement => {
             </div>
           </Tippy>
         </div>
-        <div className='hidden md:inline'>
+        <div className='inline'>
           <Tippy
             placement='right'
             content={<AlignmentTooltip />}
