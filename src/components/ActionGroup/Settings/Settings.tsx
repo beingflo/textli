@@ -47,7 +47,7 @@ export const Settings = ({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <div className='relative mx-auto my-4 min-w-sm max-w-sm rounded border border-gray-600 bg-white p-6 shadow-lg sm:min-w-lg sm:max-w-lg lg:min-w-3xl lg:max-w-3xl'>
+            <div className='relative mx-auto my-4 min-w-sm max-w-sm rounded border border-gray-600 bg-white p-6 shadow-lg sm:min-w-lg sm:max-w-lg md:min-w-3xl md:max-w-3xl'>
               <div className='flex flex-row justify-between'>
                 <Dialog.Title className='highlight inline text-2xl font-bold'>
                   Settings
