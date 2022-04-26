@@ -169,6 +169,10 @@ export const Sidebar = (): React.ReactElement => {
 
   const handleSelection = React.useCallback(
     (id: string) => {
+      if (!id) {
+        return;
+      }
+
       // Scroll to top incase we are further down the sidebar
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setLoading(true);
