@@ -315,10 +315,10 @@ export const Sidebar = (): React.ReactElement => {
                                 className={`truncate ${
                                   index === focused &&
                                   'md:-translate-x-1 md:rounded-sm md:bg-yellow-300 md:px-1'
-                                } ${
-                                  isSelected(note?.id) && index !== focused
-                                    ? 'highlight'
-                                    : ''
+                                } ${isSelected(note?.id) && 'highlight'} ${
+                                  isSelected(note?.id) &&
+                                  index === focused &&
+                                  'md:!bg-yellow-300'
                                 }`}
                               >
                                 {note?.metadata?.title}
