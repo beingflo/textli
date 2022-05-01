@@ -15,14 +15,16 @@ import { NewAction } from './NewAction';
 import '../../style.css';
 import Settings from './Settings/Settings';
 import { Sharing } from './Sharing';
-import { AuthStatus, Share } from '../../types';
+import { AuthStatus, KeyStatus, Share } from '../../types';
 import { useAtom } from 'jotai';
 import {
   authState,
   getCurrentNoteState,
   getSharesState,
   getUserInfoState,
+  keyState,
 } from '../state';
+import { removeMainKey } from '../crypto';
 
 const shareUrl = import.meta.env.VITE_SHARE_URL;
 
@@ -31,6 +33,7 @@ export const ActionGroup = (): React.ReactElement => {
   const [userInfo] = useAtom(getUserInfoState);
   const [currentNote] = useAtom(getCurrentNoteState);
   const [, setAuthStatus] = useAtom(authState);
+  const [, setKeyStatus] = useAtom(keyState);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
@@ -40,7 +43,11 @@ export const ActionGroup = (): React.ReactElement => {
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => setAuthStatus(AuthStatus.SIGNED_OUT));
-  }, []);
+    if (userInfo?.username) {
+      removeMainKey(userInfo?.username);
+      setKeyStatus(KeyStatus.MISSING);
+    }
+  }, [userInfo, setKeyStatus]);
 
   React.useEffect(() => {
     const share = shares.find(
