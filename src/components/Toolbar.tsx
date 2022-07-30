@@ -184,7 +184,7 @@ export const Toolbar = (): React.ReactElement => {
   };
 
   return (
-    <div className='fixed top-0 z-10 sm:top-10 sm:left-3.5'>
+    <div className='fixed top-0 z-10 sm:top-10 sm:left-0'>
       <button
         onClick={() => setShowToolbar((old) => !old)}
         className='fixed ml-5 mt-6 hidden text-gray-800 outline-none transition hover:translate-x-0.5 active:scale-90 sm:inline'
