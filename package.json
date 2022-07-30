@@ -40,6 +40,7 @@
     "react-hotkeys-hook": "^3.4.0",
     "react-router-dom": "^5.2.0",
     "react-toastify": "^7.0.4",
+    "valtio": "^1.6.3",
     "wouter": "^2.7"
   },
   "devDependencies": {
