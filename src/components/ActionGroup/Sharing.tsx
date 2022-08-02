@@ -12,7 +12,7 @@ import {
 import { Share } from '../../types';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
 import { useAtom } from 'jotai';
-import Tippy from '@tippyjs/react';
+import { InfoTooltip } from '../InfoTooltip';
 
 export type Props = {
   showSharing: boolean;
@@ -224,18 +224,10 @@ export const Sharing = ({
                     <div className='mb-4 flex flex-row justify-between'>
                       <span className='flex items-center'>
                         Publish note
-                        <Tippy
-                          content={
-                            <div className='max-w-xs rounded-md border border-gray-800 bg-white p-1'>
-                              Publishing a note will make it visible to everyone
-                              on your public profile
-                            </div>
-                          }
-                        >
-                          <div className='ml-2 flex h-5 w-5 cursor-default items-center justify-center rounded-full border border-black font-semibold'>
-                            !
-                          </div>
-                        </Tippy>
+                        <InfoTooltip>
+                          Publishing a note will make it visible to everyone on
+                          your public blog
+                        </InfoTooltip>
                       </span>
                       <div className='w-1/2'>
                         <input

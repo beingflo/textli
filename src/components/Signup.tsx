@@ -3,6 +3,7 @@ import React from 'react';
 import { handleException } from '../api';
 import { user_login, user_signup } from '../api/user_api';
 import { AuthStatus } from '../types';
+import { InfoTooltip } from './InfoTooltip';
 import { SpinnerPage } from './Spinner';
 import { authState } from './state';
 
@@ -130,8 +131,12 @@ const Signup = (): React.ReactElement => {
             </div>
           </label>
           <label className='mt-4 block'>
-            <span className='text-sm text-gray-500'>
+            <span className='flex text-sm text-gray-500'>
               Email address (optional)
+              <InfoTooltip color='gray-500'>
+                Your email will only be used for password resets and balance
+                alerts
+              </InfoTooltip>
             </span>
             <input
               type='email'
