@@ -4,21 +4,21 @@ import clsx from 'clsx';
 
 type Props = {
   children: ReactNode;
-  textColor?: string;
-  borderColor?: string;
+  contentClassName?: string;
+  anchorClassName?: string;
 };
 
 export const InfoTooltip = ({
   children,
-  textColor,
-  borderColor,
+  contentClassName,
+  anchorClassName,
 }: Props): JSX.Element => (
   <Tippy
     content={
       <div
         className={clsx(
-          'max-w-xs rounded-md border bg-white p-1',
-          borderColor ? borderColor : 'border-black'
+          'max-w-xs rounded-md border border-black bg-white p-1 text-black',
+          contentClassName
         )}
       >
         {children}
@@ -27,9 +27,8 @@ export const InfoTooltip = ({
   >
     <div
       className={clsx(
-        'ml-1.5 flex h-5 w-5 cursor-default items-center justify-center rounded-full border text-sm font-semibold',
-        textColor ?? 'text-black',
-        borderColor ?? 'border-black'
+        'ml-1.5 flex h-5 w-5 cursor-default items-center justify-center rounded-full border border-black text-sm font-semibold text-black',
+        anchorClassName
       )}
     >
       !

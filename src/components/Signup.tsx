@@ -133,10 +133,7 @@ const Signup = (): React.ReactElement => {
           <label className='mt-4 block'>
             <span className='flex text-sm text-gray-500'>
               Email address (optional)
-              <InfoTooltip
-                textColor='text-gray-500'
-                borderColor='border-gray-500'
-              >
+              <InfoTooltip anchorClassName='border-gray-500 text-gray-500'>
                 Your email will only be used for password resets and balance
                 alerts
               </InfoTooltip>
