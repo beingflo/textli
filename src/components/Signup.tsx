@@ -7,7 +7,7 @@ import { InfoTooltip } from './InfoTooltip';
 import { SpinnerPage } from './Spinner';
 import { authState } from './state';
 
-const FORBIDDEN_CHARS_REGEX = /[;/?:@&=+$,#*\[\]{}()^|]/;
+const FORBIDDEN_CHARS_REGEX = /[;/?:@&=+$,#*[\]{}()^|]/;
 const FORBIDDEN_CHARS = ';/?:@&=+$,#*[]{}()^|';
 
 const Signup = (): React.ReactElement => {
