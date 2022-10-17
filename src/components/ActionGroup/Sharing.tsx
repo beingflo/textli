@@ -12,7 +12,6 @@ import {
 import { Share } from '../../types';
 import { exportKey, string2arrayBuffer, unwrap_note_key } from '../crypto';
 import { useAtom } from 'jotai';
-import { InfoTooltip } from '../InfoTooltip';
 
 export type Props = {
   showSharing: boolean;
@@ -37,17 +36,10 @@ export const Sharing = ({
   const [share, setShare] = React.useState<Share>();
   const [showClipboardConfirm, setShowClipboardConfirm] = React.useState(false);
   const [expiration, setExpiration] = React.useState(expirationOptions[3]);
-  const [published, setPublished] = React.useState(false);
   const [userInfo] = useAtom(getUserInfoState);
 
   const [shareLink, setShareLink] = React.useState('');
   const share_url = import.meta.env.VITE_SHARE_URL;
-
-  React.useEffect(() => {
-    if (published) {
-      setExpiration(expirationOptions[0]);
-    }
-  }, [published, setExpiration]);
 
   React.useEffect(() => {
     const share = shares.find(
@@ -79,26 +71,17 @@ export const Sharing = ({
   const handleCreateShare = React.useCallback(() => {
     const func = async () => {
       if (showSharing && currentNote?.id && userInfo) {
-        let key = undefined;
-        if (published) {
-          const rawKey = await unwrap_note_key(
-            string2arrayBuffer(currentNote?.key?.wrapped_key),
-            userInfo?.username
-          );
-          key = await exportKey(rawKey);
-        }
-
         await create_share({
           note: currentNote?.id,
           expires_in: expiration?.expires_in,
-          public: key,
+          public: undefined,
         });
         list_shares(setShares);
       }
     };
 
     func();
-  }, [currentNote, showSharing, expiration, published]);
+  }, [currentNote, showSharing, expiration]);
 
   const handleDeleteShare = React.useCallback(() => {
     const func = async () => {
@@ -221,34 +204,11 @@ export const Sharing = ({
                   </>
                 ) : (
                   <>
-                    <div className='mb-4 flex flex-row justify-between'>
-                      <span className='flex items-center'>
-                        Publish note
-                        <InfoTooltip>
-                          Publishing a note will make it visible to everyone on
-                          your public blog
-                        </InfoTooltip>
-                      </span>
-                      <div className='w-1/2'>
-                        <input
-                          type='checkbox'
-                          checked={published}
-                          onChange={(event) =>
-                            setPublished(event.target.checked)
-                          }
-                          className='self-center rounded-sm text-green-600 outline-none focus:ring-0'
-                        />
-                      </div>
-                    </div>
                     <div className='flex flex-row justify-between'>
                       <span className='inline-flex self-center'>
                         Expire share in
                       </span>
-                      <Listbox
-                        value={expiration}
-                        onChange={setExpiration}
-                        disabled={published}
-                      >
+                      <Listbox value={expiration} onChange={setExpiration}>
                         <div className='relative mt-1 w-1/2'>
                           <Listbox.Button className='relative w-full cursor-default rounded-md bg-gray-50 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm'>
                             <span className='block truncate'>
@@ -308,9 +268,7 @@ export const Sharing = ({
                     <div className='flex flex-row justify-end'>
                       <button
                         onClick={handleCreateShare}
-                        className={`
-                          ${published && 'bg-green-600 '}
-                          mt-8 rounded-md bg-gray-800 p-2 text-white shadow-md transition`}
+                        className='mt-8 rounded-md bg-gray-800 p-2 text-white shadow-md transition'
                       >
                         Create share
                       </button>

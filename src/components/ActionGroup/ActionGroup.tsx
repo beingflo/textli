@@ -25,8 +25,6 @@ import {
 } from '../state';
 import { removeMainKey } from '../crypto';
 
-const shareUrl = import.meta.env.VITE_SHARE_URL;
-
 export const ActionGroup = (): React.ReactElement => {
   const [shares] = useAtom(getSharesState);
   const [userInfo] = useAtom(getUserInfoState);
@@ -37,8 +35,6 @@ export const ActionGroup = (): React.ReactElement => {
   const [showSharing, setShowSharing] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
-
-  const userDashboard = `${shareUrl}/${userInfo?.username}`;
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => setAuthStatus(AuthStatus.SIGNED_OUT));
