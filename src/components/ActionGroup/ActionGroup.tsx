@@ -3,7 +3,6 @@ import React from 'react';
 import { user_logout } from '../../api/user_api';
 import {
   EyeIcon,
-  HomeIcon,
   LinkIcon,
   LogoutIcon,
   MoreIcon,
@@ -100,11 +99,6 @@ export const ActionGroup = (): React.ReactElement => {
         >
           <Popover.Panel className='absolute top-8 -left-2 rounded border border-gray-800 bg-white p-2 shadow-lg sm:left-0 sm:border-none sm:p-0 sm:shadow-none'>
             <div className='space-y-4 sm:space-y-1.5'>
-              <div>
-                <button onClick={() => window.open(userDashboard, '_blank')}>
-                  <HomeIcon className='h-7 w-7 text-black transition hover:-translate-x-0.5 active:scale-90 sm:h-6 sm:w-6' />
-                </button>
-              </div>
               <div>
                 <button onClick={() => setShowSettings(true)}>
                   <SettingsIcon className='h-7 w-7 text-black transition hover:-translate-x-0.5 active:scale-90 sm:h-6 sm:w-6' />
