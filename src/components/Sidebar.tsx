@@ -13,7 +13,6 @@ import {
   BinIcon,
   ClearIcon,
   CloseIcon,
-  EyeIcon,
   LinkIcon,
   SadIcon,
   SearchIcon,
@@ -160,9 +159,9 @@ export const Sidebar = (): React.ReactElement => {
   );
 
   const isShared = React.useCallback(
-    (id: string): { shared: boolean; public: boolean } => {
+    (id: string): { shared: boolean } => {
       const share = shares.find((share: Share) => share?.note === id);
-      return { shared: !!share, public: !!share?.public };
+      return { shared: !!share };
     },
     [shares]
   );
@@ -215,11 +214,6 @@ export const Sidebar = (): React.ReactElement => {
           className={`${
             shared.shared || 'invisible'
           } icon-highlight h-5 w-5 text-black`}
-        />
-        <EyeIcon
-          className={`${
-            shared.public || 'invisible'
-          } absolute top-3 left-3 h-3 w-3 text-green-600`}
         />
       </div>
     );

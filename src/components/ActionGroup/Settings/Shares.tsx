@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { delete_share, list_shares } from '../../../api/share_api';
 import { getNoteListState, sharesState } from '../../state';
-import { AddIcon, BinIcon, ClockIcon, EyeIcon, SadIcon } from '../../../icons';
+import { AddIcon, BinIcon, ClockIcon, SadIcon } from '../../../icons';
 import { NoteListItem, Share } from '../../../types';
 import { TrendingUpIcon } from '@heroicons/react/outline';
 
@@ -63,12 +63,6 @@ export const Shares = (): React.ReactElement => {
                       {share.view_count === 1 ? ' view' : ' views'}
                     </span>
                   </div>
-                  {share.public && (
-                    <div className='flex flex-row space-x-1 text-green-600'>
-                      <EyeIcon className='h-4 w-4 self-center' />
-                      <span>Public</span>
-                    </div>
-                  )}
                 </div>
                 <button
                   className='flex flex-row md:items-center'
