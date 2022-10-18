@@ -1,17 +1,9 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import React from 'react';
-import {
-  BinIcon,
-  CloseIcon,
-  DataIcon,
-  HappyIcon,
-  LinkIcon,
-  UsersIcon,
-} from '../../../icons';
+import { BinIcon, CloseIcon, LinkIcon, UsersIcon } from '../../../icons';
 import Bin from './Bin';
 import Shares from './Shares';
 import GeneralSettings from './GeneralSettings';
-import { ChatIcon, CloudUploadIcon } from '@heroicons/react/outline';
 
 export type Props = {
   showSettings: boolean;
@@ -98,36 +90,6 @@ export const Settings = ({
                         </button>
                       )}
                     </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className='flex focus:outline-none'>
-                          <DataIcon className='mr-2 h-5 w-5 self-center' />
-                          <span className={selected ? 'highlight' : ''}>
-                            Export
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className='flex focus:outline-none'>
-                          <CloudUploadIcon className='mr-2 h-5 w-5 self-center' />
-                          <span className={selected ? 'highlight' : ''}>
-                            Sync
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
-                    <Tab as={React.Fragment}>
-                      {({ selected }) => (
-                        <button className='flex focus:outline-none'>
-                          <ChatIcon className='mr-2 h-5 w-5 self-center' />
-                          <span className={selected ? 'highlight' : ''}>
-                            Feedback
-                          </span>
-                        </button>
-                      )}
-                    </Tab>
                   </Tab.List>
                   <Tab.Panels className='min-w-0 flex-grow'>
                     <Tab.Panel className='focus:outline-none'>
@@ -138,30 +100,6 @@ export const Settings = ({
                     </Tab.Panel>
                     <Tab.Panel className='focus:outline-none'>
                       <Bin />
-                    </Tab.Panel>
-                    <Tab.Panel className='flex flex-row gap-1 focus:outline-none'>
-                      <div className='flex w-full flex-col items-center'>
-                        <div className='flex flex-col items-center'>
-                          <HappyIcon className='h-16 w-16' />
-                          <div>Coming soon</div>
-                        </div>
-                      </div>
-                    </Tab.Panel>
-                    <Tab.Panel className='flex flex-row gap-1 focus:outline-none'>
-                      <div className='flex w-full flex-col items-center'>
-                        <div className='flex flex-col items-center'>
-                          <HappyIcon className='h-16 w-16' />
-                          <div>Coming soon</div>
-                        </div>
-                      </div>
-                    </Tab.Panel>
-                    <Tab.Panel className='flex flex-row gap-1 focus:outline-none'>
-                      <div className='flex w-full flex-col items-center'>
-                        <div className='flex flex-col items-center'>
-                          <HappyIcon className='h-16 w-16' />
-                          <div>Coming soon</div>
-                        </div>
-                      </div>
                     </Tab.Panel>
                   </Tab.Panels>
                 </div>
