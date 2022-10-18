@@ -9,19 +9,12 @@ import {
 } from '../../../api/user_api';
 import { ArrowLeftIcon } from '../../../icons';
 import { AuthStatus } from '../../../types';
-import { authState, getUserInfoState } from '../../state';
+import { authState } from '../../state';
 
 export const GeneralSettings = (): React.ReactElement => {
   const [deleteConfirm, setDeleteConfirm] = React.useState(false);
   const [passwordConfirm, setPasswordConfirm] = React.useState(false);
   const [sessionConfirm, setSessionConfirm] = React.useState(false);
-
-  const [userInfo] = useAtom(getUserInfoState);
-
-  const balance = parseFloat(userInfo?.balance ?? '0');
-  const balanceFixed = balance.toFixed(2);
-  const balance_days = parseFloat(userInfo?.remaining_days ?? '0');
-  const remaining_weeks = (balance_days / 7).toFixed(0);
 
   return (
     <>
@@ -33,37 +26,7 @@ export const GeneralSettings = (): React.ReactElement => {
         <DeleteConfirm setDeleteConfirm={setDeleteConfirm} />
       ) : (
         <>
-          <div className='grid grid-cols-1 pb-8 lg:grid-cols-2'>
-            <div>
-              <div className='flex justify-between'>
-                <span>Balance</span>
-                <div>
-                  <span className='mr-1 text-xs text-gray-600'>USD</span>
-                  <span className='font-bold'>${balanceFixed}</span>
-                </div>
-              </div>
-              <div className='mt-2 flex justify-between'>
-                <span>Remaining weeks</span>
-                <span className='font-bold'>{remaining_weeks}</span>
-              </div>
-              {balance < 0 && balance > -1 && (
-                <div className='mt-6 p-1 text-red-500'>
-                  If you are more than one month overdraft, your account will
-                  become read only.
-                </div>
-              )}
-              {balance < -1 && (
-                <div className='mt-6 p-1 font-bold text-red-600'>
-                  You are more than one month overdraft, this account is read
-                  only until you add funds.
-                </div>
-              )}
-            </div>
-            <button className='ml-auto mt-4 h-10 w-max rounded-md bg-gray-800 p-1.5 font-medium text-white transition hover:bg-gray-700 active:bg-gray-800 lg:mt-0'>
-              Add funds
-            </button>
-          </div>
-          <div className='flex flex-col justify-between gap-8 pt-4 lg:flex-row'>
+          <div className='flex flex-col justify-between gap-8 lg:flex-row'>
             <div className='flex flex-col'>
               <span className='pb-1 font-bold'>Sessions</span>
               <button
