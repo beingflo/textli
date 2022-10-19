@@ -136,8 +136,8 @@ export const Sidebar = (): React.ReactElement => {
     const filteredNotes = notes.filter((note: NoteListItem) =>
       searchTerms.every(
         (term) =>
-          note.metadata?.title?.toLowerCase().includes(term.toLowerCase()) ||
-          note.metadata?.title?.toLowerCase().includes(term.toLowerCase())
+          note?.metadata?.title?.toLowerCase()?.includes(term?.toLowerCase()) ||
+          note?.metadata?.title?.toLowerCase()?.includes(term?.toLowerCase())
       )
     );
     const sortedNotes = sortNotes(filteredNotes);
