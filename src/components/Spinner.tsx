@@ -4,7 +4,7 @@ import './spinner.css';
 export const Spinner = (): React.ReactElement => {
   return (
     <div className={`h-5 w-5`}>
-      <div className="spinner" />
+      <div className='spinner' />
     </div>
   );
 };
@@ -17,9 +17,9 @@ export const SpinnerPage = ({
   return (
     <>
       {show && (
-        <div className="absolute z-30 h-screen w-full top-0 left-0 grid place-items-center bg-opacity-40 bg-gray-100">
-          <div className="spinning h-60 w-60 p-20 border border-dashed rounded-full border-black bg-white">
-            <div className="spinner" />
+        <div className='absolute top-0 left-0 z-30 grid h-screen w-full place-items-center bg-gray-100 bg-opacity-40'>
+          <div className='spinning h-60 w-60 rounded-full border border-dashed border-black bg-white p-20'>
+            <div className='spinner' />
           </div>
         </div>
       )}

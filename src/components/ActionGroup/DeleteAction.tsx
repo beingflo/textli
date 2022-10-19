@@ -93,27 +93,27 @@ export const DeleteAction = (): React.ReactElement => {
   }, [deletedNote]);
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <button
         onClick={handleDelete}
         disabled={!currentNote && noteStatus !== NoteStatus.CHANGED}
-        className="disabled:opacity-60"
+        className='disabled:opacity-60'
       >
-        <BinIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
+        <BinIcon className='h-7 w-7 text-black transition hover:-translate-x-0.5 active:scale-90 sm:h-6 sm:w-6' />
       </button>
       <Transition
         show={showUndelete}
-        enter="transition-opacity ease-linear duration-500"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity ease-linear duration-500"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+        enter='transition-opacity ease-linear duration-500'
+        enterFrom='opacity-0'
+        enterTo='opacity-100'
+        leave='transition-opacity ease-linear duration-500'
+        leaveFrom='opacity-100'
+        leaveTo='opacity-0'
       >
         <button
           onClick={handleUndelete}
-          className="absolute sm:top-0 -right-3 sm:right-8 text-white bg-yellow-400 rounded-sm px-1
-                       hover:-translate-x-0.5 transition active:scale-90"
+          className='absolute -right-3 rounded-sm bg-yellow-400 px-1 text-white transition hover:-translate-x-0.5
+                       active:scale-90 sm:top-0 sm:right-8'
         >
           Undo
         </button>

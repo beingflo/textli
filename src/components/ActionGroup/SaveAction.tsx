@@ -38,31 +38,31 @@ export const SaveAction = (): React.ReactElement => {
   );
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <button onClick={handleSave}>
-        <SaveIcon className="h-7 w-7 sm:w-6 sm:h-6 text-black hover:-translate-x-0.5 transform transition active:scale-90" />
+        <SaveIcon className='h-7 w-7 transform text-black transition hover:-translate-x-0.5 active:scale-90 sm:h-6 sm:w-6' />
       </button>
       <Transition
         show={showSaveSpinner}
-        enter="transition-opacity ease-linear duration-75"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity ease-linear duration-300"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        className="absolute top-8 right-0.5 sm:top-0.5 sm:right-8"
+        enter='transition-opacity ease-linear duration-75'
+        enterFrom='opacity-0'
+        enterTo='opacity-100'
+        leave='transition-opacity ease-linear duration-300'
+        leaveFrom='opacity-100'
+        leaveTo='opacity-0'
+        className='absolute top-8 right-0.5 sm:top-0.5 sm:right-8'
       >
-        <div className="slow-spinning border-black h-6 w-6 sm:h-5 sm:w-5 border border-dashed rounded-full bg-white" />
+        <div className='slow-spinning h-6 w-6 rounded-full border border-dashed border-black bg-white sm:h-5 sm:w-5' />
       </Transition>
       <Transition
         show={showSaveConfirm[0]}
-        enter="transition-opacity ease-linear duration-75"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity ease-linear duration-300"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        className="absolute top-8 right-0.5 sm:top-0.5 sm:right-8"
+        enter='transition-opacity ease-linear duration-75'
+        enterFrom='opacity-0'
+        enterTo='opacity-100'
+        leave='transition-opacity ease-linear duration-300'
+        leaveFrom='opacity-100'
+        leaveTo='opacity-0'
+        className='absolute top-8 right-0.5 sm:top-0.5 sm:right-8'
       >
         <CheckIcon
           className={`h-6 w-6 sm:h-5 sm:w-5 ${

@@ -36,7 +36,7 @@ export const NewAction = (): React.ReactElement => {
   return (
     <div>
       <button onClick={handleNew}>
-        <NewIcon className="h-7 w-7 sm:h-6 sm:w-6 text-black hover:-translate-x-0.5 transition active:scale-90" />
+        <NewIcon className='h-7 w-7 text-black transition hover:-translate-x-0.5 active:scale-90 sm:h-6 sm:w-6' />
       </button>
     </div>
   );
