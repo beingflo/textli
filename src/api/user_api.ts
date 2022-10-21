@@ -23,7 +23,7 @@ export const user_login = (credentials: UserCredentials): Promise<void> => {
 };
 
 export const user_logout = (
-  onSuccess: (res: Response) => void = () => {},
+  onSuccess: (res: Response) => void = () => undefined,
   onFailure: any = handleException
 ): void => {
   fetch(SESSION_URL, {
@@ -87,7 +87,7 @@ export const user_info = (): Promise<UserInfo> => {
 
 export const user_salt = (
   salt: string,
-  onSuccess: (res: Response) => void = () => {},
+  onSuccess: (res: Response) => void = () => undefined,
   onFailure: any = handleException
 ): void => {
   fetch(`${USER_URL}/salt`, {
