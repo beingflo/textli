@@ -74,7 +74,6 @@ export const Sharing = ({
         await create_share({
           note: currentNote?.id,
           expires_in: expiration?.expires_in,
-          public: undefined,
         });
         list_shares(setShares);
       }
@@ -155,11 +154,6 @@ export const Sharing = ({
                           : 'Never'}
                       </span>
                     </div>
-                    {share?.public && (
-                      <div className='mt-2 flex flex-row font-medium text-green-600'>
-                        This note is visible on your public profile!
-                      </div>
-                    )}
                     <div className='mt-4 flex flex-row justify-between rounded-md bg-gray-100 p-4'>
                       <input
                         value={shareLink}

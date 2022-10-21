@@ -144,7 +144,6 @@ export const useSaveNote = (): (() => Promise<NoteStatus>) => {
           content,
           metadata: JSON.parse(metadata),
           key: encrypted_note?.key,
-          public: false,
           ...result,
         };
         setCurrentNote(note);
