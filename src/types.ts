@@ -70,7 +70,6 @@ export type ParsedNoteListEntry = {
 export type Share = {
   token: string;
   note: string;
-  public?: string;
   view_count: number;
   created_at: string;
   expires_at: string;
@@ -94,7 +93,6 @@ export type UserCredentialsPasswordChange = {
 export type CreateShareRequest = {
   note: string;
   expires_in?: number;
-  public?: string;
 };
 
 export type UserInfo = {

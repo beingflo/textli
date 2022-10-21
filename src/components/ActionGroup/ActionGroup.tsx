@@ -1,13 +1,7 @@
 import { Popover, Transition } from '@headlessui/react';
 import React from 'react';
 import { user_logout } from '../../api/user_api';
-import {
-  EyeIcon,
-  LinkIcon,
-  LogoutIcon,
-  MoreIcon,
-  SettingsIcon,
-} from '../../icons';
+import { LinkIcon, LogoutIcon, MoreIcon, SettingsIcon } from '../../icons';
 import { SaveAction } from './SaveAction';
 import { DeleteAction } from './DeleteAction';
 import { NewAction } from './NewAction';
@@ -34,7 +28,6 @@ export const ActionGroup = (): React.ReactElement => {
   const [showSettings, setShowSettings] = React.useState(false);
   const [showSharing, setShowSharing] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
-  const [isPublic, setIsPublic] = React.useState(false);
 
   const handleLogout = React.useCallback(() => {
     user_logout(() => setAuthStatus(AuthStatus.SIGNED_OUT));
@@ -50,13 +43,6 @@ export const ActionGroup = (): React.ReactElement => {
     );
     setIsShared(!!share);
   }, [shares, currentNote]);
-
-  React.useEffect(() => {
-    const share = shares.find(
-      (share: Share) => share?.note === currentNote?.id && share?.public
-    );
-    setIsPublic(!!share);
-  }, [currentNote, shares]);
 
   return (
     <div className='fixed top-6 right-6 flex flex-row space-x-6 sm:flex-col sm:space-x-0 sm:space-y-1.5'>
@@ -74,9 +60,6 @@ export const ActionGroup = (): React.ReactElement => {
               isShared && 'icon-highlight'
             } h-7 w-7 text-black sm:h-6 sm:w-6`}
           />
-          {isPublic && (
-            <EyeIcon className='absolute top-4 left-4 h-4 w-4 text-green-600 sm:top-3.5 sm:left-3.5' />
-          )}
         </button>
       </div>
       <Popover className='relative'>
