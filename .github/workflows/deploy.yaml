@@ -1,4 +1,4 @@
-name: Prod deploy
+name: Deploy
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Node.js
         uses: actions/setup-node@v1
@@ -31,9 +31,9 @@ jobs:
       - name: Deploy to prod server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.OMNI_GH_KEY }}
           SOURCE: 'dist/'
-          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
-          REMOTE_USER: ${{ secrets.SERVER_USER }}
-          TARGET: '/var/www/write.fieldnotes.land/'
+          REMOTE_HOST: ${{ secrets.OMNI_HOST }}
+          REMOTE_USER: ${{ secrets.OMNI_USER }}
+          TARGET: '~/caddy/site/write.fieldnotes.land/'
           EXCLUDE: '/dist/, /node_modules/'
