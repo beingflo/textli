@@ -18,7 +18,6 @@ import {
   Heading2Icon,
   Heading3Icon,
   Heading4Icon,
-  ImageIcon,
   InsertColumnLeftIcon,
   InsertColumnRightIcon,
   InsertRowBottomIcon,
@@ -248,9 +247,6 @@ export const Toolbar = (): React.ReactElement => {
           >
             <QuoteIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
           </button>
-        </div>
-        <div className='md:pb-2'>
-          <ImageIcon className='h-6 w-6 sm:ml-0.5 sm:h-6 sm:w-6' />
         </div>
         <div className='inline pb-2'>
           <Tippy
